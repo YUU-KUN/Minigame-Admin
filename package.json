@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "datatables.net": "^1.10.23",
     "jquery": "^3.5.1",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-currency-filter": "^5.2.0",

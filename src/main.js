@@ -6,12 +6,18 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCurrency from 'vue-currency-filter'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import moment from 'moment'
 
-
-Vue.use(VueAxios, axios)
+Vue.use(axios, VueAxios)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 // Vue.prototype.$http = axios;
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('d MMM YYYY hh:mm')
+  }
+})
 
 Vue.use(VueCurrency, {
   name: 'rupiah',

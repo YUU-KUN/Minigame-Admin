@@ -30,10 +30,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr v-for="(transaction, index) in userTransactions" :key="index">
+                                            <tr v-for="(transaction, index) in transactions" :key="index">
                                                 <td>{{index +1}}</td>
                                                 <td>{{transaction.user}}</td>
-                                                <td>{{transaction.items[index].cartGameData.title}}</td>
+                                                <td>{{transaction.items[0].cartGameData.title}}</td>
                                                 <td>{{transaction.total | rupiah}}</td>
                                                 <td>{{transaction.status}}</td>
                                                 <td>
@@ -41,7 +41,7 @@
                                                     <!-- <router-link :to="transaction.buktiPembayaran">Lihat Bukti Pembayaran</router-link> -->
                                                 </td>
                                                 
-                                                <td>12 Feb 2021</td>
+                                                <td>{{transaction.createdAt | formatDate}}</td>
                                                 <td v-if=" status == 'waiting' " class="d-flex justify-content-center">
                                                     <button class="btn btn-danger" v-on:click="removeTransaction(index)">Delete</button>
                                                 </td>
@@ -65,7 +65,7 @@
                   <div class="card-inner">
                     <div class="card bg-dark">
                       <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{userTransactions}}</pre>
+                        <pre class="text-warning">{{transactions}}</pre>
                       </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@ export default {
     data() {
         return {
             action: false,
-            userTransactions: '',
+            transactions: '',
             status: 'waiting',
             info: ''
         }
@@ -96,14 +96,19 @@ export default {
             console.log('edit');
         },
         removeTransaction(index) {
-            this.userTransactions.splice(index, 1);
+            this.transactions.splice(index, 1);
             this.action = true
             this.info = 'Berhasil menghapus transaksi'
             console.log(this.info)
         },
         getUserTransaction(){
-            axios.get('https://infiniteroom.herokuapp.com/api/v2/transaction/user').then(response => {
-                this.userTransactions = response.data.data
+            let headers = {
+                "headers": {
+                    "content-type": "application/json",
+                },
+            }
+            axios.get('/transaction/list', this.headers).then(response => {
+                this.transactions = response.data.data
             })
         }
     },

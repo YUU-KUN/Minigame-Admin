@@ -7,7 +7,7 @@
               <div class="row" v-for="(game, index) in gameweb" :key="index" style="margin: 10px 0">
                 
                   <div class="col-4 d-flex justify-content-center">
-                    <img  @click="gameDetail" :src="game.imageUrl" alt="Game Image" height="200px" style="border-radius:15px" id="imageZoom">
+                    <img  @click="gameDetail" :src="game.imageUrl" alt="Game Image" height="200px" style="border-radius:5px" id="imageZoom">
                   </div>
                   <div class="col-8 d-flex align-items-center">
                     <div class="col">
@@ -15,7 +15,7 @@
                         <h1><b>{{game.title}}</b></h1>
                       </div>
                       <div class="row" >
-                        <span class="badge badge-pill badge-primary" v-for="(genre, index) in game.genre" :key="index" style="margin: 0 10px 0 0">{{genre}}</span>
+                        <span class="badge badge-pill badge-primary" v-for="(genre, index) in game.genre" :key="index" style="margin: 0 10px 0 0; font-size:16px">{{genre}}</span>
                       </div>
                       <div class="row" >
                           <li v-for="index in game.rating" :key="index" style="display:inline">
@@ -138,6 +138,7 @@ export default {
 }
 
 #imageZoom:hover{
+  cursor: pointer;
   opacity: 0.5;
 }
 </style>

@@ -16,6 +16,9 @@ import Transaction from '../views/admin/Transaction.vue'
 
 // user
 import DashboardUser from '../views/user/DashboardUser'
+import TransactionUser from '../views/user/TransactionUser'
+import Cart from '../views/user/Cart'
+import GameDetailUser from '../views/user/GameDetailUser'
 
 // auth
 import Login from '../views/auth/Login.vue'
@@ -27,9 +30,24 @@ const routes = [
 
   // user
   {
+    path: `/user/gameDetail/:gameDetail`,
+    name: 'GameDetailUser',
+    components: {default:GameDetailUser, sidebar:SidebarUser}
+  },
+  {
     path: '/user/',
     name: 'DashboardUser',
     components: {default:DashboardUser, sidebar:SidebarUser}
+  },
+  {
+    path: '/user/transaction',
+    name: 'TransactionUser',
+    components: {default:TransactionUser, sidebar:SidebarUser}
+  },
+  {
+    path: '/user/cart',
+    name: 'Cart',
+    components: {default:Cart, sidebar:SidebarUser}
   },
 
   // admin

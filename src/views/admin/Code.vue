@@ -29,15 +29,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr>
-                                                <td>1.</td>
-                                                <td>Transbara</td>
-                                                <td>Game 1</td>
-                                                <td>12 Feb 2021</td>
-                                                <td>4R329D</td>
-                                                <td>Available / Expired</td>
+                                            <tr v-for="(user, index) in userlist" :key="index">
+                                                <td>{{index+1}}</td>
+                                                <td>{{user.userDetail.name}}</td>
+                                                <td>{{user.gameDetail.title}}</td>
+                                                <td>{{user.playingDate | formatDate}}</td>
+                                                <td>{{user.code}}</td>
+                                                <td >
+                                                    <div v-if="user.expired">Expired</div>
+                                                    <div v-else>Available</div>
+                                                    <!-- <p :v-if="user.expired == true">Expired</p> -->
+                                                </td>
                                                 <td class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" v-on:click="generate">Generate</button>
+                                                    <button class="btn btn-danger" v-on:click="generate(index)">Generate</button>
                                                 </td>
                                             </tr>
                                     </tbody>
@@ -46,7 +50,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>      
+
+            <!-- ONLY FOR DEVELOPING -->
+            <div class="card bg-light">
+                <div class="card-header"> <h3>Data User</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{userlist}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <!-- ONLY FOR DEVELOPING -->
 
         </div>
     </div>
@@ -54,17 +71,39 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
+            userlist: '',
             generated: false,
+            date: '',
+            time: ''
         }
     },
     methods: {
-        generate() {
+        generate(index) {
+            let headers = {
+                "headers": {
+                    "content-type": "application/json",
+                },
+            }
+            let userGameId = this.userlist[index].userGameId
+            console.log(userGameId);
+            axios.put('generate/code/d4e2b707-7d50-4d58-9ba7-dc484539e94d', headers).then(response => {
+                this.userlist[index].code = response.data.data[index].code
+            })
             this.generated = true
             console.log('Success Generate')
+        },
+        getUserCode() {
+            axios.get('game/usergame').then(response => {
+                this.userlist = response.data.data
+            })
         }
+    },
+    mounted() {
+        this.getUserCode()
     }
 }
 </script>
