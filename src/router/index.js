@@ -1,19 +1,38 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+
+// layout
 import Sidebar from '../views/layouts/Sidebar.vue'
+import SidebarUser from '../views/layouts/SidebarUser.vue'
+
+// admin
 import Dashboard from '../views/admin/Dashboard.vue'
 import User from '../views/admin/User.vue'
 import Game from '../views/admin/Game.vue'
 import GameDetail from '../views/admin/GameDetail.vue'
 import Code from '../views/admin/Code.vue'
 import Transaction from '../views/admin/Transaction.vue'
+
+// user
+import DashboardUser from '../views/user/DashboardUser'
+
+// auth
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+
+  // user
+  {
+    path: '/user/',
+    name: 'DashboardUser',
+    components: {default:DashboardUser, sidebar:SidebarUser}
+  },
+
+  // admin
   {
     path: '/gameDetail/:gameDetail',
     name: 'GameDetail',
@@ -21,7 +40,7 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'register',
+    name: 'Register',
     component: Register
   },
   {

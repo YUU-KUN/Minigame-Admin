@@ -9,14 +9,14 @@
       <router-view name="sidebar"></router-view>
     
     <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content-wrapper" class="d-flex flex-column bg-dark">
 
       <!-- Main Content -->
         <div id="content">
 
           <!-- navbar kalo ada -->
 
-          <div class="container-fluid" id="app">
+          <div class="container-fluid " id="app">
             <router-view/>
           </div>    
         </div>

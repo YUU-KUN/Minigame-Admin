@@ -56,91 +56,90 @@
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
+
+
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <!-- <div class="row"> -->
-                                                                    <div class="input-subject_id" style="flex-grow: 1;  ">
-                                                                        <label for="subject"><strong>Nama Game</strong></label>
-                                                                        <input type="text" class="form-control" name="subject_id" id="subject" :value="gameDetail.title">
-                                                                            <!-- @if($subjects->isNotEmpty()) -->
-                                                                            <!-- @else -->
-                                                                            <!-- @endif -->
+                                                                <div class="col">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <label for="price"><strong>Game</strong></label>
+                                                                        <input type="text" id="price" class="form-control">
                                                                     </div>
-                                                                <!-- </div> -->
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <div class="row">
-                                                                    <div class="input-subject_id" style="flex-grow: 1;  ">
-                                                                        <label for="subject"><strong>Nama Game</strong></label>
-                                                                        <select class="form-control" name="subject_id" id="subject">
-                                                                            <!-- @if($subjects->isNotEmpty()) -->
-                                                                                    <option value="" disabled selected >Pilih Mata Pelajaran</option>
-                                                                                    <option v-for="(detail, index) in gameDetail" :key="index" :value="detail"></option>
-                                                                            <!-- @else -->
-                                                                                <option value="" disabled selected >Tidak Ada Mata Pelajaran</option>
-                                                                            <!-- @endif -->
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                <div class="col-3">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="class"><strong>Kelas</strong></label>
-                                                                        <select class="form-control" name="class_id" id="class" >
-                                                                            <!-- @if($classes->isNotEmpty()) -->
-                                                                                    <option value="" disabled selected >Pilih Kelas</option>
-                                                                            <!-- @else -->
-                                                                                <option value="" disabled selected >Tidak Ada Kelas</option>
-                                                                            <!-- @endif -->
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-3">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="semester"><strong>Semester</strong></label>
-                                                                        <select class="form-control" name="semester" id="semester" >
-                                                                            <option value="" disabled selected>Pilih Semester</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; ">
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="subject_matter"><strong>Materi Pokok</strong></label>
-                                                                        <textarea name="subject_matter" id="subject_matter" class="form-control" placeholder="Masukkan Materi Pokok" ></textarea>
+                                                                        <label for="price"><strong>Normal Price</strong></label>
+                                                                        <input type="text" id="price" class="form-control">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-3">
+                                                                <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="time_allocation"><strong>Alokasi Waktu</strong></label>
-                                                                        <input type="number" class="form-control" name="time_allocation" id="time_allocation" placeholder="60 Menit">
+                                                                        <label for="discount"><strong>Discount Price</strong></label>
+                                                                        <input type="text" id="discount" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                <div class="col-6">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <label for="duration"><strong>Duration</strong></label>
+                                                                        <input type="text" id="duration" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <!-- <label for="star"><strong>Star</strong></label> -->
+                                                                        <!-- <ul class="rate-area " id="star">
+                                                                            <input type="radio" id="1-star" class="form-control" name="crating">
+                                                                            <input type="radio" id="2-star" class="form-control" name="crating">
+                                                                            <input type="radio" id="3-star" class="form-control" name="crating">
+                                                                            <input type="radio" id="4-star" class="form-control" name="crating">
+                                                                            <input type="radio" id="5-star" class="form-control" name="crating">
+                                                                        </ul> -->
+                                                                        <ul class="rate-area">
+                                                                        <input type="radio" id="5-star" name="crating" value="5">
+                                                                          <label for="5-star" title="Amazing">5 stars</label>
+                                                                                          <input type="radio" id="4-star" name="crating" value="4">
+                                                                          <label for="4-star" title="Good">4 stars</label>
+                                                                                          <input type="radio" id="3-star" name="crating" value="3">
+                                                                          <label for="3-star" title="Average">3 stars</label>
+                                                                                          <input type="radio" id="2-star" name="crating" value="2">
+                                                                          <label for="2-star" title="Not Good">2 stars</label>
+                                                                                          <input type="radio" id="1-star" required=""
+                                                                           name="crating" value="1" aria-required="true">
+                                                                          <label for="1-star" title="Bad">1 star</label>
+                                                                        </ul>
+                                                                            
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                <div class="col">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <label for="description"><strong>Description</strong></label>
+                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-12">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-around;">
+                                                            <div class="form-group" >
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
-                                                                        <label for="KI"><strong>KI</strong></label>
-                                                                        <textarea class="form-control" name="KI" id="KI" cols="30" placeholder="Masukkan Kompetensi Inti"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="KD"><strong>KD</strong></label>
-                                                                        <textarea class="form-control" name="KD" id="KD" cols="30" placeholder="Masukkan Kompetensi Dasar"></textarea>
+                                                                        <label for="KI"><strong>Cover</strong></label>
+                                                                        <input type="file" id="cover" class="form-control">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -200,5 +199,57 @@ export default {
 </script>
 
 <style>
+.rate-area {
+    float:left;
+    border-style: none;
+}
 
+.rate-area:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rate-area:not(:checked) > label {
+    float: right;
+    width: .80em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 40px;
+    line-height: 32px;
+    color: lightgrey;
+    margin-bottom: 10px !important;
+}
+
+.rate-area:not(:checked) > label:before {
+    content: '★';
+}
+
+.rate-area > input:checked ~ label {
+    color: #e8262d;
+    text-shadow: none;
+}
+
+.rate-area:not(:checked) > label:hover,
+.rate-area:not(:checked) > label:hover ~ label {
+    color: #e8262d;
+    
+}
+
+.rate-area > input:checked + label:hover,
+.rate-area > input:checked + label:hover ~ label,
+.rate-area > input:checked ~ label:hover,
+.rate-area > input:checked ~ label:hover ~ label,
+.rate-area > label:hover ~ input:checked ~ label {
+    color: #e8262d;
+    text-shadow: none;
+    
+}
+
+.rate-area > label:active {
+    position:relative;
+    top:0px;
+    left:0px; 
+}
 </style>
