@@ -16,14 +16,14 @@
     </li>
 
     <li class="nav-item">
-        <router-link to="/transactionUser" class="nav-link">
+        <router-link to="/user/transaction" class="nav-link">
             <i class="fas fa-fw fa-school"></i>
             <span>Transaction</span>
         </router-link>
     </li>
 
     <li class="nav-item">
-        <router-link to="/cart" class="nav-link">
+        <router-link to="/user/cart" class="nav-link">
             <i class="fas fa-fw fa-school"></i>
             <span>Cart</span>
         </router-link>

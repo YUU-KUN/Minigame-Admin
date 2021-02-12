@@ -7,7 +7,7 @@
               <div class="row" v-for="(game, index) in gameweb" :key="index" style="margin: 10px 0">
                 
                   <div class="col-4 d-flex justify-content-center">
-                    <img  @click="gameDetail" :src="game.imageUrl" alt="Game Image" height="200px" style="border-radius:5px" id="imageZoom">
+                    <img  @click="gameDetail(index)" :src="game.imageUrl" alt="Game Image" height="200px" style="border-radius:5px" id="imageZoom">
                   </div>
                   <div class="col-8 d-flex align-items-center">
                     <div class="col">
@@ -112,6 +112,7 @@ export default {
   data() {
     return {
       gameweb: '',
+      gameId: ''
     }
   },
   methods: {
@@ -120,7 +121,9 @@ export default {
         this.gameweb = response.data.data
       })
     },
-    gameDetail() {
+    gameDetail(index) {
+      this.gameId = this.gameweb[index].gameId
+      this.$router.push({name: 'GameDetailUser', params:{gameDetail: this.gameId} })
       console.log('halo gan');
     }
   },

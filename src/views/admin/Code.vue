@@ -38,7 +38,6 @@
                                                 <td >
                                                     <div v-if="user.expired">Expired</div>
                                                     <div v-else>Available</div>
-                                                    <!-- <p :v-if="user.expired == true">Expired</p> -->
                                                 </td>
                                                 <td class="d-flex justify-content-center">
                                                     <button class="btn btn-danger" v-on:click="generate(index)">Generate</button>

@@ -1,5 +1,7 @@
 <template>
-  
+  <div>
+      Ini Halaman Cart User ya
+  </div>
 </template>
 
 <script>
