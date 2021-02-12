@@ -357,10 +357,16 @@ export default {
       members: {
         name: '',
         userId: '',
-      }
+      },
+      users: ''
     };
   },
   methods: {
+    getUsers() {
+      axios.get('/user/list').then(response => {
+        this.users = response.data.data
+      })
+    },
     getDetailGame() {
       axios.get('/game/detail/'+this.gameId).then(response => {
         this.detailGame = response.data.data
@@ -376,7 +382,7 @@ export default {
         dateTime: this.date + ' ' +this.time,
         gameId: this.gameId,
         members: this.members,
-      }, headers)
+      })
     }
   },
   mounted() {
@@ -385,8 +391,11 @@ export default {
         console.log(this.gameId);
       } else {
         console.log('id game nya kosong gannn');
-      } 
-    this.getDetailGame();
+      }
+
+    this.getDetailGame()
+    this.getUsers()
+    
   },
 };
 </script>
