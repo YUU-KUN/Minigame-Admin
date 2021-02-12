@@ -55,8 +55,11 @@
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="rating"><strong>Rating</strong></label>
                                                                         <div class="col">
-                                                                            <div class="row">
+                                                                            <div class="row" v-if="gameDetail.rating" >
                                                                                 <b-icon v-for="index in gameDetail.rating" :key="index" class="h4 mb-2" icon="star-fill" style="color: orange"></b-icon>
+                                                                            </div>
+                                                                            <div class="row" v-else >
+                                                                                <span>-</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -82,7 +85,7 @@
                                                                         <label for="cover"><strong>Cover</strong></label>
                                                                         <div class="row">
                                                                             <div class="col">
-                                                                                <img :src="gameDetail.posterUrl" alt="Game Image" id="cover">
+                                                                                <img :src="gameDetail.posterUrl" alt="Game Image" id="cover" width="100%">
                                                                             </div>
                                                                         </div>
                                                                     </div>

@@ -109,7 +109,7 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="poster"><strong>Poster</strong></label>
-                                                                        <input type="file" id="poster" class="form-control" @change="onPosterChange">
+                                                                        <input type="file" id="poster" accept="image/*" class="form-control" @change="onPosterChange">
                                                                     </div>
                                                                 </div>
                                                             </div>

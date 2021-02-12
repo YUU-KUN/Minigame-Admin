@@ -43,7 +43,12 @@
                                                 <td>{{index+1}}</td>
                                                 <td>{{game.title}}</td>
                                                 <td>{{game.price | rupiah}}</td>
-                                                <td>{{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span></td>
+                                                <td v-if="game.rating">
+                                                    {{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                                </td>
+                                                <td v-else>
+                                                    -
+                                                </td>
                                                 <td>{{game.genre.join(', ')}}</td>
                                                 <td >
                                                     <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
