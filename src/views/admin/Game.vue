@@ -15,9 +15,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-right">
+                            <router-link to="addNewGame">
                             <a href="" class="btn btn-primary">
                                 Add New Game
                             </a>
+                            </router-link>
                         </div>
                     </div>
                     <div class="row">
@@ -104,7 +106,7 @@ export default {
     },
     methods: {
         getGames() {
-            axios.get('https://infiniteroom.herokuapp.com/api/v2/game/web').then(response => {
+            axios.get('game/list').then(response => {
                 this.gamelist = response.data.data
             })
         },
@@ -114,12 +116,12 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            let detail = this.gamelist[index].gameId
+            let detail = this.gamelist[index]
             // console.log(detail);
-            axios.get('game/detail/'+detail, headers).then(response => {
+            axios.get('game/detail/'+detail.gameId, headers).then(response => {
                 this.gameDetail = response.data.data
             })
-            this.$router.push({name: 'GameDetail', params: {gameDetail:this.gamelist}}) //bisa juga kayak gini
+            this.$router.push({name: 'GameDetail', params: {gameDetail:detail}}) //bisa juga kayak gini
             console.log('harusnya muncul detail gamenya');
         },
         edit() {

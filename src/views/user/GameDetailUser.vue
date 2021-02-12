@@ -5,7 +5,7 @@
         <div class="card shadow mb-4">
           <!-- <div class="col-4 d-flex justify-content-center"> -->
           <img
-            src="https://res.cloudinary.com/mygalleryfile/image/upload/v1609328265/THE-TEMPLE-OF-RIDDLE_tbwvfr.jpg"
+            :src="detailGame.posterUrl"
             alt="Game Image"
             height="auto"
             style="border-radius: 5px"
@@ -13,6 +13,7 @@
           <!-- </div> -->
         </div>
 
+        <router-link to="/user/joinGame">
         <button
           class="btn btn-success d-flex align-items-center justify-content-center"
           style="width: 100%; margin: 20px auto"
@@ -20,6 +21,7 @@
           <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon
           ><b>Play Game</b>
         </button>
+        </router-link>
 
         <button
           class="btn btn-warning d-flex align-items-center justify-content-center"
@@ -245,6 +247,18 @@
         </div> -->
 
         <!-- ONLY FOR DEVELOPING -->
+
+        <div class="card bg-light">
+                <div class="card-header"> <h3>All Users</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{users}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
         <div class="card bg-light">
                 <div class="card-header"> <h3>GameID</h3> </div>
                   <div class="card-inner">
@@ -271,7 +285,7 @@
 
 <div style="display: none;" id="addToCart">
           <h2>Get The Temple Of Riddle!</h2>
-          <p>You are awesome!</p>
+          <!-- <p>You are awesome!</p> -->
                                 <div class="form">
                                     <div class="form-group">
                                           <div class="row">
@@ -284,17 +298,14 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="date"><strong>Date</strong></label>
-                                                                        <input type="date" id="date" class="form-control">
+                                                                        <input type="date" id="date" class="form-control" v-model="date">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="time"><strong>Time</strong></label>
-                                                                        <select name="time" id="time" class="form-control">
-                                                                          <option value="" selected disabled>19.00</option>
-                                                                          <option value="">12.00</option>
-                                                                          <option value="">15.00</option>
-                                                                          <option value="">19.00</option>
+                                                                        <select name="time" id="time" class="form-control" v-model="time">
+                                                                          <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" selected>{{time}}</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -306,11 +317,16 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="members"><strong>Members</strong></label>
-                                                                        <select name="members" id="members" class="form-control">
-                                                                          <option value="" selected disabled>@testHammam</option>
-                                                                          <option value="">@testHammam</option>
-                                                                          <option value="">@testHammam</option>
-                                                                          <option value="">@testHammam</option>
+                                                                        <select name="members" id="members" v-model="members" class="form-control">
+                                                                          <!-- <option :value="members" selected disabled>{{currentUser}}</option> -->
+                                                                          <!-- <option :value="members" v-for="(member, userId) in members" :key="userId">{{member}}</option> -->
+                                                                          <option
+                                                                            v-for="(member, index) in users"
+                                                                            :key="index"
+                                                                            :value="users"
+                                                                          >
+                                                                            {{ member.name }}
+                                                                          </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -321,7 +337,7 @@
                                                             <div class="form-group" >
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;">
-                                                                        <div class="d-flex justify-content-end" style="margin:10px 0">Total: Rp 250.000,00</div>
+                                                                        <div class="d-flex justify-content-end" style="margin:10px 0">Total: {{detailGame.price | rupiah}}</div>
                                                                         <button @click="addToCart" class="btn btn-warning d-flex align-items-center justify-content-center" style="float: right">
                                                                           <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
                                                                           <b>Add to Cart</b>
@@ -354,11 +370,18 @@ export default {
       dateTime: '',
       date: '',
       time: '',
+      users: '',
+      currentUser: '',
       members: {
         name: '',
-        userId: '',
+        userId: ''
       },
-      users: ''
+      chooseTime: [
+        '09:00',
+        '12:00',
+        '15:00',
+        '19:00',
+      ]
     };
   },
   methods: {
@@ -366,6 +389,7 @@ export default {
       axios.get('/user/list').then(response => {
         this.users = response.data.data
       })
+    this.currentUser = this.$route.params.currentUser
     },
     getDetailGame() {
       axios.get('/game/detail/'+this.gameId).then(response => {
@@ -373,20 +397,24 @@ export default {
       })
     },
     addToCart() {
-      // let headers = {
-      //           "headers": {
-      //               "content-type": "application/json",
-      //           },
-      //       }
+      let headers = {
+                "headers": {
+                    "content-type": "application/json",
+                },
+            }
       axios.post('/cart/add', {
         dateTime: this.date + ' ' +this.time,
         gameId: this.gameId,
-        members: this.members,
-      })
+        members: {
+          name: this.members.name,
+          userId: this.members.userId,
+        },
+      },headers)
     }
   },
   mounted() {
-    this.gameId = this.$route.params.id;
+    this.gameId = this.$route.params.gameId
+
       if (this.gameId) {
         console.log(this.gameId);
       } else {

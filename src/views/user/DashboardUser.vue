@@ -23,7 +23,7 @@
                           </li>
                       </div>
                       <div class="row">
-                        <button class="btn btn-warning d-flex align-items-center"><b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon><b>Play Game</b></button>
+                          <button class="btn btn-warning d-flex align-items-center" @click="gameDetail(index)"><b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon><b>Detail Game</b></button>
                       </div>
                     </div>
                   </div>
@@ -112,7 +112,8 @@ export default {
   data() {
     return {
       gameweb: '',
-      gameId: ''
+      gameId: '',
+      currentUser: ''
     }
   },
   methods: {
@@ -123,9 +124,13 @@ export default {
     },
     gameDetail(index) {
       this.gameId = this.gameweb[index].gameId
-      this.$router.push({name: 'GameDetailUser', params:{id: this.gameId} })
+      this.$router.push({name: 'GameDetailUser', params:{
+          gameId: this.gameId,
+          currentUser: this.currentUser,
+        } 
+      })
       console.log('halo gan');
-    }
+    },
   },
   mounted() {
     this.getWebGame()

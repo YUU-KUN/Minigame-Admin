@@ -63,7 +63,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Game</strong></label>
-                                                                        <input type="text" id="price" class="form-control">
+                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.title" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -74,13 +74,13 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Normal Price</strong></label>
-                                                                        <input type="text" id="price" class="form-control">
+                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.price | rupiah" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="discount"><strong>Discount Price</strong></label>
-                                                                        <input type="text" id="discount" class="form-control">
+                                                                        <input type="text" id="discount" class="form-control" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -91,33 +91,17 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Duration</strong></label>
-                                                                        <input type="text" id="duration" class="form-control">
+                                                                        <input type="text" id="duration" class="form-control" :value="gameDetail.duration+' Minutes'" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <!-- <label for="star"><strong>Star</strong></label> -->
-                                                                        <!-- <ul class="rate-area " id="star">
-                                                                            <input type="radio" id="1-star" class="form-control" name="crating">
-                                                                            <input type="radio" id="2-star" class="form-control" name="crating">
-                                                                            <input type="radio" id="3-star" class="form-control" name="crating">
-                                                                            <input type="radio" id="4-star" class="form-control" name="crating">
-                                                                            <input type="radio" id="5-star" class="form-control" name="crating">
-                                                                        </ul> -->
-                                                                        <ul class="rate-area">
-                                                                        <input type="radio" id="5-star" name="crating" value="5">
-                                                                          <label for="5-star" title="Amazing">5 stars</label>
-                                                                                          <input type="radio" id="4-star" name="crating" value="4">
-                                                                          <label for="4-star" title="Good">4 stars</label>
-                                                                                          <input type="radio" id="3-star" name="crating" value="3">
-                                                                          <label for="3-star" title="Average">3 stars</label>
-                                                                                          <input type="radio" id="2-star" name="crating" value="2">
-                                                                          <label for="2-star" title="Not Good">2 stars</label>
-                                                                                          <input type="radio" id="1-star" required=""
-                                                                           name="crating" value="1" aria-required="true">
-                                                                          <label for="1-star" title="Bad">1 star</label>
-                                                                        </ul>
-                                                                            
+                                                                        <label for="rating"><strong>Rating</strong></label>
+                                                                        <div class="col">
+                                                                            <div class="row">
+                                                                                <b-icon v-for="index in gameDetail.rating" :key="index" class="h4 mb-2" icon="star-fill" style="color: orange"></b-icon>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -128,7 +112,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="description"><strong>Description</strong></label>
-                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameDetail.description" disabled></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -138,8 +122,12 @@
                                                             <div class="form-group" >
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
-                                                                        <label for="KI"><strong>Cover</strong></label>
-                                                                        <input type="file" id="cover" class="form-control">
+                                                                        <label for="cover"><strong>Cover</strong></label>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <img :src="gameDetail.posterUrl" alt="Game Image" id="cover">
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -184,9 +172,6 @@ export default {
         }
     },
     methods: {
-        created() {
-            this.gameDetail = this.$route.params.gameDetail.data
-        }
         // gameDetail(){
         //     axios.get('game/detail/', gameDetail).then(response => {
         //         this.gameDetail = response.data.data
@@ -194,6 +179,7 @@ export default {
         // }
     },
     mounted() {
+        this.gameDetail = this.$route.params.gameDetail
     }
 }
 </script>
