@@ -30,7 +30,7 @@ const routes = [
 
   // user
   {
-    path: `/user/gameDetail/:gameDetail`,
+    path: `/user/gameDetail/:id`,
     name: 'GameDetailUser',
     components: {default:GameDetailUser, sidebar:SidebarUser}
   },

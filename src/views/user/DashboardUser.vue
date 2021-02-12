@@ -123,7 +123,7 @@ export default {
     },
     gameDetail(index) {
       this.gameId = this.gameweb[index].gameId
-      this.$router.push({name: 'GameDetailUser', params:{gameDetail: this.gameId} })
+      this.$router.push({name: 'GameDetailUser', params:{id: this.gameId} })
       console.log('halo gan');
     }
   },
