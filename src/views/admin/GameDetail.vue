@@ -6,47 +6,6 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Game Detail</h6>
                 </div>
-                <!-- <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <a href="" class="btn btn-primary">
-                                Add New Game
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mt-3">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Game</th>
-                                            <th>Price</th>
-                                            <th>Rating</th>
-                                            <th>Genre</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                            <tr v-for="(game, index) in gamelist" :key="index">
-                                                <td>{{index+1}}</td>
-                                                <td>{{game.title}}</td>
-                                                <td>{{game.price | rupiah}}</td>
-                                                <td>{{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span></td>
-                                                <td>{{game.genre.join(', ')}}</td>
-                                                <td >
-                                                    <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
-                                                    <button class="btn btn-primary" @click="edit" style="margin: 0 5px">Edit</button>
-                                                    <button class="btn btn-danger" @click="removeGame(index)" style="margin: 0 5px">Delete</button>
-                                                </td>
-                                            </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="card-body">
                         <div class="row gx-5">
                             <div class="col-md-12 mt-3">
