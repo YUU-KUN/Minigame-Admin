@@ -15,8 +15,6 @@
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
-
-
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col">
@@ -144,57 +142,4 @@ export default {
 </script>
 
 <style>
-.rate-area {
-    float:left;
-    border-style: none;
-}
-
-.rate-area:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-    clip:rect(0,0,0,0);
-}
-
-.rate-area:not(:checked) > label {
-    float: right;
-    width: .80em;
-    overflow: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 40px;
-    line-height: 32px;
-    color: lightgrey;
-    margin-bottom: 10px !important;
-}
-
-.rate-area:not(:checked) > label:before {
-    content: '★';
-}
-
-.rate-area > input:checked ~ label {
-    color: #e8262d;
-    text-shadow: none;
-}
-
-.rate-area:not(:checked) > label:hover,
-.rate-area:not(:checked) > label:hover ~ label {
-    color: #e8262d;
-    
-}
-
-.rate-area > input:checked + label:hover,
-.rate-area > input:checked + label:hover ~ label,
-.rate-area > input:checked ~ label:hover,
-.rate-area > input:checked ~ label:hover ~ label,
-.rate-area > label:hover ~ input:checked ~ label {
-    color: #e8262d;
-    text-shadow: none;
-    
-}
-
-.rate-area > label:active {
-    position:relative;
-    top:0px;
-    left:0px; 
-}
 </style>
