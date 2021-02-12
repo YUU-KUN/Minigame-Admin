@@ -20,7 +20,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Game</strong></label>
-                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.title" disabled>
+                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.title" zz>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -31,13 +31,13 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Normal Price</strong></label>
-                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.price | rupiah" disabled>
+                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.price | rupiah" zz>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="discount"><strong>Discount Price</strong></label>
-                                                                        <input type="text" id="discount" class="form-control" disabled>
+                                                                        <input type="text" id="discount" class="form-control" zz>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -48,7 +48,7 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Duration</strong></label>
-                                                                        <input type="text" id="duration" class="form-control" :value="gameDetail.duration+' Minutes'" disabled>
+                                                                        <input type="text" id="duration" class="form-control" :value="gameDetail.duration+' Minutes'" zz>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
@@ -69,7 +69,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="description"><strong>Description</strong></label>
-                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameDetail.description" disabled></textarea>
+                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameDetail.description" zz></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -125,18 +125,13 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            gameDetail: ''
+            gameEdit: ''
         }
     },
     methods: {
-        // gameDetail(){
-        //     axios.get('game/detail/', gameDetail).then(response => {
-        //         this.gameDetail = response.data.data
-        //     })
-        // }
     },
     mounted() {
-        this.gameDetail = this.$route.params.gameDetail
+        this.gameEdit = this.$route.params.gameEdit
     }
 }
 </script>

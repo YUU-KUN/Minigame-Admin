@@ -128,13 +128,6 @@ export default {
             gameDetail: ''
         }
     },
-    methods: {
-        // gameDetail(){
-        //     axios.get('game/detail/', gameDetail).then(response => {
-        //         this.gameDetail = response.data.data
-        //     })
-        // }
-    },
     mounted() {
         this.gameDetail = this.$route.params.gameDetail
     }

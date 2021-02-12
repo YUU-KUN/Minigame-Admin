@@ -46,10 +46,8 @@
                                                 <td>{{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span></td>
                                                 <td>{{game.genre.join(', ')}}</td>
                                                 <td >
-                                                    <!-- <router-link :to="{name: 'GameDetail', params:{gameDetail:game.gameId}}">
-                                                    </router-link> -->
                                                     <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
-                                                    <button class="btn btn-primary" @click="edit" style="margin: 0 5px">Edit</button>
+                                                    <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
                                                     <button class="btn btn-danger" @click="removeGame(index)" style="margin: 0 5px">Delete</button>
                                                 </td>
                                             </tr>
@@ -124,8 +122,8 @@ export default {
             this.$router.push({name: 'GameDetail', params: {gameDetail:detail}}) //bisa juga kayak gini
             console.log('harusnya muncul detail gamenya');
         },
-        edit() {
-            console.log('edit');
+        editGame(index) {
+            this.$router.push({name:'EditGame', params:{gameEdit:this.gamelist}})
         },
         removeGame(index) {
             this.gamelist.splice(index, 1)

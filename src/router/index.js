@@ -3,21 +3,22 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 // auth
-import Login from '../views/auth/Login.vue'
-import Register from '../views/auth/Register.vue'
+import Login from '../views/auth/Login'
+import Register from '../views/auth/Register'
 
 // layout
-import Sidebar from '../views/layouts/Sidebar.vue'
-import SidebarUser from '../views/layouts/SidebarUser.vue'
+import Sidebar from '../views/layouts/Sidebar'
+import SidebarUser from '../views/layouts/SidebarUser'
 
 // admin
-import Dashboard from '../views/admin/Dashboard.vue'
-import User from '../views/admin/User.vue'
-import Game from '../views/admin/Game.vue'
-import AddNewGame from '../views/admin/AddNewGame.vue'
-import GameDetail from '../views/admin/GameDetail.vue'
-import Code from '../views/admin/Code.vue'
-import Transaction from '../views/admin/Transaction.vue'
+import Dashboard from '../views/admin/Dashboard'
+import User from '../views/admin/User'
+import Game from '../views/admin/Game'
+import AddNewGame from '../views/admin/AddNewGame'
+import GameDetail from '../views/admin/GameDetail'
+import EditGame from '../views/admin/EditGame'
+import Code from '../views/admin/Code'
+import Transaction from '../views/admin/Transaction'
 
 // user
 import DashboardUser from '../views/user/DashboardUser'
@@ -34,6 +35,11 @@ Vue.use(VueRouter)
 const routes = [
 
   // user
+  {
+    path: '/editGame/:gameEdit',
+    name: 'EditGame',
+    components: {default:EditGame, sidebar: Sidebar}
+  },
   {
     path: `/user/theTempleOfRiddle`,
     name: 'theTempleOfRiddle',
