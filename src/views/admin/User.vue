@@ -35,8 +35,17 @@
                                                 <td>{{user.isVerified}}</td>
                                                 <td>{{user.createdAt}}</td>
                                                 <td class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" v-on:click="deleteUser(index)">Delete</button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>
+
+                                                <div style="display:none" :id="index" class="animated-modal">
+                                                    <h2>Watch Out!</h2>
+                                                    <p>Are you sure wanna delete <b>{{user.username}}</b>?</p>
+                                                    <div class=" d-flex justify-content-center">
+                                                    <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                    <button type="button" @click="deleteUser(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                    </div>
+                                                </div>
                                             </tr>
                                     </tbody>
                                 </table>
@@ -88,44 +97,7 @@
                     <a href="#" class="card-link">Another link</a>
                   </div>
                 </div>
-            </div>
-
-                <div class="row">
-                    <img src="" alt="NO DATA FOUND" height="200px" width="auto" style="margin: 0 auto">
-                </div>
-                    <div class="col" style="text-align:center; ">
-                <div style=" background-color: white; height: 200px; width: 250px; padding: 50px" >
-                        <h5>Ups, datanya gak ketemu nih...</h5>
-                        <h7>Yuk, mulai buat tabungan pertama</h7> <br><br>
-                        <a href="" class="btn btn-primary">
-                            Mulai Menabung
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col" style="text-align:center; ">
-                    <div style=" background-color: white; height: 200px; width: 250px; padding: 50px" >
-                        <div class="col">
-                            <img src="../../../public\assets\icons\2 Friends.jpg" class="card-img-top" alt="..." style="margin: 0 auto; width: 50px">
-                        </div>
-                        <br>
-                        <h3 class="card-text"><strong>900 Users</strong></h3>
-                    </div>
-                </div> -->
-
-                <!-- <div class="row" style="text-align:center">
-                    <div class="col">
-                    <div class="card" style="width: 18rem; height: 200px">
-                        <div class="card-body">
-                            <div class="col">
-                                <img src="../../../public\assets\icons\2 Friends.jpg" class="card-img-top" alt="..." style="margin: 0 auto; width: 50px">
-                            </div>
-                            <br>
-                            <h3 class="card-text"><strong>900 Users</strong></h3>
-                        </div>
-                    </div>
-                    </div>
-                </div> -->
+            </div> -->
 
         </div>
     </div>
@@ -148,12 +120,6 @@ export default {
                 this.users = response.data.data
             })
         },
-        // deleteUser(index) {
-        //     this.removed = true
-        //     this.info = 'Berhasil Hapus User '+this.users[index].username
-        //     this.users.splice(index, 1)
-        //     console.log(this.info)
-        // },
         deleteUser(index) {
             let id = this.users[index].userId
                 console.log(id)

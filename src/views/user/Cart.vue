@@ -76,13 +76,23 @@
                                 </table>
                                 <div class="d-flex justify-content-end" style="margin:10px 0"><b style="margin: 0 5px;">Total:</b>{{userCart.total | rupiah}}</div>
                             <div class="d-flex">
-                                <div class="ml-auto p-0"><button type="button" @click="checkOut" class="btn btn-success mb-4">Checkout!</button></div>
+                                <div class="ml-auto p-0"><a href="" data-fancybox data-src="#uploadPayment" class="btn btn-success mb-4">Checkout!</a></div>
                             </div>
                             </div>
-                            <!-- <button class="btn btn-primary" @click="checkOut">Checkout</button> -->
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div style="display: none;" id="uploadPayment" class="animated-modal">
+              <h2>Hello!</h2>
+              <p>Silahkan upload bukti pembayarannya ya~</p>
+              <form @submit="checkOut">
+                <div class="form-group">
+                  <input type="file" accept="image/*" class="form-control-file" required>
+                </div>
+                <button type="submit" class="btn btn-success mb-4 form-control">Checkout!</button>
+              </form>
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
@@ -143,7 +153,6 @@
 
 <script>
 import axios from 'axios'
-import moment from 'moment'
 export default {
     data() {
         return {
@@ -195,5 +204,38 @@ export default {
 </script>
 
 <style>
+.animated-modal {
+  max-width: 550px;
+  border-radius: 4px;
+  overflow: hidden;
+  
+  transform: translateY(-50px);
+  transition: all .7s;
+}
 
+.animated-modal h2,
+.animated-modal p {
+  transform: translateY(-50px);
+  opacity: 0;
+  
+  transition-property: transform, opacity;
+  transition-duration: .4s;
+}
+
+/* Final state */
+.fancybox-slide--current .animated-modal,
+.fancybox-slide--current .animated-modal h2,
+.fancybox-slide--current .animated-modal p {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Reveal content with different delays */
+.fancybox-slide--current .animated-modal h2 {
+  transition-delay: .1s;
+}
+
+.fancybox-slide--current .animated-modal p {
+  transition-delay: .3s;
+}
 </style>
