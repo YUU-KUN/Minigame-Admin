@@ -16,31 +16,66 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>No.</th>
-                                            <th>Email</th>
-                                            <th>Username</th>
-                                            <th>Verified</th>
-                                            <th>Joined</th>
+                                            <!-- <th>No.</th> -->
+                                            <th>Items</th>
+                                            <th>Members</th>
+                                            <th>Play Date</th>
+                                            <th>Price</th>
+                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr v-for="(cart, index) in userCart" :key="index">
-                                                <td>{{index+1}}</td>
-                                                <td>{{user.email}}</td>
-                                                <td>{{user.username}}</td>
-                                                <td>{{user.isVerified}}</td>
-                                                <td>{{user.createdAt}}</td>
-                                                <td class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" v-on:click="deleteUser(index)">Delete</button>
-                                                </td>
-                                            </tr>
+                                          <!-- <tr v-for="(cart, index) in userCart" :key="index">
+                                              <td>{{index+1}}</td>
+                                              <td>
+                                                {{cart.cartGameData}}
+                                                <span v-for="(game, index) in userCart.items" :key="index">{{game.cartGameData.name}}</span>
+                                              </td>
+                                              <td v-for="(member, index) in cart.members" :key="index">{{member.name}}</td>
+                                              <td>{{cart.datePlay}}</td>
+                                              <td>{{cart.total}}</td>
+                                              <td>{{cart.createdAt}}</td>
+                                              <td class="d-flex justify-content-center">
+                                                  <button class="btn btn-danger" v-on:click="deleteCart(index)">Delete</button>
+                                              </td>
+                                          </tr> -->
+
+                                          <!-- worked -->
+                                          <!-- <tr>
+                                            <td>
+                                              <span v-for="(cart, index) in userCart.items" :key="index">{{cart.cartGameData.title}}</span>
+                                            </td>
+                                            <td>
+                                              <span v-for="(cart, index) in userCart.items" :key="index">
+                                                <span v-for="(members, index) in cart.members" :key="index">{{members.name}}</span>
+                                                </span>
+                                            </td>
+                                            <td>
+                                              {{userCart}}
+                                            </td>
+                                          </tr> -->
+
+                                          <tr v-for="(cart, index) in userCart.items" :key="index">
+                                            <td>{{index+1}}</td>
+                                            <td>
+                                              {{cart.cartGameData.title}}
+                                            </td>
+                                            <td>{{cart.datePlay | formatDate}}</td>
+                                            <td>{{cart.price}}</td>
+                                            <td>{{cart.createdAt | formatDate}}</td>
+                                            <td class="d-flex justify-content-center">
+                                                  <button class="btn btn-danger" v-on:click="deleteCart(index)">Delete</button>
+                                            </td>
+                                          </tr>
+                                          
                                     </tbody>
-                                </table> -->
+                                </table>
                             </div>
+                            <button class="btn btn-primary" @click="checkOut">Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -53,6 +88,16 @@
                     <div class="card bg-dark">
                       <div class="card-inner bg-dark">
                         <pre class="text-warning">{{userCart}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="card bg-light">
+                <div class="card-header"> <h3>Cart iD</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{cartId}}</pre>
                       </div>
                     </div>
                 </div>
@@ -88,29 +133,34 @@ export default {
         return {
             userCart: '',
             removed: false,
-            info: false
+            info: false,
+            cartId: '',
         }
     },
     methods: {
         getCart() {
             axios.get('/cart/user').then(response => {
                 this.userCart = response.data.data
+                this.cartId = response.data.data.cartId
             })
         },
-        deleteUser(index) {
-            let id = this.users[index].userId
-                console.log(id)
-            let username = this.users[index].username
-                console.log(username)
+        deleteCart(index) {
             let headers = {
                 "headers": {
                     "content-type": "application/json",
                 },
             }
-            axios.delete(`/user/${id}`, headers).then(this.getUser())
-            
+            axios.put(`/cart/remove/${this.cartId}`, headers).then(response => {
+              console.log(response)
+              console.log('Berhasil Menghapus Dari Keranjang')
+            })
             this.info = true
-            console.log('Berhasil hapus User '+username)
+        },
+        checkOut() {
+          axios.post('transaction/checkout', this.cartId).then(response => {
+            console.log(response)
+            console.log('Berhasil Checkout Keranjang!')
+          })
         }
     },
     mounted() {

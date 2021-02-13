@@ -120,17 +120,18 @@ export default {
                 },
             }
             let detail = this.gamelist[index]
+            let id = this.gamelist[index].gameId
             // console.log(detail);
             axios.get('game/detail/'+detail.gameId, headers).then(response => {
                 this.gameDetail = response.data.data
             })
-            this.$router.push({name: 'GameDetail', params: {gameDetail:detail}}) //bisa juga kayak gini
+            this.$router.push({name: 'GameDetail', params: {gameDetail:detail, gameId:id}}) //bisa juga kayak gini
             console.log('harusnya muncul detail gamenya');
         },
         editGame(index) {
-            let edit = this.gamelist[index]
+            // let edit = this.gamelist[index]
             let id = this.gamelist[index].gameId
-            this.$router.push({name:'EditGame', params:{gameEdit:edit, gameId:id}})
+            this.$router.push({name:'EditGame', params:{gameId:id}})
         },
         removeGame(index) {
             this.gamelist.splice(index, 1)

@@ -196,15 +196,15 @@ export default {
         },
 
         addNewGame() {
-            // let headers = {
-            //     "headers": {
-            //         "content-type": "application/json",
-            //     },
-            // }
+            let headers = {
+                "headers": {
+                    "content-type": "application/json",
+                },
+            }
             axios.post('game/create', {
                 title: this.title,
-                poster: this.poster,
-                image: this.image,
+                // poster: this.poster,
+                // image: this.image,
                 genre: this.genre,
                 price: this.price,
                 // rating: this.rating,
@@ -213,10 +213,10 @@ export default {
                 capacity: this.capacity,
                 duration: this.duration,
                 url: this.title.replace(/\s/g, '')
-            }).then(
+            },headers).then(
                 this.$router.push('/games'),
                 console.log('Berhasil Menambahkan Game Baru')
-            )
+            ).catch((error) => console.log( error.response.request ))
         }
     },
     mounted() {

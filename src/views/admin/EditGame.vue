@@ -21,7 +21,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="title"><strong>Game</strong></label>
-                                                                        <input type="text" id="title" class="form-control" :value="gameEdit.title"  >
+                                                                        <input type="text" id="title" class="form-control" v-model="gameEdit.title"  >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -32,7 +32,7 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Normal Price</strong></label>
-                                                                        <input type="number" id="price" class="form-control" :value="gameEdit.price"  min="0" required>
+                                                                        <input type="number" id="price" class="form-control" v-model="gameEdit.price"  min="0">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
@@ -45,14 +45,14 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Duration</strong> (Minutes)</label>
-                                                                        <input type="number" id="duration" class="form-control" :value="gameEdit.duration"  min="1" required>
+                                                                        <input type="number" id="duration" class="form-control" v-model="gameEdit.duration"  min="1">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5)</label>
-                                                                        <input type="number" id="duration" class="form-control" :value="gameEdit.rating"  min="0" max="5" required>
+                                                                        <input type="number" id="duration" class="form-control" v-model="gameEdit.rating"  min="0" max="5">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -63,21 +63,21 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="difficulty"><strong>Difficulty</strong></label>
-                                                                        <input type="number" id="difficulty" class="form-control" :value="gameEdit.difficulty"  min="1" required>
+                                                                        <input type="number" id="difficulty" class="form-control" v-model="gameEdit.difficulty"  min="1">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="capasity"><strong>Capacity</strong></label>
-                                                                        <input type="number" id="capasity" class="form-control" :value="gameEdit.capacity"  min="1" required>
+                                                                        <input type="number" id="capasity" class="form-control" v-model="gameEdit.capacity"  min="1">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
-                                                                        <select name="genre" id="genre" :value="gameEdit.genre"  class="form-control">
-                                                                            <option v-for="(genre, index ) in gameEdit.genre" :key="index" :value="genre">{{genre}}</option>
+                                                                        <select name="genre" id="genre" v-model="gameEdit.genre"  class="form-control">
+                                                                            <option v-for="(cat, index ) in gameEdit.genre" :key="index">{{cat}}</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -89,7 +89,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="description"><strong>Description</strong></label>
-                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" :value="gameEdit.description" ></textarea>
+                                                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameEdit.description" ></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -100,13 +100,15 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="cover"><strong>Cover</strong></label>
-                                                                        <input type="file" id="cover" class="form-control" @change="onCoverChange">
+                                                                        <img :src="gameEdit.imageUrl" alt="" srcset="" width="100%">
+                                                                        <!-- <input type="file" id="cover" class="form-control" @change="onCoverChange"> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="poster"><strong>Poster</strong></label>
-                                                                        <input type="file" id="poster" accept="image/*" class="form-control" @change="onPosterChange">
+                                                                        <img :src="gameEdit.posterUrl" alt="" srcset="" width="100%">
+                                                                        <!-- <input type="file" id="poster" accept="image/*" class="form-control" @change="onPosterChange"> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -155,7 +157,7 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            gameEdit: '',
+            gameEdit: {},
 
             title: '',
             price: '',
@@ -171,6 +173,39 @@ export default {
         }
     },
     methods: {
+        getGame() {
+            axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
+                this.gameEdit = response.data.data
+            })
+        },
+        editGame(){
+            let headers = {
+                "headers": {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    "Access-Control-Allow-Origin": "*",
+                },
+            }
+            axios.put('game/update/'+this.gameEdit.gameId, 
+            {
+                title: this.gameEdit.title,
+                price: this.gameEdit.price,
+                duration: this.gameEdit.duration,
+                description: this.gameEdit.description,
+                poster: this.gameEdit.poster,
+                image: this.gameEdit.image,
+                genre: this.gameEdit.genre,
+                difficulty: this.gameEdit.difficulty,
+                capacity: this.gameEdit.capacity,
+                rating: this.gameEdit.rating,
+                url: this.gameEdit.title.replace(/\s/g, ''),
+            }, 
+            headers).then( response => {
+                this.$router.push('/games'), 
+                console.log('Berhasil Edit Data Game')
+                console.log(response)
+                }
+            ).catch((error) => console.log( error.response.request ))
+        },
         onCoverChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
@@ -206,21 +241,10 @@ export default {
             };
             reader.readAsDataURL(file);
         },
-
-        editGame(){
-            let headers = {
-                "headers": {
-                    "content-type": "application/json",
-                },
-            }
-            axios.put('game/update/'+this.gameEdit.gameId, headers).then(
-                this.$router.push('/games'),
-                console.log('Berhasil Edit Data Game')
-            )
-        }
     },
     mounted() {
-        this.gameEdit = this.$route.params.gameEdit
+        this.getGame()
+        // this.gameEdit = this.$route.params.gameEdit
         console.log(this.gameEdit.gameId)   
     },
 }

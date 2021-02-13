@@ -32,16 +32,16 @@ Vue.use(VueCurrency, {
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://infiniteroom.herokuapp.com/api/v2'
-const token = localStorage.getItem('Authorization')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+// const token = localStorage.getItem('Authorization')
+// if (token) {
+//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+// }
 
 // require('dotenv').config();
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
 // axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_API_AUTHORIZATION;
-axios.defaults.headers.common['x-access-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMzQ1MzBkZS0yN2VhLTQxMGItYjQxYS1mNTBmZTc0ODc2OWQiLCJuYW1hIjoiYWRtaW4gbm9ybWFsIiwicm9sZSI6MSwibGV2ZWwiOjAsImlhdCI6MTYxMzA5NjE5MSwiZXhwIjoxNjEzMTgyNTkxfQ.Oc8kczkuokaVgGxHIVsxVw8MqeKzYNx4zKuf9T7jPOU';
+axios.defaults.headers.common['x-access-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMzQ1MzBkZS0yN2VhLTQxMGItYjQxYS1mNTBmZTc0ODc2OWQiLCJuYW1hIjoiYWRtaW4gbm9ybWFsIiwicm9sZSI6MSwibGV2ZWwiOjAsImlhdCI6MTYxMzIwMTI0MiwiZXhwIjoxNjEzMjg3NjQyfQ.H2DloK_L8TpgoQYAHKoRuIgcAqC2gkDiCLZtt5aynPQ';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 new Vue({
   router,

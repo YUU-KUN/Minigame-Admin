@@ -36,11 +36,6 @@ const routes = [
 
   // user
   {
-    path: '/editGame/:gameId',
-    name: 'EditGame',
-    components: {default:EditGame, sidebar: Sidebar}
-  },
-  {
     path: `/user/theTempleOfRiddle`,
     name: 'theTempleOfRiddle',
     component: theTempleOfRiddle
@@ -71,7 +66,14 @@ const routes = [
     components: {default:Cart, sidebar:SidebarUser}
   },
 
+
+  
   // admin
+  {
+    path: '/editGame/:gameId',
+    name: 'EditGame',
+    components: {default:EditGame, sidebar: Sidebar}
+  },
   {
     path: '/addNewGame',
     name: 'AddNewGame',

@@ -2,7 +2,7 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #111;">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <span>Halo, Admin</span>
+        <span>Halo, {{whoami.name}}</span>
     </a>
 
     <!-- Divider -->
@@ -46,7 +46,23 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+    data() {
+        return {
+            whoami: '',
+        }
+    },
+    methods: {
+        whoAmI() {
+            axios.get('admin/profile').then(response => {
+                this.whoami = response.data.data
+            })
+        }
+    },
+    mounted() {
+        this.whoAmI()
+    }
 
 }
 </script>

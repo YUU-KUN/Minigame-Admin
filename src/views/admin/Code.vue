@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     <div v-if="generated" class="alert alert-success alert-dismissible fade show" role="alert">
-                      Berhasil generate Kode. Kode Anda adalah <b>{{newCode}}</b>
+                      {{info}} <b>{{newCode}}</b>
                       <button type="button" @click="generated = false" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -177,6 +177,7 @@ export default {
             console.log(this.newCode)
             })
             this.generated = true
+            this.info = 'Berhasil generate Kode. Kode '+ this.userlist[index].userDetail.name+ ' adalah ' 
             console.log('Success Generate')
         },
         getUserCode() {
@@ -198,7 +199,8 @@ export default {
         this.getUserCode()
     },
     created() {
-        this.$forceUpdate();
+        this.newCode
+        this.$forceUpdate()
     }
 }
 </script>
