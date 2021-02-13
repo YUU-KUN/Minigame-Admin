@@ -128,7 +128,9 @@ export default {
             console.log('harusnya muncul detail gamenya');
         },
         editGame(index) {
-            this.$router.push({name:'EditGame', params:{gameEdit:this.gamelist}})
+            let edit = this.gamelist[index]
+            let id = this.gamelist[index].gameId
+            this.$router.push({name:'EditGame', params:{gameEdit:edit, gameId:id}})
         },
         removeGame(index) {
             this.gamelist.splice(index, 1)

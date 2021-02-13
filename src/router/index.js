@@ -36,7 +36,7 @@ const routes = [
 
   // user
   {
-    path: '/editGame/:gameEdit',
+    path: '/editGame/:gameId',
     name: 'EditGame',
     components: {default:EditGame, sidebar: Sidebar}
   },
