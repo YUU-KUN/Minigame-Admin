@@ -65,7 +65,7 @@
                                               {{cart.cartGameData.title}}
                                             </td>
                                             <td>{{cart.datePlay | formatDate}}</td>
-                                            <td>{{cart.price}}</td>
+                                            <td>{{cart.price | rupiah}}</td>
                                             <td>{{cart.createdAt | formatDate}}</td>
                                             <td class="d-flex justify-content-center">
                                                   <button class="btn btn-danger" v-on:click="deleteCart(index)">Delete</button>
@@ -74,14 +74,38 @@
                                           
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-end" style="margin:10px 0"><b style="margin: 0 5px;">Total:</b>{{userCart.total | rupiah}}</div>
+                            <div class="d-flex">
+                                <div class="ml-auto p-0"><button type="button" @click="checkOut" class="btn btn-success mb-4">Checkout!</button></div>
                             </div>
-                            <button class="btn btn-primary" @click="checkOut">Checkout</button>
+                            </div>
+                            <!-- <button class="btn btn-primary" @click="checkOut">Checkout</button> -->
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
+            <div class="card bg-light">
+                <div class="card-header"> <h3>Cart ID</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{cartId}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="card bg-light">
+                <div class="card-header"> <h3>Cart Item ID</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{cartItemId}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
               <div class="card bg-light">
                 <div class="card-header"> <h3>List Cart User</h3> </div>
                   <div class="card-inner">
@@ -92,16 +116,7 @@
                     </div>
                 </div>
               </div>
-              <div class="card bg-light">
-                <div class="card-header"> <h3>Cart iD</h3> </div>
-                  <div class="card-inner">
-                    <div class="card bg-dark">
-                      <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{cartId}}</pre>
-                      </div>
-                    </div>
-                </div>
-              </div>
+              
               <!-- ONLY FOR DEVELOPING -->
 
 
@@ -128,6 +143,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
     data() {
         return {
@@ -135,12 +151,14 @@ export default {
             removed: false,
             info: false,
             cartId: '',
+            cartItemId: '',
         }
     },
     methods: {
         getCart() {
             axios.get('/cart/user').then(response => {
                 this.userCart = response.data.data
+                this.cartItemId = this.userCart.items[0].cartItemId
                 this.cartId = response.data.data.cartId
             })
         },
@@ -150,21 +168,28 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            axios.put(`/cart/remove/${this.cartId}`, headers).then(response => {
+            axios.put('/cart/remove/'+this.cartItemId, headers).then(response => {
               console.log(response)
               console.log('Berhasil Menghapus Dari Keranjang')
             })
             this.info = true
         },
         checkOut() {
-          axios.post('transaction/checkout', this.cartId).then(response => {
+          let cart = this.cartId
+          console.log(cart);
+          axios.post('transaction/checkout', {
+            cartId: cart
+            }).then(response => {
             console.log(response)
             console.log('Berhasil Checkout Keranjang!')
+            this.getCart()
+          }).catch(error => {
+            console.log(error.response);
           })
         }
     },
     mounted() {
-        this.getCart()
+      this.getCart()
     }
 }
 </script>
