@@ -284,78 +284,6 @@
         <!-- ONLY FOR DEVELOPING -->
       </div>
 
-<!-- <div style="display: none;" id="addToCart">
-          <h2>Get The Temple Of Riddle!</h2>
-          <p>Please select the date to play!</p>
-                                <div class="form">
-                                    <div class="form-group">
-                                          <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <div class="col-6">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="date"><strong>Date</strong></label>
-                                                                        <input type="date" id="date" class="form-control" v-model="date">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="time"><strong>Time</strong></label>
-                                                                        <select name="time" id="time" class="form-control" v-model="time">
-                                                                          <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" selected>{{time}}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <div class="col">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="members"><strong>Members</strong></label>
-                                                                        <select name="members" id="members" v-model="members" class="form-control">
-                                                                          <option
-                                                                            v-for="(member, index) in users"
-                                                                            :key="index"
-                                                                            :value="users"
-                                                                          >
-                                                                            {{ member.name }}
-                                                                          </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <div class="form-group" >
-                                                                <div class="col">
-                                                                    <div class="input-container" style="flex-grow: 1;">
-                                                                        <div class="d-flex justify-content-end" style="margin:10px 0">Total: {{detailGame.price | rupiah}}</div>
-                                                                        <button @click="addToCart(index)" class="btn btn-warning d-flex align-items-center justify-content-center" style="float: right">
-                                                                          <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
-                                                                          <b>Add to Cart</b>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-</div> -->
-
-
 <div style="display: none;" id="addToCart">
           <h2>Generate New Code</h2>
           <p>Please select the date to play!</p>
@@ -388,14 +316,12 @@
 
                                                         <div class="col-md-12">
                                                             <div class="form-group" >
-                                                                <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;">
-                                                                        <button @click="addToCart" class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
+                                                                        <button @click="addToCart" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
                                                                           <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
                                                                           <b>Add!</b>
                                                                         </button>
                                                                     </div>
-                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -468,6 +394,7 @@ export default {
       },headers).then(response => {
         console.log(response)
         console.log('Berhasil Menambahkan ke Cart')
+        this.getDetailGame()
       })
     }
   },

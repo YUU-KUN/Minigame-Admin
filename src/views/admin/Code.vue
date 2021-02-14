@@ -80,7 +80,7 @@
                                                             <div class="form-group" >
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;">
-                                                                        <button @click="generate(index)" class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
+                                                                        <button @click="generate(index)" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
                                                                           <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
                                                                           <b>Generate</b>
                                                                         </button>
@@ -174,7 +174,8 @@ export default {
                 time: this.time
             }, headers).then(response => {
                 this.newCode = response.data.data.code
-            console.log(this.newCode)
+                console.log(this.newCode)
+                this.getUserCode()
             })
             this.generated = true
             this.info = 'Berhasil generate Kode. Kode '+ this.userlist[index].userDetail.name+ ' adalah ' 

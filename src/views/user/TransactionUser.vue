@@ -42,13 +42,17 @@
                                                 </td>
                                                 <td>{{transaction.total | rupiah}}</td>
                                                 <td>
-                                                  <span v-if="transaction.status == 0">Waiting</span>
-                                                  <span v-else-if="transaction.status == 1">Paid</span>
-                                                  <span v-else-if="transaction.status == 2">Unpaid</span>
-                                                  <span v-else>Rejected</span>
+                                                  <span v-if="transaction.status == 0">Menunggu Bukti Pembayaran</span>
+                                                  <span v-else-if="transaction.status == 1">Transaksi Terkonfirmasi</span>
+                                                  <span v-else-if="transaction.status == 2">Pending</span>
+                                                  <span v-else-if="transaction.status == 3">Transaksi Ditolak</span>
+                                                  <span v-else>Transaksi Kadaluarsa</span>
                                                 </td>
-                                                <td>
-                                                  <a href="#" ><span class="badge badge-primary">Lihat Bukti Pembayaran</span></a>
+                                                <td v-if="transaction.status ==  1 || transaction.status == 2">
+                                                  <a :href="transaction.buktiPembayaran" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
+                                                </td>
+                                                <td v-else-if="transaction.status == 0">
+                                                  <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
                                                 </td>
                                                 <td>{{transaction.createdAt | formatDate}}</td>
                                                 <td style="align-items:center">
@@ -61,6 +65,17 @@
                                                 <div style="display: none;" :id="index" class="animated-modal">
                                                   <h2>Hello!</h2>
                                                   <p>This is animated content! Cool, right?</p>
+                                                </div>
+
+                                                <div style="display: none;" :id="'bukti'+index" class="animated-modal">
+                                                  <h2>Hello!</h2>
+                                                  <p>Silahkan upload bukti pembayarannya ya~</p>
+                                                  <form @submit="uploadPayment(index)" enctype="multipart/form-data">
+                                                    <div class="form-group" >
+                                                      <input type="file" accept="image/*" class="form-control-file" required>
+                                                    </div>
+                                                    <button type="submit" data-fancybox-close class="btn btn-success mb-4 form-control">Checkout!</button>
+                                                  </form>
                                                 </div>
                                             </tr>
                                     </tbody>
@@ -122,6 +137,13 @@ export default {
                 this.userTransaction = response.data.data
             })
         },
+        uploadPayment(index) {
+          console.log(this.userTransaction[index].transaksiId);
+          // axios.post('transaction/upload-bukti/'+this.userTransaction[index].transaksiId).then(response => {
+          //   console.log(response)
+          //   this.getUserTransaction()
+          // })
+        }
     },
     mounted() {
         this.getUserTransaction()
@@ -130,38 +152,4 @@ export default {
 </script>
 
 <style>
-.animated-modal {
-  max-width: 550px;
-  border-radius: 4px;
-  overflow: hidden;
-  
-  transform: translateY(-50px);
-  transition: all .7s;
-}
-
-.animated-modal h2,
-.animated-modal p {
-  transform: translateY(-50px);
-  opacity: 0;
-  
-  transition-property: transform, opacity;
-  transition-duration: .4s;
-}
-
-/* Final state */
-.fancybox-slide--current .animated-modal,
-.fancybox-slide--current .animated-modal h2,
-.fancybox-slide--current .animated-modal p {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* Reveal content with different delays */
-.fancybox-slide--current .animated-modal h2 {
-  transition-delay: .1s;
-}
-
-.fancybox-slide--current .animated-modal p {
-  transition-delay: .3s;
-}
 </style>

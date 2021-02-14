@@ -33,7 +33,7 @@
                                                 <td>{{user.email}}</td>
                                                 <td>{{user.username}}</td>
                                                 <td>{{user.isVerified}}</td>
-                                                <td>{{user.createdAt}}</td>
+                                                <td>{{user.createdAt | formatDate}}</td>
                                                 <td class="d-flex justify-content-center">
                                                     <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>

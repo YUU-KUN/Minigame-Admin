@@ -53,8 +53,17 @@
                                                 <td >
                                                     <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
                                                     <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
-                                                    <button class="btn btn-danger" @click="removeGame(index)" style="margin: 0 5px">Delete</button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index" style="margin: 0 5px">Delete</button>
                                                 </td>
+
+                                                <div style="display:none" :id="index" class="animated-modal">
+                                                    <h2>Watch Out!</h2>
+                                                    <p>Are you sure wanna delete <b>{{game.title}}</b>?</p>
+                                                    <div class=" d-flex justify-content-center">
+                                                    <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                    <button type="button" @click="removeGame(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                    </div>
+                                                </div>
                                             </tr>
                                     </tbody>
                                 </table>

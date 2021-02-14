@@ -33,7 +33,12 @@
                                             <tr v-for="(transaction, index) in transactions" :key="index">
                                                 <td>{{index +1}}</td>
                                                 <td>{{transaction.user}}</td>
-                                                <td>{{transaction.items[0].cartGameData.title}}</td>
+                                                <!-- <td>{{transaction.items[0].cartGameData.title}}</td> -->
+                                                <td>
+                                                    <span v-for="(game, index) in transaction.items" :key="index">
+                                                    {{game.cartGameData.title}}
+                                                    </span>
+                                                </td>
                                                 <td>{{transaction.total | rupiah}}</td>
                                                 <td>{{transaction.status}}</td>
                                                 <td>
@@ -43,13 +48,23 @@
                                                 
                                                 <td>{{transaction.createdAt | formatDate}}</td>
                                                 <td v-if=" status == 'waiting' " class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" v-on:click="removeTransaction(index)">Delete</button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>
                                                 <td v-else class="d-flex justify-content-around">
                                                     <button class="btn btn-success" v-on:click="view">&#10003;</button>
                                                     <button class="btn btn-primary" v-on:click="edit">&times;</button>
-                                                    <button class="btn btn-danger" v-on:click="removeTransaction(index)">Delete</button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>
+
+                                                <div style="display:none" :id="index" class="animated-modal">
+                                                    <h2>Watch Out!</h2>
+                                                    <p>Are you sure wanna delete <span v-if="transaction.user"><b>{{transaction.user}}</b>'s</span> <span v-else>this</span> transaction?</p>
+                                                    <div class=" d-flex justify-content-center">
+                                                    <button type="button" data-fancybox-close @click="checkTransactionId(index)" class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                    <button type="button" @click="removeTransaction(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                    </div>
+                                                </div>
+                                                
                                             </tr>
                                     </tbody>
                                 </table>
@@ -95,8 +110,23 @@ export default {
         edit() {
             console.log('edit');
         },
+        checkTransactionId(index){
+            console.log(this.transactions[index].transaksiId);
+        },
         removeTransaction(index) {
-            this.transactions.splice(index, 1);
+            let headers = {
+                "headers": {
+                    "content-type": "application/json",
+                },
+            }
+            let transactionId = this.transactions[index].transaksiId
+            console.log(transactionId);
+            axios.delete('transaction/delete/'+transactionId).then(response => {
+                console.log('Berhasil menghapus transaksi');
+                this.getUserTransaction()
+            }).catch(err => {
+                console.log(err.response);
+            })
             this.action = true
             this.info = 'Berhasil menghapus transaksi'
             console.log(this.info)
@@ -107,7 +137,7 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            axios.get('/transaction/list', this.headers).then(response => {
+            axios.get('/transaction/list', headers).then(response => {
                 this.transactions = response.data.data
             })
         }

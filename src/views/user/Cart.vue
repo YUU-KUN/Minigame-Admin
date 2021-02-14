@@ -60,7 +60,7 @@
                                           </tr> -->
 
                                           <tr v-for="(cart, index) in userCart.items" :key="index">
-                                            <td>{{index+1}}</td>
+                                            <td><span class="d-flex justify-content-center">{{index+1}}</span></td>
                                             <td>
                                               {{cart.cartGameData.title}}
                                             </td>
@@ -68,15 +68,24 @@
                                             <td>{{cart.price | rupiah}}</td>
                                             <td>{{cart.createdAt | formatDate}}</td>
                                             <td class="d-flex justify-content-center">
-                                                  <button class="btn btn-danger" v-on:click="deleteCart(index)">Delete</button>
+                                                  <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                             </td>
+
+                                            <div style="display:none" :id="index" class="animated-modal">
+                                                <h2>Watch Out!</h2>
+                                                <p>Are you sure wanna delete <b>{{cart.cartGameData.title}}</b>?</p>
+                                                <div class=" d-flex justify-content-center">
+                                                  <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                  <button type="button" @click="deleteCart(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                </div>
+                                            </div>
+
                                           </tr>
-                                          
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end" style="margin:10px 0"><b style="margin: 0 5px;">Total:</b>{{userCart.total | rupiah}}</div>
                             <div class="d-flex">
-                                <div class="ml-auto p-0"><a href="" data-fancybox data-src="#uploadPayment" class="btn btn-success mb-4">Checkout!</a></div>
+                                <div class="ml-auto p-0"><button type="submit" @click="checkOut" class="btn btn-success mb-4">Checkout!</button></div>
                             </div>
                             </div>
                         </div>
@@ -84,16 +93,17 @@
                 </div>
             </div>
 
-            <div style="display: none;" id="uploadPayment" class="animated-modal">
+            <!-- CANNOT IMPLEMENT IT HERE -->
+            <!-- <div style="display: none;" id="uploadPayment" class="animated-modal">
               <h2>Hello!</h2>
               <p>Silahkan upload bukti pembayarannya ya~</p>
-              <form @submit="checkOut">
-                <div class="form-group">
+              <form @submit="checkOut" enctype="multipart/form-data">
+                <div class="form-group" >
                   <input type="file" accept="image/*" class="form-control-file" required>
                 </div>
-                <button type="submit" class="btn btn-success mb-4 form-control">Checkout!</button>
+                <button type="submit" data-fancybox-close class="btn btn-success mb-4 form-control">Checkout!</button>
               </form>
-            </div>
+            </div> -->
 
             <!-- ONLY FOR DEVELOPING -->
             <div class="card bg-light">
@@ -167,7 +177,6 @@ export default {
         getCart() {
             axios.get('/cart/user').then(response => {
                 this.userCart = response.data.data
-                this.cartItemId = this.userCart.items[0].cartItemId
                 this.cartId = response.data.data.cartId
             })
         },
@@ -177,9 +186,11 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            axios.put('/cart/remove/'+this.cartItemId, headers).then(response => {
+            let deleleCartId = this.userCart.items[index].cartItemId
+            axios.put('/cart/remove/'+deleleCartId, headers).then(response => {
               console.log(response)
               console.log('Berhasil Menghapus Dari Keranjang')
+              this.getCart()
             })
             this.info = true
         },
@@ -195,7 +206,8 @@ export default {
           }).catch(error => {
             console.log(error.response);
           })
-        }
+        },
+        
     },
     mounted() {
       this.getCart()
@@ -204,38 +216,4 @@ export default {
 </script>
 
 <style>
-.animated-modal {
-  max-width: 550px;
-  border-radius: 4px;
-  overflow: hidden;
-  
-  transform: translateY(-50px);
-  transition: all .7s;
-}
-
-.animated-modal h2,
-.animated-modal p {
-  transform: translateY(-50px);
-  opacity: 0;
-  
-  transition-property: transform, opacity;
-  transition-duration: .4s;
-}
-
-/* Final state */
-.fancybox-slide--current .animated-modal,
-.fancybox-slide--current .animated-modal h2,
-.fancybox-slide--current .animated-modal p {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* Reveal content with different delays */
-.fancybox-slide--current .animated-modal h2 {
-  transition-delay: .1s;
-}
-
-.fancybox-slide--current .animated-modal p {
-  transition-delay: .3s;
-}
 </style>
