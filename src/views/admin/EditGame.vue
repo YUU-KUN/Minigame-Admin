@@ -160,7 +160,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data(){
         return {
@@ -189,8 +188,8 @@ export default {
         //             "content-type": "application/json",
         //         },
         //     }
-        //     axios.get('game/detail/f006f15a-a5a2-4b8c-b326-c9fb6807a55a', headers).then(response => { 
-        //     // axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
+        //     this.axios.get('game/detail/f006f15a-a5a2-4b8c-b326-c9fb6807a55a', headers).then(response => { 
+        //     // this.axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
         //         this.gameEdit = response.data.data
         //     })
         // },
@@ -227,7 +226,7 @@ export default {
                     'Access-Control-Allow-Origin': '*'
                 },
             }
-            axios.put('game/update/'+this.gameEdit.gameId, 
+            this.axios.put('game/update/'+this.gameEdit.gameId, 
             formData, headers
             // {
             //     title: this.gameEdit.title,

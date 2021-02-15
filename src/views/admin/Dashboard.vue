@@ -4,7 +4,7 @@
         <div class="col">
             <div class="d-flex justify-content-center">
                 <!-- <div style="align-items:center"> -->
-                <router-link to="/users">
+                <router-link to="/users" style="text-decoration: none">
                 <div class="col" >
                     <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                     <div class="card-body" style="padding: 50px 0">
@@ -18,7 +18,7 @@
                 </div>
                 </router-link>
 
-                <router-link to="/games">
+                <router-link to="/games" style="text-decoration: none">
                 <div class="col" >
                     <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                     <div class="card-body" style="padding: 50px 0">
@@ -38,7 +38,7 @@
     <div class="row" style="margin: 25px">
         <div class="col">
             <div class="d-flex justify-content-center">
-                <router-link to="/codes">
+                <router-link to="/codes" style="text-decoration: none">
                 <div class="col" >
                     <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                     <div class="card-body" style="padding: 50px 0">
@@ -52,7 +52,7 @@
                 </div>
                 </router-link>
 
-                <router-link to="/transactions">
+                <router-link to="/transactions" style="text-decoration: none">
                 <div class="col" >
                     <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                     <div class="card-body" style="padding: 50px 0">
@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -83,17 +82,17 @@ export default {
     },
     methods: {
         getTotalUsers() {
-            axios.get('user/list').then(response => {
+            this.axios.get('user/list').then(response => {
                 this.totalUser = response.data.data
             })
         },
         getTotalGames() {
-            axios.get('game/list').then(response => {
+            this.axios.get('game/list').then(response => {
                 this.totalGame = response.data.data
             })
         },
         getTotalTransactions() {
-            axios.get('transaction/list').then(response => {
+            this.axios.get('transaction/list').then(response => {
                 this.totalTransaction = response.data.data
             })
         },

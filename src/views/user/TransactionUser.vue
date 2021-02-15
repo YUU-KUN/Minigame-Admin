@@ -131,7 +131,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -149,7 +148,7 @@ export default {
     },
     methods: {
         getUserTransaction() {
-            axios.get('/transaction/user').then(response => {
+            this.axios.get('/transaction/user').then(response => {
                 this.userTransaction = response.data.data
             })
         },
@@ -178,7 +177,7 @@ export default {
         //   let inputGambar = document.getElementsByClassName('form-control-file')
         //   file.append('file', this.buktiPembayaran); 
 
-        //   axios.put('transaction/upload-bukti/'+transactionID, {
+        //   this.axios.put('transaction/upload-bukti/'+transactionID, {
         //     file: file
         //   }, headers).then(response => {
         //     console.log(response)
@@ -198,7 +197,7 @@ export default {
           let formData = new FormData();
           formData.append('file', this.buktiPembayaran); 
 
-          axios.put('transaction/upload-bukti/'+transactionID, formData, headers).then(response => {
+          this.axios.put('transaction/upload-bukti/'+transactionID, formData, headers).then(response => {
             console.log(response)
             this.info = true
             this.res = "Bukti transaksi berhasil diupload!"

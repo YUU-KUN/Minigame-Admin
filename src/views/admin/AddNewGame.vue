@@ -21,7 +21,7 @@
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="title"><strong>Game</strong></label>
-                                                                        <input type="text" id="title" class="form-control" v-model="title" >
+                                                                        <input type="text" id="title" class="form-control" v-model="title" placeholder="The Last Adventure" >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -32,13 +32,13 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Normal Price</strong></label>
-                                                                        <input type="number" id="price" class="form-control" v-model="price" min="1" >
+                                                                        <input type="number" id="price" class="form-control" v-model="price" min="1" placeholder="50000">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="discount"><strong>Discount Price</strong></label>
-                                                                        <input type="number" id="discount" class="form-control" min="0" >
+                                                                        <label for="discount"><strong>Discount</strong> (%)</label>
+                                                                        <input type="number" id="discount" class="form-control" min="0" placeholder="20">
                                                                     </div>
                                                                 </div>
 
@@ -51,7 +51,10 @@
 
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="duration"><strong>Rating</strong> (1-5)</label>
+                                                                        <label for="duration"><strong>Rating</strong> (1-5) 
+                                                                            <span v-if="rating"><b-icon v-for="index in rating" :key="index" icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                            <span v-else><b-icon icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span>
+                                                                        </label>
                                                                         <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" >
                                                                     </div>
                                                                 </div>
@@ -73,7 +76,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-6">
+                                                                <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
                                                                         <select name="genre" id="genre" v-model="genre" class="form-control">
@@ -81,6 +84,12 @@
                                                                             <option value="Action">Action</option>
                                                                             <option value="Puzzle">Puzzle</option>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <label for="url"><strong>URL</strong> (...tranceformasiindonesia.com/<b><span v-if="url">{{url}}</span> <span v-else>yourURL</span></b> )</label>
+                                                                        <input type="text" id="url" class="form-control" v-model="url">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -123,7 +132,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-md">
-                                                                    <button class="btn btn-primary" type="submit">Create!</button>
+                                                                    <button class="btn btn-primary" type="submit">Add Game!</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -145,7 +154,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data(){
         return {
@@ -187,7 +195,7 @@ export default {
             formData.append('difficulty', this.difficulty)
             formData.append('capacity', this.capacity)
             formData.append('duration', this.duration)
-            formData.append('url', this.title.replace(/\s/g, ''))
+            formData.append('url', this.url)
 
             let headers = {
                 "headers": {
@@ -196,8 +204,8 @@ export default {
             }
 
             console.log('ini form data: '+formData);    
-            axios.post('/game/create', formData, headers).then( response => {
-                localStorage.rating = this.rating
+            this.axios.post('/game/create', formData, headers).then( response => {
+                localStorage.setItem('rating', this.rating)
                 console.log('imagenya: ' + formData)
                 console.log('response requestnya: ' + response.request)
                 console.log('Berhasil Menambahkan Game Baru')

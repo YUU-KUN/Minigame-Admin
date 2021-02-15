@@ -2,16 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios'
 import VueAxios from 'vue-axios'
+import axios from 'axios'
 import VueCurrency from 'vue-currency-filter'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import moment from 'moment'
 
-Vue.use(axios, VueAxios)
+Vue.use(VueAxios, axios); //HARUS VueAxios dulu, or enjoy your protocol ERROR
+
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
-// Vue.prototype.$http = axios;
 
 Vue.filter('formatDate', function(value) {
   if (value) {

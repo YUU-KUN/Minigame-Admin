@@ -141,7 +141,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -169,7 +168,7 @@ export default {
             }
             let userGameId = this.userlist[index].userGameId
             // console.log(userGameId);
-            axios.put('generate/code/'+userGameId, {
+            this.axios.put('generate/code/'+userGameId, {
                 date: this.date,
                 time: this.time
             }, headers).then(response => {
@@ -182,7 +181,7 @@ export default {
             console.log('Success Generate')
         },
         getUserCode() {
-            axios.get('game/usergame').then(response => {
+            this.axios.get('game/usergame').then(response => {
                 this.userlist = response.data.data
                 this.allCode = response.data.data[1].code
 

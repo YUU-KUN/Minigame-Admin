@@ -13,15 +13,15 @@
           <!-- </div> -->
         </div>
 
-        <router-link to="/user/joinGame">
-        <button
-          class="btn btn-success d-flex align-items-center justify-content-center"
-          style="width: 100%; margin: 20px auto"
-        >
-          <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon
-          ><b>Play Game</b>
-        </button>
-        </router-link>
+        <a href="https://minigames.tranceformasiindonesia.com/theTempleOfRiddle" style="text-decoration: none">
+          <button
+            class="btn btn-success d-flex align-items-center justify-content-center"
+            style="width: 100%; margin: 20px auto"
+          >
+            <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon
+            ><b>Play Game</b>
+          </button>
+        </a>
 
         <button
           class="btn btn-warning d-flex align-items-center justify-content-center"
@@ -339,7 +339,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -364,13 +363,13 @@ export default {
   },
   methods: {
     getUsers() {
-      axios.get('/user/list').then(response => {
+      this.axios.get('/user/list').then(response => {
         this.users = response.data.data
       })
     this.currentUser = this.$route.params.currentUser
     },
     getDetailGame() {
-      axios.get('/game/detail/'+this.gameId).then(response => {
+      this.axios.get('/game/detail/'+this.gameId).then(response => {
         this.detailGame = response.data.data
       })
     },
@@ -381,7 +380,7 @@ export default {
                     "content-type": "application/json",
                 },
             }
-      axios.post('/cart/add', {
+      this.axios.post('/cart/add', {
         dateTime: this.date,
         gameId: this.gameId,
         members: {

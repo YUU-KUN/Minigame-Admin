@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         joinGame() {
-            axios.post('join/game', {
+            this.axios.post('join/game', {
                 code: this.code
             })
         }

@@ -116,7 +116,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -129,7 +128,7 @@ export default {
     },
     methods: {
         getGames() {
-            axios.get('game/list').then(response => {
+            this.axios.get('game/list').then(response => {
                 this.gamelist = response.data.data
             })
             this.rating = localStorage.getItem('rating')
@@ -137,7 +136,7 @@ export default {
         viewGameDetail(index) {
             let detail = this.gamelist[index]
             let id = detail.gameId
-            axios.get('game/detail/'+detail.gameId).then(response => {
+            this.axios.get('game/detail/'+detail.gameId).then(response => {
                 this.gameDetail = response.data.data
             })
             this.$router.push({name: 'GameDetail', params: {gameDetail:detail, gameId:id}}) //bisa juga kayak gini
@@ -147,7 +146,7 @@ export default {
         editGame(index) {
             let edit = this.gamelist[index]
             let id = edit.gameId
-            axios.get('game/detail/'+id).then(response => {
+            this.axios.get('game/detail/'+id).then(response => {
                 this.gameEdit = response.data.data
             })
             this.$router.push({name: 'EditGame', params: {gameEdit:edit, gameId:id}}) //bisa juga kayak gini
@@ -161,7 +160,7 @@ export default {
         // },
         removeGame(index) {
             let GameID = this.gamelist[index].gameId
-            axios.delete('game/delete/'+GameID).then(this.getGames())
+            this.axios.delete('game/delete/'+GameID).then(this.getGames())
             this.removed = true
             this.info = 'Berhasil Hapus Game'
             console.log(this.info)

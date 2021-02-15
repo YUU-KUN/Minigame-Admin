@@ -162,7 +162,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -175,7 +174,7 @@ export default {
     },
     methods: {
         getCart() {
-            axios.get('/cart/user').then(response => {
+            this.axios.get('/cart/user').then(response => {
                 this.userCart = response.data.data
                 this.cartId = response.data.data.cartId
             })
@@ -187,7 +186,7 @@ export default {
                 },
             }
             let deleleCartId = this.userCart.items[index].cartItemId
-            axios.put('/cart/remove/'+deleleCartId, headers).then(response => {
+            this.axios.put('/cart/remove/'+deleleCartId, headers).then(response => {
               console.log(response)
               console.log('Berhasil Menghapus Dari Keranjang')
               this.getCart()
@@ -197,7 +196,7 @@ export default {
         checkOut() {
           let cart = this.cartId
           console.log(cart);
-          axios.post('transaction/checkout', {
+          this.axios.post('transaction/checkout', {
             cartId: cart
             }).then(response => {
             console.log(response)

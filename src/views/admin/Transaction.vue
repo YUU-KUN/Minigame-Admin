@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -121,7 +120,7 @@ export default {
             }
             let transactionId = this.transactions[index].transaksiId
             console.log(transactionId);
-            axios.delete('transaction/delete/'+transactionId).then(response => {
+            this.axios.delete('transaction/delete/'+transactionId).then(response => {
                 console.log('Berhasil menghapus transaksi');
                 this.getUserTransaction()
             }).catch(err => {
@@ -137,7 +136,7 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            axios.get('/transaction/list', headers).then(response => {
+            this.axios.get('/transaction/list', headers).then(response => {
                 this.transactions = response.data.data
             })
         }

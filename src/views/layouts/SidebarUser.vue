@@ -2,7 +2,7 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #111;">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <span v-if="whoami">Halo, {{whoami}}</span> <span v-else>Halo, User</span>
+        <span v-if="whoami">Halo, {{userProfile}}</span> <span v-else>Halo, User</span>
     </a>
 
     <!-- Divider -->
@@ -35,18 +35,19 @@
 export default {
     data() {
         return {
-            whoami: '',
+            whoami: false,
+            userProfile: '',
         }
     },
     methods: {
-        whoAmi() {
-            axios.get('user/profile').then(response => {
-                this.whoami = response.data.data.name
-            })
-        }
+        // whoAmi() {
+        //     this.axios.get('user/profile').then(response => {
+        //         this.userProfile = response.data.data.name
+        //     })
+        // }
     },
     mounted() {
-        whoAmi()
+        // this.whoAmi()
     }
 
 }

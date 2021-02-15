@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -55,7 +54,7 @@ export default {
     },
     methods: {
         whoAmI() {
-            axios.get('admin/profile').then(response => {
+            this.axios.get('admin/profile').then(response => {
                 this.whoami = response.data.data
             })
         }

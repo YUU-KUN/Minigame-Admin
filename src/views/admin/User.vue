@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import 'bootstrap-vue'
 export default {
     data() {
@@ -103,7 +102,7 @@ export default {
     },
     methods: {
         getUser() {
-            axios.get('/user/list').then(response => {
+            this.axios.get('/user/list').then(response => {
                 this.users = response.data.data
             })
         },
@@ -117,7 +116,7 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            axios.delete(`/user/${id}`, headers).then(this.getUser())
+            this.axios.delete(`/user/${id}`, headers).then(this.getUser())
             this.$bvToast.show('my-toast')
             this.info = true
             console.log('Berhasil hapus User '+username)

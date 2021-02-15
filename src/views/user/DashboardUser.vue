@@ -26,9 +26,18 @@
                             <span><h2>-</h2> </span>
                       </div>
                       <div class="row">
-                          <button class="btn btn-warning d-flex align-items-center" @click="gameDetail(index)">
-                            <!-- <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon> -->
-                            <b>Detail Game</b></button>
+                          <b-icon class="h5 " icon="cash" style="color: orange"></b-icon>
+                          <span v-if="game.discount" style="text-decoration: line-through">{{game.price | rupiah}}</span>
+                          <span v-else>{{game.price | rupiah}}</span>&nbsp;	<span style="margin: 0 10px"><b><h5>{{game.price | rupiah}}&nbsp;	</h5></b></span> <span style="color:red"><h5>(Save 40%!)</h5></span>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <a href="https://minigames.tranceformasiindonesia.com/theTempleOfRiddle" style="text-decoration: none">
+                          <button class="btn btn-warning d-flex align-items-center">
+                            <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon>
+                            <b>Play Game</b>
+                          </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -127,7 +136,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
@@ -138,13 +146,8 @@ export default {
     }
   },
   methods: {
-    whoAmi() {
-      axios.get('user/profile').then(response => {
-          this.whoami = response.data.data.name
-      })
-    },
     getWebGame() {
-      axios.get('https://infiniteroom.herokuapp.com/api/v2/game/web').then(response => {
+      this.axios.get('/game/web').then(response => {
         this.gameweb = response.data.data
       })
     },
@@ -160,7 +163,6 @@ export default {
   },
   mounted() {
     this.getWebGame()
-    this.whoAmi()
   }
 
 }
