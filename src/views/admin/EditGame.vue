@@ -76,9 +76,10 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
-                                                                        <select name="genre" id="genre" v-model="gameEdit.genre"  class="form-control">
-                                                                            <option v-for="(cat, index ) in gameEdit.genre" :key="index">{{cat}}</option>
-                                                                        </select>
+                                                                        <input type="text" id="genre" class="form-control" v-model="gameEdit.genre">
+                                                                        <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
+                                                                            <option v-for="(genre, index) in gameEdit.genre[0]" :key="index">{{genre}}</option>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -100,15 +101,21 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="cover"><strong>Cover</strong></label>
-                                                                        <img :src="gameEdit.imageUrl" alt="" srcset="" width="100%">
-                                                                        <!-- <input type="file" id="cover" class="form-control" @change="onCoverChange"> -->
+                                                                        <input type="file" id="cover" name="image" accept="image/*" ref="image" class="form-control" @change="onCoverChange">
+                                                                        <div class="preview">
+                                                                            <img v-if="!newImage" :src="gameEdit.imageUrl" alt="Covernya" height="100px" style="margin:10px">
+                                                                            <img v-else :src="imageUrl" alt="Covernya" height="100px" style="margin:10px">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="poster"><strong>Poster</strong></label>
-                                                                        <img :src="gameEdit.posterUrl" alt="" srcset="" width="100%">
-                                                                        <!-- <input type="file" id="poster" accept="image/*" class="form-control" @change="onPosterChange"> -->
+                                                                        <input type="file" id="poster" ref="poster" accept="image/*" name="poster" class="form-control" @change="onPosterChange">
+                                                                        <div class="preview">
+                                                                            <img v-if="!newPoster" :src="gameEdit.posterUrl" alt="Posternya" height="100px" style="margin:10px">
+                                                                            <img v-else :src="posterUrl" alt="Posternya" height="100px" style="margin:10px">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -117,7 +124,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-md">
-                                                                    <button class="btn btn-primary" type="submit">Create!</button>
+                                                                    <button class="btn btn-primary" type="submit">Update!</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -157,94 +164,95 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            gameEdit: {},
+            gameEdit: '',
+            newPoster: false,
+            newImage: false,
+            posterUrl: '',
+            imageUrl: '',
 
-            title: '',
-            price: '',
-            duration: '',
-            description: '',
-            poster: '',
-            image: '',
-            genre: {},
-            difficulty: '',
-            capacity: '',
-            rating: '',
-            url: ''
+            // title: '',
+            // price: '',
+            // duration: '',
+            // description: '',
+            // poster: '',
+            // image: '',
+            // difficulty: '',
+            // capacity: '',
+            // rating: '',
+            // url: ''
         }
     },
     methods: {
-        getGame() {
-            axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
-                this.gameEdit = response.data.data
-            })
+        // getGame() {
+        //     let headers = {
+        //         "headers": {
+        //             "content-type": "application/json",
+        //         },
+        //     }
+        //     axios.get('game/detail/f006f15a-a5a2-4b8c-b326-c9fb6807a55a', headers).then(response => { 
+        //     // axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
+        //         this.gameEdit = response.data.data
+        //     })
+        // },
+
+        onCoverChange() {
+            this.newImage = true
+            this.gameEdit.image = this.$refs.image.files[0]
+            this.imageUrl = URL.createObjectURL(this.gameEdit.image)
+            console.log('urlnya: '+this.imageUrl);
         },
+        onPosterChange() {
+            this.newPoster = true
+            this.gameEdit.poster = this.$refs.poster.files[0]
+            this.posterUrl = URL.createObjectURL(this.gameEdit.poster)
+            console.log('urlnya: '+this.posterUrl);
+        },
+
         editGame(){
+            const formData = new FormData()
+            formData.append('title', this.gameEdit.title)
+            formData.append('poster', this.gameEdit.poster)
+            formData.append('image', this.gameEdit.image)
+            formData.append('genre', this.gameEdit.genre)
+            formData.append('price', this.gameEdit.price)
+            formData.append('description', this.gameEdit.description)
+            formData.append('difficulty', this.gameEdit.difficulty)
+            formData.append('capacity', this.gameEdit.capacity)
+            formData.append('duration', this.gameEdit.duration)
+            formData.append('url', this.gameEdit.title.replace(/\s/g, ''))
+
             let headers = {
                 "headers": {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    "Access-Control-Allow-Origin": "*",
+                    'Content-Type': 'multipart/form-data',
+                    'Access-Control-Allow-Origin': '*'
                 },
             }
             axios.put('game/update/'+this.gameEdit.gameId, 
-            {
-                title: this.gameEdit.title,
-                price: this.gameEdit.price,
-                duration: this.gameEdit.duration,
-                description: this.gameEdit.description,
-                poster: this.gameEdit.poster,
-                image: this.gameEdit.image,
-                genre: this.gameEdit.genre,
-                difficulty: this.gameEdit.difficulty,
-                capacity: this.gameEdit.capacity,
-                rating: this.gameEdit.rating,
-                url: this.gameEdit.title.replace(/\s/g, ''),
-            }, 
-            headers).then( response => {
+            formData, headers
+            // {
+            //     title: this.gameEdit.title,
+            //     price: this.gameEdit.price,
+            //     duration: this.gameEdit.duration,
+            //     description: this.gameEdit.description,
+            //     poster: this.gameEdit.poster,
+            //     image: this.gameEdit.image,
+            //     genre: this.gameEdit.genre,
+            //     difficulty: this.gameEdit.difficulty,
+            //     capacity: this.gameEdit.capacity,
+            //     rating: this.gameEdit.rating,
+            //     url: this.gameEdit.title.replace(/\s/g, ''),
+            // }, 
+            ).then( response => {
                 this.$router.push('/games'), 
                 console.log('Berhasil Edit Data Game')
                 console.log(response)
                 }
             ).catch((error) => console.log( error.response.request ))
         },
-        onCoverChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-            return;
-            this.createCover(files[0]);
-            this.createPoster(files[0]);
-        },
-        createCover(file) {
-            var image = new Image();
-            var reader = new FileReader();
-            var vm = this;
-
-            reader.onload = (e) => {
-                vm.image = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-
-        onPosterChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-            return;
-            this.createCover(files[0]);
-            this.createPoster(files[0]);
-        },
-        createPoster(file) {
-            var poster = new Image();
-            var reader = new FileReader();
-            var vm = this;
-
-            reader.onload = (e) => {
-                vm.poster = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
     },
     mounted() {
-        this.getGame()
-        // this.gameEdit = this.$route.params.gameEdit
+        // this.getGame()
+        this.gameEdit = this.$route.params.gameEdit
         console.log(this.gameEdit.gameId)   
     },
 }

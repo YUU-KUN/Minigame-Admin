@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+
+    <input type="file" @change="onFileSelected">
+    <button @click="onUpload" class="btn btn-primary">Upload!</button>
+    <!-- <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -27,15 +30,45 @@
       <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    </ul> -->
+
+    <img :src="image" alt="" srcset="">
+
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      image: null  
+    }
+  },
+  methods: {
+    onFileSelected(event) {
+      this.image = event.target.files[0]
+      // console.log(this.image);
+      console.log(event);
+    },
+    onUpload() {
+      let headers = {
+                'headers': {
+                    'Content-Type' : 'multipart/form-data; boundary=<calculated when request is sent>',
+                },
+            }
+      let fd = new FormData();
+      fd.append('imageCoba', this.image, this.image.name)
+      axios.put('transaction/upload-bukti/76e02924-25b1-450d-bb80-33c30962f891', fd). then(response => {
+        console.log(response);
+      }, headers).catch(error => {  
+        console.log(error.response);
+      })
+    }
   }
 }
 </script>

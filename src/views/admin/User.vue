@@ -69,21 +69,7 @@
               <!-- ONLY FOR DEVELOPING -->
 
 
-                <!-- <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-                  <div class="toast" style="position: absolute; top: 0; right: 0;">
-                    <div class="toast-header">
-                      <img src="" class="rounded mr-2" alt="...">
-                      <strong class="mr-auto">Bootstrap</strong>
-                      <small>11 mins ago</small>
-                      <button @click="info == false" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="toast-body">
-                      User berhasil terhapus
-                    </div>
-                  </div>
-                </div> -->
+                
 
             
 
@@ -106,12 +92,13 @@
 
 <script>
 import axios from 'axios'
+import 'bootstrap-vue'
 export default {
     data() {
         return {
             users: '',
             removed: false,
-            info: false
+            info: false,
         }
     },
     methods: {
@@ -131,10 +118,11 @@ export default {
                 },
             }
             axios.delete(`/user/${id}`, headers).then(this.getUser())
-            
+            this.$bvToast.show('my-toast')
             this.info = true
             console.log('Berhasil hapus User '+username)
-        }
+        },
+
     },
     mounted() {
         this.getUser()

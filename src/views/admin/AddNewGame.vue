@@ -32,27 +32,27 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="price"><strong>Normal Price</strong></label>
-                                                                        <input type="number" id="price" class="form-control" v-model="price" min="0" required>
+                                                                        <input type="number" id="price" class="form-control" v-model="price" min="1" >
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="discount"><strong>Discount Price</strong></label>
-                                                                        <input type="number" id="discount" class="form-control" min="0" required>
+                                                                        <input type="number" id="discount" class="form-control" min="0" >
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Duration</strong> (Minutes)</label>
-                                                                        <input type="number" id="duration" class="form-control" v-model="duration" min="1" required>
+                                                                        <input type="number" id="duration" class="form-control" v-model="duration" min="1" >
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5)</label>
-                                                                        <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" required>
+                                                                        <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -63,13 +63,13 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="difficulty"><strong>Difficulty</strong></label>
-                                                                        <input type="number" id="difficulty" class="form-control" v-model="difficulty" min="1" required>
+                                                                        <input type="number" id="difficulty" class="form-control" v-model="difficulty" min="1" >
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="capasity"><strong>Capacity</strong></label>
-                                                                        <input type="number" id="capasity" class="form-control" v-model="capacity" min="1" required>
+                                                                        <input type="number" id="capasity" class="form-control" v-model="capacity" min="1" >
                                                                     </div>
                                                                 </div>
 
@@ -77,11 +77,10 @@
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
                                                                         <select name="genre" id="genre" v-model="genre" class="form-control">
-                                                                            <option value="">Adventure</option>
-                                                                            <option value="">Action</option>
-                                                                            <option value="">Puzzle</option>
+                                                                            <option value="Adventure">Adventure</option>
+                                                                            <option value="Action">Action</option>
+                                                                            <option value="Puzzle">Puzzle</option>
                                                                         </select>
-                                                                        <!-- <input type="text" id="capasity" class="form-control" v-model="capasity"> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -103,13 +102,19 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="cover"><strong>Cover</strong></label>
-                                                                        <input type="file" id="cover" class="form-control" @change="onCoverChange">
+                                                                        <input type="file" id="cover" name="image" ref="image" class="form-control" @change="onCoverChange">
+                                                                    </div>
+                                                                    <div class="preview">
+                                                                        <img v-if="imageUrl" :src="imageUrl" alt="Covernya" height="100px" style="margin:10px">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="poster"><strong>Poster</strong></label>
-                                                                        <input type="file" id="poster" accept="image/*" class="form-control" @change="onPosterChange">
+                                                                        <input type="file" id="poster" ref="poster" name="poster" class="form-control" @change="onPosterChange">
+                                                                    </div>
+                                                                    <div class="preview">
+                                                                        <img v-if="posterUrl" :src="posterUrl" alt="Posternya" height="100px" style="margin:10px">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -154,70 +159,51 @@ export default {
             difficulty: '',
             capacity: '',
             rating: '',
-            url: ''
-
+            url: '',
+            imageUrl: '',
+            posterUrl: '',
         }
     },
     methods: {
-        onCoverChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-            return;
-            this.createCover(files[0]);
-            this.createPoster(files[0]);
+        onCoverChange() {
+            this.image = this.$refs.image.files[0]
+            this.imageUrl = URL.createObjectURL(this.image)
+            console.log('urlnya: '+this.imageUrl);
         },
-        createCover(file) {
-            var image = new Image();
-            var reader = new FileReader();
-            var vm = this;
-
-            reader.onload = (e) => {
-                vm.image = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-
-        onPosterChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-            return;
-            this.createCover(files[0]);
-            this.createPoster(files[0]);
-        },
-        createPoster(file) {
-            var poster = new Image();
-            var reader = new FileReader();
-            var vm = this;
-
-            reader.onload = (e) => {
-                vm.poster = e.target.result;
-            };
-            reader.readAsDataURL(file);
+        onPosterChange() {
+            this.poster = this.$refs.poster.files[0]
+            this.posterUrl = URL.createObjectURL(this.poster)
+            console.log('urlnya: '+this.posterUrl);
         },
 
         addNewGame() {
+            const formData = new FormData()
+            formData.append('title', this.title)
+            formData.append('poster', this.poster)
+            formData.append('image', this.image)
+            formData.append('genre', this.genre)
+            formData.append('price', this.price)
+            formData.append('description', this.description)
+            formData.append('difficulty', this.difficulty)
+            formData.append('capacity', this.capacity)
+            formData.append('duration', this.duration)
+            formData.append('url', this.title.replace(/\s/g, ''))
+
             let headers = {
                 "headers": {
-                    "content-type": "application/json",
+                    "Content-Type": "multipart/form-data",
                 },
             }
-            axios.post('game/create', {
-                title: this.title,
-                // poster: this.poster,
-                // image: this.image,
-                genre: this.genre,
-                price: this.price,
-                // rating: this.rating,
-                description: this.description,
-                difficulty: this.difficulty,
-                capacity: this.capacity,
-                duration: this.duration,
-                url: this.title.replace(/\s/g, '')
-            },headers).then(
-                this.$router.push('/games'),
+
+            console.log('ini form data: '+formData);    
+            axios.post('/game/create', formData, headers).then( response => {
+                localStorage.rating = this.rating
+                console.log('imagenya: ' + formData)
+                console.log('response requestnya: ' + response.request)
                 console.log('Berhasil Menambahkan Game Baru')
-            ).catch((error) => console.log( error.response.request ))
-        }
+                this.$router.push('/games')
+            }).catch(error => {console.log( error.response )})
+        },
     },
     mounted() {
     }

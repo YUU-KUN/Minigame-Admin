@@ -202,7 +202,7 @@ export default {
             }).then(response => {
             console.log(response)
             console.log('Berhasil Checkout Keranjang!')
-            this.getCart()
+            this.$router.push('/user/transaction')
           }).catch(error => {
             console.log(error.response);
           })

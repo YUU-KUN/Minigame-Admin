@@ -19,8 +19,8 @@
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="price"><strong>Game</strong></label>
-                                                                        <input type="text" id="price" class="form-control" :value="gameDetail.title" disabled>
+                                                                        <label for="title"><strong>Game</strong></label>
+                                                                        <input type="text" id="title" class="form-control" :value="gameDetail.title" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>

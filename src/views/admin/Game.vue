@@ -44,7 +44,7 @@
                                                 <td>{{game.title}}</td>
                                                 <td>{{game.price | rupiah}}</td>
                                                 <td v-if="game.rating">
-                                                    {{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                                    {{rating}} <span style="font-size:17px;color:orange;">&starf;</span>
                                                 </td>
                                                 <td v-else>
                                                     -
@@ -75,6 +75,16 @@
 
 
             <!-- ONLY FOR DEVELOPING -->
+            <div class="card bg-light">
+                <div class="card-header"> <h3>Edit Game</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{gameEdit}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
             <div class="card bg-light">
                 <div class="card-header"> <h3>Detail Game</h3> </div>
                   <div class="card-inner">
@@ -113,6 +123,7 @@ export default {
             removed: false,
             gamelist: '',
             gameDetail: '',
+            gameEdit: '',
             info: ''
         }
     },
@@ -121,29 +132,36 @@ export default {
             axios.get('game/list').then(response => {
                 this.gamelist = response.data.data
             })
+            this.rating = localStorage.getItem('rating')
         },
         viewGameDetail(index) {
-            let headers = {
-                "headers": {
-                    "content-type": "application/json",
-                },
-            }
             let detail = this.gamelist[index]
-            let id = this.gamelist[index].gameId
-            // console.log(detail);
-            axios.get('game/detail/'+detail.gameId, headers).then(response => {
+            let id = detail.gameId
+            axios.get('game/detail/'+detail.gameId).then(response => {
                 this.gameDetail = response.data.data
             })
             this.$router.push({name: 'GameDetail', params: {gameDetail:detail, gameId:id}}) //bisa juga kayak gini
             console.log('harusnya muncul detail gamenya');
         },
+
         editGame(index) {
-            // let edit = this.gamelist[index]
-            let id = this.gamelist[index].gameId
-            this.$router.push({name:'EditGame', params:{gameId:id}})
+            let edit = this.gamelist[index]
+            let id = edit.gameId
+            axios.get('game/detail/'+id).then(response => {
+                this.gameEdit = response.data.data
+            })
+            this.$router.push({name: 'EditGame', params: {gameEdit:edit, gameId:id}}) //bisa juga kayak gini
         },
+
+        // ASLI
+        // editGame(index) {
+        //     let edit = this.gamelist[index]
+        //     let id = this.gamelist[index].gameId
+        //     this.$router.push({name:'EditGame', params:{gameId:id, gameEdit: edit}})
+        // },
         removeGame(index) {
-            this.gamelist.splice(index, 1)
+            let GameID = this.gamelist[index].gameId
+            axios.delete('game/delete/'+GameID).then(this.getGames())
             this.removed = true
             this.info = 'Berhasil Hapus Game'
             console.log(this.info)

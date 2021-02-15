@@ -199,10 +199,6 @@ export default {
         this.getallCode()
         this.getUserCode()
     },
-    created() {
-        this.newCode
-        this.$forceUpdate()
-    }
 }
 </script>
 

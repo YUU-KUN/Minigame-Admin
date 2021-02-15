@@ -32,16 +32,16 @@ Vue.use(VueCurrency, {
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://infiniteroom.herokuapp.com/api/v2'
-// const token = localStorage.getItem('Authorization')
-// if (token) {
-//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-// }
+const token = localStorage.getItem('Authorization')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
-// require('dotenv').config();
+require('dotenv').config();
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
-// axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_API_AUTHORIZATION;
-axios.defaults.headers.common['x-access-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMzQ1MzBkZS0yN2VhLTQxMGItYjQxYS1mNTBmZTc0ODc2OWQiLCJuYW1hIjoiYWRtaW4gbm9ybWFsIiwicm9sZSI6MSwibGV2ZWwiOjAsImlhdCI6MTYxMzIwMTI0MiwiZXhwIjoxNjEzMjg3NjQyfQ.H2DloK_L8TpgoQYAHKoRuIgcAqC2gkDiCLZtt5aynPQ';
+axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_API_AUTHORIZATION;
+axios.defaults.headers.common['x-access-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhMDQyMzE0My04NWEwLTRhMWItYjhiZS0xNmZlYTZkY2VhNDYiLCJuYW1hIjoiU3VwZXIgQWRtaWVuIiwicm9sZSI6MSwibGV2ZWwiOjEsImlhdCI6MTYxMzM3NTExMywiZXhwIjoxNjEzNDYxNTEzfQ.jGmaQHzkw_2LHngt1opkm0ZzJc6Jt686cYZuWC7dAas';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 new Vue({
   router,

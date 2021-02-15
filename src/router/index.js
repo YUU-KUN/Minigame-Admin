@@ -19,6 +19,7 @@ import GameDetail from '../views/admin/GameDetail'
 import EditGame from '../views/admin/EditGame'
 import Code from '../views/admin/Code'
 import Transaction from '../views/admin/Transaction'
+import CobaUploadImage from '../views/admin/cobaUploadImage'
 
 // user
 import DashboardUser from '../views/user/DashboardUser'
@@ -70,7 +71,12 @@ const routes = [
   
   // admin
   {
-    path: '/editGame/:gameId',
+    path: '/tes',
+    name: 'CobaUploadImage',
+    components: {default:CobaUploadImage, sidebar: Sidebar}
+  },
+  {
+    path: '/editGame/:gameEdit',
     name: 'EditGame',
     components: {default:EditGame, sidebar: Sidebar}
   },
