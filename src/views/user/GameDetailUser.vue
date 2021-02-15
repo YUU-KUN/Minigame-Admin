@@ -285,53 +285,49 @@
       </div>
 
 <div style="display: none;" id="addToCart">
-          <h2>Generate New Code</h2>
-          <p>Please select the date to play!</p>
-                                <div class="form">
-                                    <div class="form-group">
-                                          <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="date"><strong>Date</strong></label>
-                                                                        <input type="date" id="date" class="form-control" v-model="date">
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="time"><strong>Time</strong></label>
-                                                                        <select name="time" v-model="time" id="time" class="form-control">
-                                                                            <option selected disabled>Select the Time</option>
-                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" >{{time}}</option>
-                                                                        </select>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <div class="form-group" >
-                                                                    <div class="input-container" style="flex-grow: 1;">
-                                                                        <button @click="addToCart" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
-                                                                          <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
-                                                                          <b>Add!</b>
-                                                                        </button>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+  <h2>Add this game to cart?</h2>
+  <p>Please select the date to play!</p>
+  <div class="form">
+      <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                          <div class="col">
+                              <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                      <div class="input-container" style="flex-grow: 1;  ">
+                                          <label for="date"><strong>Date</strong></label>
+                                          <input type="date" id="date" class="form-control" v-model="date">
+                                      </div>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                      <div class="input-container" style="flex-grow: 1;  ">
+                                          <label for="time"><strong>Time</strong></label>
+                                          <select name="time" v-model="time" id="time" class="form-control">
+                                              <option selected disabled>Select the Time</option>
+                                              <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" >{{time}}</option>
+                                          </select>
+                                      </div>
+                              </div>
+                          </div>
+                          <div class="col-md-12">
+                              <div class="form-group" >
+                                      <div class="input-container" style="flex-grow: 1;">
+                                          <button @click="addToCart" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
+                                            <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
+                                            <b>Add to Cart!</b>
+                                          </button>
+                                      </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
       
     </div>
@@ -393,8 +389,16 @@ export default {
       },headers).then(response => {
         console.log(response)
         console.log('Berhasil Menambahkan ke Cart')
-        this.getDetailGame()
+        this.showToast()
       })
+    },
+    showToast() {{
+        this.$bvToast.toast(`Success Adding ${this.detailGame.title} to Cart!`, {
+          title: 'Success',
+          autoHideDelay: 5000,
+        })
+      }
+
     }
   },
   mounted() {

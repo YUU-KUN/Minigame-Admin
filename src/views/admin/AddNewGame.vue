@@ -52,7 +52,7 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5) 
-                                                                            <span v-if="rating"><b-icon v-for="index in rating" :key="index" icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                            <span v-if="rating"><b-icon v-for="value in rating" :key="value" icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span> 
                                                                             <span v-else><b-icon icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span>
                                                                         </label>
                                                                         <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" >
@@ -205,7 +205,6 @@ export default {
 
             console.log('ini form data: '+formData);    
             this.axios.post('/game/create', formData, headers).then( response => {
-                localStorage.setItem('rating', this.rating)
                 console.log('imagenya: ' + formData)
                 console.log('response requestnya: ' + response.request)
                 console.log('Berhasil Menambahkan Game Baru')

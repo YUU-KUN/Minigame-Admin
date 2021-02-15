@@ -8,6 +8,8 @@ import VueCurrency from 'vue-currency-filter'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import moment from 'moment'
 
+import 'bootstrap-vue/dist/bootstrap-vue.css' //import bootstrap-vue doang, gak perlu bootstrap biasa,or have fun with that 'beautiful' layout
+
 Vue.use(VueAxios, axios); //HARUS VueAxios dulu, or enjoy your protocol ERROR
 
 Vue.use(BootstrapVue)
