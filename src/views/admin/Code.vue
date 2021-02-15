@@ -184,11 +184,8 @@ export default {
         getUserCode() {
             axios.get('game/usergame').then(response => {
                 this.userlist = response.data.data
-            })
-        },
-        getallCode() {
-            axios.get('game/usergame').then(response => {
                 this.allCode = response.data.data[1].code
+
             })
         },
         tesIndex(index) {
@@ -196,7 +193,6 @@ export default {
         }
     },
     mounted() {
-        this.getallCode()
         this.getUserCode()
     },
 }

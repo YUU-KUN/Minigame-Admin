@@ -8,8 +8,8 @@
                 </div>
                 <div class="card-body">
                     <div v-if="info" class="alert alert-success alert-dismissible fade show" role="alert">
-                      {{res}} 
-                      <button type="button" @click="info == false" class="close" data-dismiss="alert" aria-label="Close">
+                      <b>{{res}}</b>
+                      <button type="button" @click="setTimeout(closeToast, 3000)" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -50,11 +50,14 @@
                                                   <span v-else-if="transaction.status == 3">Transaksi Ditolak</span>
                                                   <span v-else>Transaksi Kadaluarsa</span>
                                                 </td>
-                                                <td v-if="transaction.status ==  1 || transaction.status == 2">
+                                                <td v-if="transaction.status ==  1 || transaction.status == 2 || transaction.status == 3">
                                                   <a :href="transaction.buktiPembayaran" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
                                                 </td>
                                                 <td v-else-if="transaction.status == 0">
                                                   <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
+                                                </td>
+                                                <td v-else>
+                                                  -
                                                 </td>
                                                 <td>{{transaction.createdAt | formatDate}}</td>
                                                 <td style="align-items:center">
@@ -73,17 +76,15 @@
                                                   <h2>Hello!</h2>
                                                   <p>Silahkan upload bukti pembayarannya ya~</p>
 
-                                                  <!-- <form @submit="uploadPayment(index)" enctype="multipart/form-data"> -->
                                                   <!-- <form enctype="multipart/form-data"> -->
                                                     <div class="form-group" >
-                                                      <input type="file" class="form-control" id="buktiPembayaran" name="buktiPembayaran" ref="buktiPembayaran" @change="onFileSelected" required>
-                                                      <!-- <input type="file" id="poster" ref="poster" name="poster" class="form-control" @change="onFileSelected"> -->
+                                                      <!-- <input type="file" class="form-control" id="buktiPembayaran" name="buktiPembayaran" ref="buktiPembayaran" @change="onFileSelected" required> -->
+                                                      <input type="file" id="poster" ref="poster" name="poster" class="form-control" @change="onFileSelected">
                                                     </div>
                                                     <!-- <div class="preview">
                                                         <img v-if="posterUrl" :src="posterUrl" alt="Posternya" height="100px" style="margin:10px">
                                                     </div> -->
-                                                    <button @click="onUpload()" type="button" class="btn btn-success mb-4 form-control">Checkout!</button>
-                                                  <!-- </form> -->
+                                                    <button @click="onUpload(index)" type="button" data-fancybox-close class="btn btn-success mb-4 form-control">Checkout!</button>
                                                 </div>
                                             </tr>
                                     </tbody>
@@ -153,38 +154,63 @@ export default {
             })
         },
 
-        onFileSelected() {
+        onFileSelected(event) {
           // this.buktiPembayaran = this.$refs.buktiPembayaran.files[0]
           // console.log(this.buktiPembayaran);
 
           // this.buktiPembayaranUrl = URL.createObjectURL(this.buktiPembayaran)
           // console.log('urlnya: '+this.buktiPembayaranUrl);
 
-          // this.poster = this.$refs.poster.files[0]
-          //   this.posterUrl = URL.createObjectURL(this.poster)
-          //   console.log('urlnya: '+this.posterUrl);
+          this.buktiPembayaran = event.target.files[0]
+          console.log(this.buktiPembayaran);
+          this.posterUrl = URL.createObjectURL(this.buktiPembayaran)
+          console.log('urlnya: '+this.posterUrl);
         },
 
-        uploadPayment(index) {
+        // uploadPayment(index) {
+        //   let headers = {
+        //         'headers': {
+        //             'Content-Type' : 'multipart/form-data',
+        //         },
+        //     }
+        //   let transactionID = this.userTransaction[index].transaksiId
+        //   let file = new FormData();
+        //   let inputGambar = document.getElementsByClassName('form-control-file')
+        //   file.append('file', this.buktiPembayaran); 
+
+        //   axios.put('transaction/upload-bukti/'+transactionID, {
+        //     file: file
+        //   }, headers).then(response => {
+        //     console.log(response)
+        //     this.info = true
+        //     this.res = response
+        //     // this.getUserTransaction()
+        //   })
+        // },
+
+        onUpload(index) {
           let headers = {
                 'headers': {
                     'Content-Type' : 'multipart/form-data',
                 },
             }
           let transactionID = this.userTransaction[index].transaksiId
-          let file = new FormData();
-          let inputGambar = document.getElementsByClassName('form-control-file')
-          file.append('file', this.buktiPembayaran); 
+          let formData = new FormData();
+          formData.append('file', this.buktiPembayaran); 
 
-          axios.put('transaction/upload-bukti/'+transactionID, {
-            file: file
-          }, headers).then(response => {
+          axios.put('transaction/upload-bukti/'+transactionID, formData, headers).then(response => {
             console.log(response)
             this.info = true
-            this.res = response
-            // this.getUserTransaction()
+            this.res = "Bukti transaksi berhasil diupload!"
+            this.getUserTransaction()
+          }).catch(error => {
+            console.log(error);
           })
         },
+        
+        closeToast() {
+          this.info = false 
+        }
 
         
     },

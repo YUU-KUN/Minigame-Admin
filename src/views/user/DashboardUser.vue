@@ -109,7 +109,6 @@
 
 
             <!-- ONLY FOR DEVELOPING -->
-
               <div class="card bg-light">
                 <div class="card-header"> <h3>Web Game</h3> </div>
                   <div class="card-inner">
@@ -134,10 +133,16 @@ export default {
     return {
       gameweb: '',
       gameId: '',
-      currentUser: ''
+      currentUser: '',
+      totalUser: '',
     }
   },
   methods: {
+    whoAmi() {
+      axios.get('user/profile').then(response => {
+          this.whoami = response.data.data.name
+      })
+    },
     getWebGame() {
       axios.get('https://infiniteroom.herokuapp.com/api/v2/game/web').then(response => {
         this.gameweb = response.data.data
@@ -155,6 +160,7 @@ export default {
   },
   mounted() {
     this.getWebGame()
+    this.whoAmi()
   }
 
 }

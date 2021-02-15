@@ -36,7 +36,7 @@ export default new Vuex.Store({
                   "Content-Type": "application/x-www-form-urlencoded",
                 },
               };
-	            axios({url: '/user/login', data: user, method: 'POST' })
+	            axios({url: '/admin/login', data: user, method: 'POST' })
 	            .then(response => {
 	                const token = response.data.token
 	                const logged = response.data.logged
