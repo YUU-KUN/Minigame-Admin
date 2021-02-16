@@ -35,7 +35,7 @@
                                                 <td>{{user.isVerified}}</td>
                                                 <td>{{user.createdAt | formatDate}}</td>
                                                 <td class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index"><b-icon icon="trash2-fill" title="Delete User"></b-icon></button>
                                                 </td>
 
                                                 <div style="display:none" :id="index" class="animated-modal">

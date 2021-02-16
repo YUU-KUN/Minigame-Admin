@@ -68,7 +68,7 @@
                                             <td>{{cart.price | rupiah}}</td>
                                             <td>{{cart.createdAt | formatDate}}</td>
                                             <td class="d-flex justify-content-center">
-                                                  <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
+                                                  <button class="btn btn-danger" data-fancybox :data-src="'#'+index" title="Delete Item"><b-icon icon="trash2-fill"></b-icon></button>
                                             </td>
 
                                             <div style="display:none" :id="index" class="animated-modal">
