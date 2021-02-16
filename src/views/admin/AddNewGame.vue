@@ -1,21 +1,21 @@
 <template>
 <div class="container-fluid" style="margin-top:100px">
-  <div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Add New Game</h6>
                 </div>
                 <div class="card-body">
-                        <div class="row gx-5">
-                            <div class="col-md-12 mt-3">
-                                <div class="form">
-                                    <div class="form-group">
-                                          <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-                                                        <form @submit.prevent="addNewGame">
+                    <div class="row gx-5">
+                        <div class="col-md-12 mt-3">
+                            <div class="form">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form @submit.prevent="addNewGame">
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col">
@@ -26,7 +26,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-3">
@@ -41,14 +40,12 @@
                                                                         <input type="number" id="discount" class="form-control" min="0" placeholder="20">
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Duration</strong> (Minutes)</label>
                                                                         <input type="number" id="duration" class="form-control" v-model="duration" min="1" >
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5) 
@@ -60,7 +57,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-3">
@@ -75,7 +71,6 @@
                                                                         <input type="number" id="capasity" class="form-control" v-model="capacity" min="1" >
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
@@ -94,7 +89,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col">
@@ -105,7 +99,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-md-12">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-6">
@@ -128,7 +121,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-md-12">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                                 <div class="col-md">
@@ -136,8 +128,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        </form>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,12 +136,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
+                </div> 
             </div>
-
         </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>

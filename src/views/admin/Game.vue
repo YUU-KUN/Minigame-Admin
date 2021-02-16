@@ -1,6 +1,6 @@
 <template>
 <div class="container-fluid" style="margin-top:100px">
-  <div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -8,17 +8,17 @@
                 </div>
                 <div class="card-body">
                     <div v-if="removed" class="alert alert-success alert-dismissible fade show" role="alert">
-                      {{info}}
-                      <button type="button" @click="removed = false" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                        {{info}}
+                        <button type="button" @click="removed = false" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <router-link to="addNewGame">
-                            <a href="" class="btn btn-primary">
-                                Add New Game
-                            </a>
+                                <button type="button" class="btn btn-primary">
+                                    Add New Game
+                                </button>
                             </router-link>
                         </div>
                     </div>
@@ -39,32 +39,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr v-for="(game, index) in gamelist" :key="index">
-                                                <td>{{index+1}}</td>
-                                                <td>{{game.title}}</td>
-                                                <td>{{game.price | rupiah}}</td>
-                                                <td v-if="game.rating">
-                                                    {{rating}} <span style="font-size:17px;color:orange;">&starf;</span>
-                                                </td>
-                                                <td v-else>
-                                                    -
-                                                </td>
-                                                <td>{{game.genre.join(', ')}}</td>
-                                                <td >
-                                                    <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
-                                                    <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
-                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index" style="margin: 0 5px">Delete</button>
-                                                </td>
+                                        <tr v-for="(game, index) in gamelist" :key="index">
+                                            <td>{{index+1}}</td>
+                                            <td>{{game.title}}</td>
+                                            <td>{{game.price | rupiah}}</td>
+                                            <td v-if="game.rating">
+                                                {{rating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                            </td>
+                                            <td v-else>
+                                                -
+                                            </td>
+                                            <td>{{game.genre.join(', ')}}</td>
+                                            <td >
+                                                <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
+                                                <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
+                                                <button class="btn btn-danger" data-fancybox :data-src="'#'+index" style="margin: 0 5px">Delete</button>
+                                            </td>
 
-                                                <div style="display:none" :id="index" class="animated-modal">
-                                                    <h2>Watch Out!</h2>
-                                                    <p>Are you sure wanna delete <b>{{game.title}}</b>?</p>
-                                                    <div class=" d-flex justify-content-center">
-                                                    <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                    <button type="button" @click="removeGame(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
-                                                    </div>
+                                            <!-- Delete Confirmation -->
+                                            <div style="display:none" :id="index" class="animated-modal">
+                                                <h2>Watch Out!</h2>
+                                                <p>Are you sure wanna delete <b>{{game.title}}</b>?</p>
+                                                <div class=" d-flex justify-content-center">
+                                                <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                <button type="button" @click="removeGame(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
                                                 </div>
-                                            </tr>
+                                            </div>
+
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -106,8 +108,6 @@
                     </div>
                 </div>
               </div>
-
-              
               <!-- ONLY FOR DEVELOPING -->
 
         </div>

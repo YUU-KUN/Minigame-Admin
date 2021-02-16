@@ -1,6 +1,6 @@
 <template>
 <div class="container-fluid" style="margin-top:100px">
-  <div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -29,78 +29,66 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr v-for="(user, index) in userlist" :key="index">
-                                                <td>{{index+1}}</td>
-                                                <td>{{user.userDetail.name}}</td>
-                                                <td>{{user.gameDetail.title}}</td>
-                                                <td>{{user.playingDate | formatDate}}</td>
-                                                <td>{{user.code}}</td>
-                                                <td >
-                                                    <div v-if="user.expired">Expired</div>
-                                                    <div v-else>Available</div>
-                                                </td>
-                                                <td class="d-flex justify-content-center">
-                                                    <button class="btn btn-danger" data-fancybox :data-src="'#'+index" @click="tesIndex(index)">Generate</button>
-                                                    <!-- <button class="btn btn-danger" v-on:click="generate(index)">Generate</button> -->
-
-                                                    <div style="display: none;" :id="index">
-          <h2>Generate New Code</h2>
-          <p>Please select the date to play!</p>
-                                <div class="form">
-                                    <div class="form-group">
-                                          <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <!-- <div class="col"> -->
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="date"><strong>Date</strong></label>
-                                                                        <input type="date" id="date" class="form-control" v-model="date">
-                                                                    </div>
-                                                                <!-- </div> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <!-- <div class="col"> -->
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="time"><strong>Time</strong></label>
-                                                                        <select name="time" v-model="time" id="time" class="form-control">
-                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" selected>{{time}}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                <!-- </div> -->
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <div class="form-group" >
-                                                                <div class="col">
-                                                                    <div class="input-container" style="flex-grow: 1;">
-                                                                        <button @click="generate(index)" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
-                                                                          <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
-                                                                          <b>Generate</b>
-                                                                        </button>
+                                        <tr v-for="(user, index) in userlist" :key="index">
+                                            <td>{{index+1}}</td>
+                                            <td>{{user.userDetail.name}}</td>
+                                            <td>{{user.gameDetail.title}}</td>
+                                            <td>{{user.playingDate | formatDate}}</td>
+                                            <td>{{user.code}}</td>
+                                            <td>
+                                                <div v-if="user.expired">Expired</div>
+                                                <div v-else>Available</div>
+                                            </td>
+                                            <td class="d-flex justify-content-center">
+                                                <button class="btn btn-danger" data-fancybox :data-src="'#'+index" @click="tesIndex(index)">Generate</button>
+                                                <div style="display: none;" :id="index">
+                                                    <h2>Generate New Code</h2>
+                                                    <p>Please select the date to play!</p>
+                                                    <div class="form">
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-body">
+                                                                            <div class="col">
+                                                                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                                        <label for="date"><strong>Date</strong></label>
+                                                                                        <input type="date" id="date" class="form-control" v-model="date">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                                        <label for="time"><strong>Time</strong></label>
+                                                                                        <select name="time" v-model="time" id="time" class="form-control">
+                                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" selected>{{time}}</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group" >
+                                                                                    <div class="col">
+                                                                                        <div class="input-container" style="flex-grow: 1;">
+                                                                                            <button @click="generate(index)" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
+                                                                                                <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
+                                                                                                <b>Generate</b>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-</div>
-                                                </td>
-
-                                                
-                                            </tr>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -137,7 +125,7 @@
 
         </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>
