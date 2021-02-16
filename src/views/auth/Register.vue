@@ -1,17 +1,17 @@
 <template>
   <div>
-      <h1>Welcome to Register Page!</h1>
-
-      <div class="container">
-          <form @submit.prevent="Register" class="form-group">
-              <label for="email">Email</label>
-              <input type="text" id="email" class="form-control" placeholder="Email" name="email" v-model="email">
-
-              <label for="password">Password</label>
-              <input type="password" id="password" class="form-control" placeholder="Password" name="password" v-model="password">
-              <button type="submit" class="btn btn-primary">Register</button>
-          </form>
-      </div>
+    <h1>Welcome to Register Page!</h1>
+    <div class="container">
+        <form @submit.prevent="Register" class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" class="form-control" placeholder="Email" name="email" v-model="email">
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" name="password" v-model="password">
+            
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
   </div>
 </template>
 
