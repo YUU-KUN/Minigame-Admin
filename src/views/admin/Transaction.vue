@@ -32,27 +32,32 @@
                                     <tbody>
                                             <tr v-for="(transaction, index) in transactions" :key="index">
                                                 <td>{{index +1}}</td>
-                                                <td>{{transaction.user}}</td>
-                                                <!-- <td>{{transaction.items[0].cartGameData.title}}</td> -->
+                                                <td><span v-if="transaction.user">{{transaction.user}}</span> <span v-else>User</span></td>
                                                 <td>
                                                     <span v-for="(game, index) in transaction.items" :key="index">
                                                     {{game.cartGameData.title}}
                                                     </span>
                                                 </td>
                                                 <td>{{transaction.total | rupiah}}</td>
-                                                <td>{{transaction.status}}</td>
                                                 <td>
-                                                    <a :href="transaction.buktiPembayaran" target="_blank">Lihat Bukti Pembayaran</a>
-                                                    <!-- <router-link :to="transaction.buktiPembayaran">Lihat Bukti Pembayaran</router-link> -->
+                                                    <span v-if="transaction.status == 0">Menunggu Bukti Pembayaran</span>
+                                                    <span v-else-if="transaction.status == 1">Transaksi Terkonfirmasi</span>
+                                                    <span v-else-if="transaction.status == 2">Menunggu Konfirmasi Admin</span>
+                                                    <span v-else-if="transaction.status == 3">Transaksi Ditolak</span>
+                                                    <span v-else>Transaksi Kadaluarsa</span>
+                                                </td>
+                                                <td>
+                                                    <a v-if="transaction.buktiPembayaran" :href="transaction.buktiPembayaran" target="_blank">Lihat Bukti Pembayaran</a>
+                                                    <a v-else href="">Tidak Ada Bukti Pembayaran</a>
                                                 </td>
                                                 
                                                 <td>{{transaction.createdAt | formatDate}}</td>
-                                                <td v-if=" status == 'waiting' " class="d-flex justify-content-center">
+                                                <td v-if="transaction.status != 2" >
                                                     <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>
                                                 <td v-else class="d-flex justify-content-around">
-                                                    <button class="btn btn-success" v-on:click="view">&#10003;</button>
-                                                    <button class="btn btn-primary" v-on:click="edit">&times;</button>
+                                                    <button class="btn btn-success" @click="accept(index)">&#10003;</button>
+                                                    <button class="btn btn-primary" @click="reject(index)">&times;</button>
                                                     <button class="btn btn-danger" data-fancybox :data-src="'#'+index">Delete</button>
                                                 </td>
 
@@ -98,16 +103,15 @@ export default {
         return {
             action: false,
             transactions: '',
-            status: 'waiting',
             info: ''
         }
     },
     methods: {
-        view() {
-            console.log('viewed');
+        accept(index) {
+            console.log('accepted');
         },
-        edit() {
-            console.log('edit');
+        reject(index) {
+            console.log('rejected');
         },
         checkTransactionId(index){
             console.log(this.transactions[index].transaksiId);

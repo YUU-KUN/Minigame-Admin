@@ -27,8 +27,8 @@
                       </div>
                       <div class="row">
                           <b-icon class="h5 " icon="cash" style="color: orange"></b-icon>
-                          <span v-if="game.discount" style="text-decoration: line-through">{{game.price | rupiah}}</span>
-                          <span v-else>{{game.price | rupiah}}</span>&nbsp;	<span style="margin: 0 10px"><b><h5>{{game.price | rupiah}}&nbsp;	</h5></b></span> <span style="color:red"><h5>(Save 40%!)</h5></span>
+                          <span v-if="!game.discount" ><h5>{{game.price | rupiah}}</h5></span>
+                          <span v-else style="text-decoration: line-through">{{game.price | rupiah}}&nbsp;	<span style="margin: 0 10px"><b><h5>{{game.price | rupiah}}&nbsp;	</h5></b></span> <span style="color:red"><h5>(Save 40%!)</h5></span></span>
                       </div>
                       <br>
                       <div class="row">
