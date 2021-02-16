@@ -1,12 +1,13 @@
 <template>
-  <div>
-      <form @submit="joinGame"></form>
-      <input type="text" class="form-control" placeholder="Input Game Code" v-model="code">
-      <button type="submit" class="btn btn-primary">
-          <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon>
-           Play Game
+<div>
+    <form @submit="joinGame">
+        <input type="text" class="form-control" placeholder="Input Game Code" v-model="code">
+        <button type="submit" class="btn btn-primary">
+            <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon>
+            Play Game
         </button>
-  </div>
+    </form>
+</div>
 </template>
 
 <script>
