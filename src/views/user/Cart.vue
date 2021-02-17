@@ -19,7 +19,7 @@
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<!-- <th>No.</th> -->
+											<th>No.</th>
 											<th>Items</th>
 											<th>Members</th>
 											<th>Play Date</th>
@@ -37,6 +37,9 @@
 												{{cart.cartGameData.title}}
 											</td>
 											<td>
+												<span v-for="(member, index) in cart.members" :key="index">{{member}}</span>
+											</td>
+											<td>
 												{{cart.datePlay | formatDate}}
 											</td>
 											<td>
@@ -48,6 +51,7 @@
 											<td class="d-flex justify-content-center">
 												<button class="btn btn-danger" data-fancybox :data-src="'#'+index" title="Delete Item"><b-icon icon="trash2-fill"></b-icon></button>
 											</td>
+
 											<div style="display:none" :id="index" class="animated-modal">
 												<h2>Watch Out!</h2>
 												<p>Are you sure wanna delete <b>{{cart.cartGameData.title}}</b>?</p>
@@ -57,6 +61,7 @@
 													<button type="button" @click="deleteCart(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
 												</div>
 											</div>
+
 										</tr>
 									</tbody>
 								</table>
@@ -74,6 +79,7 @@
 					</div>
 				</div>
 			</div>
+
 			<!-- CANNOT IMPLEMENT THIS TOAST HERE -->
 			<!-- <div style="display: none;" id="uploadPayment" class="animated-modal">
 				<h2>Hello!</h2>

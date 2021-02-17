@@ -83,7 +83,7 @@
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="url"><strong>URL</strong> (...tranceformasiindonesia.com/<b><span v-if="url">{{url}}</span> <span v-else>yourURL</span></b> )</label>
+                                                                        <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="url">{{url}}</span> <span v-else>yourURL</span></b> )</label>
                                                                         <input type="text" id="url" class="form-control" v-model="url">
                                                                     </div>
                                                                 </div>
