@@ -203,6 +203,7 @@ export default {
             let headers = {
                 "headers": {
                     'Content-Type': 'multipart/form-data',
+                    'Access-Control-Allow-Origin': '*'
                 },
             }
             this.axios.put('game/update/'+this.gameEdit.gameId, 

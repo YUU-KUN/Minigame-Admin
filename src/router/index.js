@@ -108,6 +108,7 @@ const routes = [
   {
     path: '/games',
     name: 'Game',
+    // requireAuth: true,
     components: {default: Game, sidebar: Sidebar}
   },
   {

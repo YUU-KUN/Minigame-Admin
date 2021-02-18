@@ -119,6 +119,16 @@
 
             <!-- ONLY FOR DEVELOPING -->
               <div class="card bg-light">
+                <div class="card-header"> <h3>Current User</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{currentUser}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="card bg-light">
                 <div class="card-header"> <h3>Web Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">

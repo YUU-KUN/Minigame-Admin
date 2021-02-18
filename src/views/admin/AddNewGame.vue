@@ -18,10 +18,18 @@
                                                     <form @submit.prevent="addNewGame">
                                                         <div class="col">
                                                             <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                <div class="col">
+                                                                <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="title"><strong>Game</strong></label>
                                                                         <input type="text" id="title" class="form-control" v-model="title" placeholder="The Last Adventure" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="input-container" style="flex-grow: 1;  ">
+                                                                        <label for="genre"><strong>Genre</strong></label>
+                                                                        <!-- <select name="" id="" v-model="genre"></select> -->
+                                                                        <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect>
+                                                                        <!-- <pre class="language-json"><code>{{ genre  }}</code></pre> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -37,7 +45,7 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="discount"><strong>Discount</strong> (%)</label>
-                                                                        <input type="number" id="discount" class="form-control" min="0" placeholder="20">
+                                                                        <input type="number" id="discount" class="form-control" v-model="discount" min="0" placeholder="20">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3">
@@ -49,8 +57,9 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5) 
-                                                                            <span v-if="rating"><b-icon v-for="value in rating" :key="value" icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span> 
-                                                                            <span v-else><b-icon icon="star-fill" class="h7 mb-1" style="color: orange" aria-hidden="true"></b-icon></span>
+                                                                            <!-- ternyata pake parseInt() biar dia ngebaca integer -->
+                                                                            <span v-if="rating"><b-icon v-for="value in parseInt(rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                            <span v-else><b-icon icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span>
                                                                         </label>
                                                                         <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" >
                                                                     </div>
@@ -71,17 +80,17 @@
                                                                         <input type="number" id="capasity" class="form-control" v-model="capacity" min="1" >
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-3">
-                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="genre"><strong>Genre</strong></label>
+                                                                <!-- <div class="col-3">
+                                                                    <div class="input-container" style="flex-grow: 1;">
+                                                                        
                                                                         <select name="genre" id="genre" v-model="genre" class="form-control">
                                                                             <option value="Adventure">Adventure</option>
                                                                             <option value="Action">Action</option>
                                                                             <option value="Puzzle">Puzzle</option>
                                                                         </select>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-3">
+                                                                </div> -->
+                                                                <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="url">{{url}}</span> <span v-else>yourURL</span></b> )</label>
                                                                         <input type="text" id="url" class="form-control" v-model="url">
@@ -100,7 +109,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                            <div class="form-group" style="display: flex; ">
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;">
                                                                         <label for="cover"><strong>Cover</strong></label>
@@ -137,6 +146,20 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="card bg-light">
+			        	<div class="card-header">
+			        		<h3>Game Data</h3> 
+			        	</div>
+			        	<div class="card-inner">
+			        		<div class="card bg-dark">
+			        			<div class="card-inner bg-dark">
+			        				<pre class="text-warning">{{getGame}}</pre>
+			        			</div>
+			        		</div>
+			        	</div>
+			        </div>
+
                 </div> 
             </div>
         </div>
@@ -145,25 +168,48 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 export default {
+    components: {
+        Multiselect
+    },
     data(){
         return {
             title: '',
             price: '',
             duration: '',
+            discount: '',
             description: '',
             poster: '',
             image: '',
-            genre: {},
+            genre: [],
             difficulty: '',
             capacity: '',
             rating: '',
             url: '',
             imageUrl: '',
             posterUrl: '',
+
+            getGame: '',
+
+            value: [
+                { name: 'Adventure'},
+                { name: 'Puzzle'},
+            ],
+            
         }
     },
     methods: {
+        addGenre (newTag) {
+            const tag = {
+              name: newTag,
+              code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.options.push(tag)
+            this.value.push(tag)
+        },
         onCoverChange() {
             this.image = this.$refs.image.files[0]
             this.imageUrl = URL.createObjectURL(this.image)
@@ -182,10 +228,12 @@ export default {
             formData.append('image', this.image)
             formData.append('genre', this.genre)
             formData.append('price', this.price)
+            formData.append('discount', this.discount)
             formData.append('description', this.description)
             formData.append('difficulty', this.difficulty)
             formData.append('capacity', this.capacity)
             formData.append('duration', this.duration)
+            formData.append('rating', this.rating)
             formData.append('url', this.url)
 
             let headers = {
@@ -202,11 +250,16 @@ export default {
                 this.$router.push('/games')
             }).catch(error => {console.log( error.response )})
         },
+        Games() {
+            this.axios.get('game/list').then(response => {
+                this.getGame = response.data.data
+            })
+        }
     },
     mounted() {
+        this.Games()
     }
 }
 </script>
 
-<style>
-</style>
+<style src="../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>

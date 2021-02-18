@@ -248,19 +248,17 @@
         </div> -->
 
         <!-- ONLY FOR DEVELOPING -->
-
-        <div class="card bg-light">
-                <div class="card-header"> <h3>All Users</h3> </div>
+          <div class="card bg-light">
+                <div class="card-header"> <h3>Members</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
                       <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{users}}</pre>
+                        <pre class="text-warning">{{values}}</pre>
                       </div>
                     </div>
                 </div>
               </div>
-
-        <div class="card bg-light">
+              <div class="card bg-light">
                 <div class="card-header"> <h3>GameID</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -281,10 +279,24 @@
                     </div>
                 </div>
               </div>
+        <div class="card bg-light">
+                <div class="card-header"> <h3>All Users</h3> </div>
+                  <div class="card-inner">
+                    <div class="card bg-dark">
+                      <div class="card-inner bg-dark">
+                        <pre class="text-warning">{{users}}</pre>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+        
+              
         <!-- ONLY FOR DEVELOPING -->
       </div>
 
-<div style="display: none;" id="addToCart">
+<div class="container-fluid">
+<div style="display: none;" id="addToCart" >
   <h2>Add this game to cart?</h2>
   <p>Please select the date to play!</p>
   <div class="form">
@@ -293,16 +305,35 @@
               <div class="col-md-12">
                   <div class="panel panel-default">
                       <div class="panel-body">
-                          <div class="col">
-                              <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+
+                          <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                            <div class="col-6">
+                                <!-- <div class="input-container" style="flex-grow: 1;  "> -->
+                                    <label for="date"><strong>Date</strong></label>
+                                    <input type="date" id="date" class="form-control" v-model="date">
+                                <!-- </div> -->
+                            </div>
+
+                            <div class="col-6">
+                                <!-- <div class="input-container" style="flex-grow: 1;  "> -->
+                                    <label for="time"><strong>Time</strong></label>
+                                    <select name="time" v-model="time" id="time" class="form-control">
+                                        <option selected disabled>Select the Time</option>
+                                        <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" >{{time}}</option>
+                                    </select>
+                                <!-- </div> -->
+                            </div>
+
+                            <!-- <div class="col-6">
+                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                       <div class="input-container" style="flex-grow: 1;  ">
                                           <label for="date"><strong>Date</strong></label>
                                           <input type="date" id="date" class="form-control" v-model="date">
                                       </div>
-                              </div>
-                          </div>
-                          <div class="col">
-                              <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                       <div class="input-container" style="flex-grow: 1;  ">
                                           <label for="time"><strong>Time</strong></label>
                                           <select name="time" v-model="time" id="time" class="form-control">
@@ -310,16 +341,29 @@
                                               <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" >{{time}}</option>
                                           </select>
                                       </div>
-                              </div>
+                                </div>
+                            </div> -->
                           </div>
+
+                          <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                            <div class="col">
+                                <!-- <div class="input-container" style="flex-grow: 1;  "> -->
+                                    <label for="members"><strong>Members</strong></label>
+                                    <!-- <Multiselect v-model="value" :options="options" :multiple="true" group-values="libs" group-label="language" :group-select="true" placeholder="Type to search" track-by="name" label="name"><span slot="noResult">Oops! No elements found. Consider changing the search query.</span></Multiselect> -->
+                                    <multiselect v-model="values" tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="username" :options="users" :multiple="true" :taggable="true"></multiselect>
+                                    <!-- <pre class="language-json"><code>{{ members}}</code></pre> -->
+                                <!-- </div> -->
+                            </div>
+                          </div>
+
                           <div class="col-md-12">
                               <div class="form-group" >
-                                      <div class="input-container" style="flex-grow: 1;">
-                                          <button @click="addToCart" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
-                                            <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
-                                            <b>Add to Cart!</b>
-                                          </button>
-                                      </div>
+                                  <div class="input-container" style="flex-grow: 1;">
+                                      <button @click="addToCart" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
+                                        <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
+                                        <b>Add to Cart!</b>
+                                      </button>
+                                  </div>
                               </div>
                             </div>
                         </div>
@@ -329,13 +373,19 @@
         </div>
     </div>
 </div>
-      
+</div>
     </div>
   </div>
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+
 export default {
+  components: {
+    Multiselect
+  },
+
   data() {
     return {
       detailGame: '',
@@ -343,18 +393,16 @@ export default {
       dateTime: '',
       date: '',
       time: '',
-      users: '',
-      currentUser: '',
-      members: {
-        name: '',
-        userId: ''
-      },
+      users: [],
+      currentUser: 'Current User',
+      members: [], //jadi list users
       chooseTime: [
         '09:00',
         '12:00',
         '15:00',
         '19:00',
-      ]
+      ],
+      values: []
     };
   },
   methods: {
@@ -362,7 +410,7 @@ export default {
       this.axios.get('/user/list').then(response => {
         this.users = response.data.data
       })
-    this.currentUser = this.$route.params.currentUser
+    // this.currentUser = this.$route.params.currentUser
     },
     getDetailGame() {
       this.axios.get('/game/detail/'+this.gameId).then(response => {
@@ -379,21 +427,23 @@ export default {
       this.axios.post('/cart/add', {
         dateTime: this.date,
         gameId: this.gameId,
-        members: {
-          name: 'Irfan Jauhari',
-          userId: '1aa08550-a7c6-4779-baf4-2d97c4b2730d'
-          // name: this.members.name,
-          // userId: this.members.userId,
-        },
+        members: [
+          { 
+            name: '',
+            userId: '',
+          }
+        ],
         time: this.time
       },headers).then(response => {
         console.log(response)
         console.log('Berhasil Menambahkan ke Cart')
         this.showToast()
+      }).catch(error => {
+        console.log(error.response);
       })
     },
     showToast() {{
-        this.$bvToast.toast(`Success Adding ${this.detailGame.title} to Cart!`, {
+        this.$bvToast.toast(`Success Adding Game to Cart!`, {
           title: 'Success',
           autoHideDelay: 5000,
         })
@@ -417,4 +467,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style src="../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>
+

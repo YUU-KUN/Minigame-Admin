@@ -42,6 +42,13 @@
             <span>Transactions</span>
         </router-link>
     </li>
+
+    <li class="nav-item" >
+        <div class="nav-link" @click="logout" style="cursor: pointer">
+            <i class="fas fa-fw fa-school"></i>
+            <span>Logout</span>
+        </div>
+    </li>
 </ul>
 </template>
 
@@ -57,6 +64,12 @@ export default {
             this.axios.get('admin/profile').then(response => {
                 this.whoami = response.data.data
             })
+        },
+        logout() {
+            console.log('Logout Terpencet');
+            this.$store.dispatch('logout')
+            .then(() => this.$router.push('/login'))
+            .catch(err => console.log(err))
         }
     },
     mounted() {
