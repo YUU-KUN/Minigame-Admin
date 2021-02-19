@@ -22,6 +22,8 @@
         </div>
       </div>    
     </div>    
+
+      <router-view name="login"></router-view>
   </div>    
 </template>
 
