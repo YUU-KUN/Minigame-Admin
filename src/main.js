@@ -43,8 +43,8 @@ if (token) {
 require('dotenv').config();
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
-// axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_API_AUTHORIZATION;
-axios.defaults.headers.common['x-access-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhMDQyMzE0My04NWEwLTRhMWItYjhiZS0xNmZlYTZkY2VhNDYiLCJuYW1hIjoiU3VwZXIgQWRtaWVuIiwicm9sZSI6MSwibGV2ZWwiOjEsImlhdCI6MTYxMzYwMjUxOSwiZXhwIjoxNjEzNjg4OTE5fQ.RBu9-1_jR88YPkyYCJl1G6UgTU8TaaB81nR2Ocptcvg';
+axios.defaults.headers.common['Authorization'] = token;
+axios.defaults.headers.common['x-access-token'] = token;
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 new Vue({
   router,

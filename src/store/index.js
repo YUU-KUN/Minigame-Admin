@@ -8,16 +8,17 @@ export default new Vuex.Store({
 	state: {
   		status: '',
   		token: localStorage.getItem('Authorization') || '',
+  		admin : {},
   		user : {}
 	},
 	mutations: {
 		auth_request(state){
 	    	state.status = 'loading'
 	  	},
-	  	auth_success(state, token, logged){
+	  	auth_success(state, token){
 		    state.status = 'success'
 		    state.token = token
-		    state.logged = logged
+		    // state.logged = logged
 	  	},
 	  	auth_error(state){
 	    	state.status = 'error'
@@ -28,7 +29,8 @@ export default new Vuex.Store({
 	  	},
 	},
 	actions: {
-	  	login({commit}, user){
+		//Admin
+	  	login({commit}, admin){
 	        return new Promise((resolve, reject) => {
 	            commit('auth_request')
               const config = {
@@ -36,23 +38,65 @@ export default new Vuex.Store({
                   "Content-Type": "application/x-www-form-urlencoded",
                 },
               };
-	            axios({url: '/admin/login', data: user, method: 'POST' })
+			  const auth = {
+				auth: {
+					username: process.env.VUE_APP_BASIC_AUTH_USERNAME, 
+					password: process.env.VUE_APP_BASIC_AUTH_PASSWORD
+				}
+			  }
+			  axios.post('/admin/login', admin, auth) //shorthand
 	            .then(response => {
-	                const token = response.data.token
-	                const logged = response.data.logged
-	                localStorage.setItem('Authorization', token)
-	                // Add the following line:
+					const token = response.data.data.accessToken
 	                axios.defaults.headers.common['Authorization'] = token
-	                commit('auth_success', token, logged)
+	                localStorage.setItem('Authorization', token)
+	                // const logged = response.data.logged
+
+	                commit('auth_success', token)
 	                resolve(response)
 	            })
 	            .catch(err => {
+					console.log(err.response.data[0].message);
 	                commit('auth_error')
 	                localStorage.removeItem('Authorization')
 	                reject(err)
 	            })
 	        })
 	    },
+
+		//User
+		loginUser({commit}, user){
+	        return new Promise((resolve, reject) => {
+	            commit('auth_request')
+              const config = {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              };
+			  const auth = {
+				auth: {
+					username: process.env.VUE_APP_BASIC_AUTH_USERNAME, 
+					password: process.env.VUE_APP_BASIC_AUTH_PASSWORD
+				}
+			  }
+			  axios.post('/user/login', user, auth) //shorthand
+	            .then(response => {
+					const tokenUser = response.data.data.accessToken
+	                axios.defaults.headers.common['Authorization'] = tokenUser
+	                localStorage.setItem('Authorization', tokenUser)
+	                // const logged = response.data.logged
+
+	                commit('auth_success', tokenUser)
+	                resolve(response)
+	            })
+	            .catch(err => {
+					console.log(err.response.data[0].message);
+	                commit('auth_error')
+	                localStorage.removeItem('Authorization')
+	                reject(err)
+	            })
+	        })
+	    },
+
 	    register({commit}, user){
 	    	return new Promise((resolve, reject) => {
 	            commit('auth_request')

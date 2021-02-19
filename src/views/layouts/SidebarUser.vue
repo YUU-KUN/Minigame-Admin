@@ -40,14 +40,14 @@ export default {
         }
     },
     methods: {
-        // whoAmi() {
-        //     this.axios.get('user/profile').then(response => {
-        //         this.userProfile = response.data.data.name
-        //     })
-        // }
+        whoAmi() {
+            this.axios.get('user/profile').then(response => {
+                this.userProfile = response.data.data.name
+            })
+        }
     },
     mounted() {
-        // this.whoAmi()
+        this.whoAmi()
     }
 
 }

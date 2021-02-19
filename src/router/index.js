@@ -1,10 +1,14 @@
 import Vue from 'vue'
+import store from '../store'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
-// auth
-import Login from '../views/auth/Login'
-import Register from '../views/auth/Register'
+
+// auth admin
+import Login from '../views/auth/admin/Login'
+import Register from '../views/auth/admin/Register'
+// auth user
+import LoginUser from '../views/auth/user/LoginUser'
 
 // layout
 import Sidebar from '../views/layouts/Sidebar'
@@ -36,10 +40,15 @@ Vue.use(VueRouter)
 const routes = [
 
   // user
+  // {
+  //   path: `/user/theTempleOfRiddle`,
+  //   name: 'theTempleOfRiddle',
+  //   component: theTempleOfRiddle
+  // },
   {
-    path: `/user/theTempleOfRiddle`,
-    name: 'theTempleOfRiddle',
-    component: theTempleOfRiddle
+    path: '/loginuser',
+    name: 'LoginUser',
+    component: LoginUser
   },
   {
     path: `/user/joinGame`,
@@ -52,9 +61,12 @@ const routes = [
     components: {default:GameDetailUser, sidebar:SidebarUser}
   },
   {
-    path: '/user/',
+    path: '/user',
     name: 'DashboardUser',
-    components: {default:DashboardUser, sidebar:SidebarUser}
+    components: {default:DashboardUser, sidebar:SidebarUser},
+    meta: {
+      requiresAuthUser: true
+    }
   },
   {
     path: '/user/transaction',
@@ -73,22 +85,34 @@ const routes = [
   {
     path: '/tes',
     name: 'CobaUploadImage',
-    components: {default:CobaUploadImage, sidebar: Sidebar}
+    components: {default:CobaUploadImage, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/editGame/:gameEdit',
     name: 'EditGame',
-    components: {default:EditGame, sidebar: Sidebar}
+    components: {default:EditGame, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/addNewGame',
     name: 'AddNewGame',
-    components: {default:AddNewGame, sidebar:Sidebar}
+    components: {default:AddNewGame, sidebar:Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/gameDetail/:gameDetail',
     name: 'GameDetail',
-    components: {default:GameDetail, sidebar:Sidebar}
+    components: {default:GameDetail, sidebar:Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
@@ -103,28 +127,42 @@ const routes = [
   {
     path: '/transactions',
     name: 'Transaction',
-    components: {default: Transaction, sidebar: Sidebar}
+    components: {default: Transaction, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/games',
     name: 'Game',
-    // requireAuth: true,
-    components: {default: Game, sidebar: Sidebar}
+    components: {default: Game, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/codes',
     name: 'Code',
-    components: {default: Code, sidebar: Sidebar}
+    components: {default: Code, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/users',
     name: 'User',
-    components: {default: User, sidebar: Sidebar}
+    components: {default: User, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/',
     name: 'Dashboard',
-    components: {default: Dashboard, sidebar: Sidebar}
+    components: {default: Dashboard, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/home',
@@ -144,6 +182,27 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else if (to.matched.some(record => record.meta.requiresAuthUser)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/loginuser')
+  }
+  
+  
+  else {
+    next() 
+  }
 })
 
 export default router
