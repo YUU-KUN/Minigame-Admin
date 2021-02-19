@@ -54,6 +54,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL
 axios.defaults.headers.common['Authorization'] = token;
 axios.defaults.headers.common['x-access-token'] = token;
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+
 new Vue({
   router,
   store,
