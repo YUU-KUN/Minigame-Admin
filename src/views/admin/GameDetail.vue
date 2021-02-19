@@ -20,46 +20,71 @@
                                                             <div class="col">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="title"><strong>Game</strong></label>
-                                                                    <input type="text" id="title" class="form-control" :value="gameDetail.title" disabled>
+                                                                    <input type="text" id="title" class="form-control" v-model="gameDetail.title"   disabled>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <div class="input-container" style="flex-grow: 1;  ">
+                                                                    <label for="genre"><strong>Genre</strong></label>
+                                                                    <input type="text" id="genre" class="form-control" v-model="gameDetail.genre" disabled>
+                                                                    <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
+                                                                        <option v-for="(genre, index) in gameDetail.genre[0]" :key="index">{{genre}}</option>
+                                                                    </select> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                            <div class="col-6">
+                                                            <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="price"><strong>Normal Price</strong></label>
-                                                                    <input type="text" id="price" class="form-control" :value="gameDetail.price | rupiah" disabled>
+                                                                    <input type="number" id="price" class="form-control" v-model="gameDetail.price"  min="0" disabled>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="discount"><strong>Discount Price</strong></label>
-                                                                    <input type="text" id="discount" class="form-control" disabled>
+                                                                    <label for="discount"><strong>Discount (%)</strong></label>
+                                                                    <input type="number" id="discount" class="form-control" v-model="gameDetail.discount" min="0" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <div class="input-container" style="flex-grow: 1;  ">
+                                                                    <label for="duration"><strong>Duration</strong> (Minutes)</label>
+                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.duration"  min="1" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <div class="input-container" style="flex-grow: 1;  ">
+                                                                    <label for="duration"><strong>Rating</strong> (1-5)
+                                                                        <span v-if="gameDetail.rating"><b-icon v-for="value in parseInt(gameDetail.rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                    </label>
+                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.rating"  min="0" max="5" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                            <div class="col-6">
+                                                            <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="duration"><strong>Duration</strong></label>
-                                                                    <input type="text" id="duration" class="form-control" :value="gameDetail.duration+' Minutes'" disabled>
+                                                                    <label for="difficulty"><strong>Difficulty</strong></label>
+                                                                    <input type="number" id="difficulty" class="form-control" v-model="gameDetail.difficulty"  min="1" disabled>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-3">
+                                                                <div class="input-container" style="flex-grow: 1;  ">
+                                                                    <label for="capasity"><strong>Capacity</strong></label>
+                                                                    <input type="number" id="capasity" class="form-control" v-model="gameDetail.capacity"  min="1" disabled>
+                                                                </div>
+                                                            </div>
+                                                            
+
                                                             <div class="col-6">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="rating"><strong>Rating</strong></label>
-                                                                    <div class="col">
-                                                                        <div class="row" v-if="gameDetail.rating" >
-                                                                            <b-icon v-for="index in gameDetail.rating" :key="index" class="h4 mb-2" icon="star-fill" style="color: orange"></b-icon>
-                                                                        </div>
-                                                                        <div class="row" v-else >
-                                                                            <span>-</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="gameDetail.url">{{gameDetail.url}}</span> <span v-else>yourURL</span></b> )</label>
+                                                                    <input type="text" id="url" class="form-control" v-model="gameDetail.url" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -74,16 +99,50 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <!-- <div class="col-md-12">
                                                         <div class="form-group" >
                                                             <div class="col-6">
                                                                 <div class="input-container" style="flex-grow: 1;">
                                                                     <label for="cover"><strong>Cover</strong></label>
                                                                     <div class="row">
                                                                         <div class="col">
-                                                                            <img :src="gameDetail.posterUrl" alt="Game Image" id="cover" width="100%">
+                                                                            <img :src="gameDetail.imageUrl" alt="Game Image" id="cover" width="100%">
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="input-container" style="flex-grow: 1;">
+                                                                    <label for="poster"><strong>Poster</strong></label>
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <img :src="gameDetail.posterUrl" alt="Game Poster" id="poster" width="100%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                            <div class="col-6">
+                                                                <div class="input-container" style="flex-grow: 1;">
+                                                                    <label for="cover"><strong>Cover</strong></label>
+                                                                    <!-- <div class="preview"> -->
+                                                                        <img v-if="gameDetail.imageUrl" :src="gameDetail.imageUrl" class="img-thumbnail" alt="Covernya" width="100%" style="margin:10px">
+                                                                        <!-- <img v-else :src="gameEdit.imageUrl" alt="Covernya" height="100px" style="margin:10px"> -->
+                                                                    <!-- </div> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="input-container" style="flex-grow: 1;">
+                                                                    <label for="poster"><strong>Poster</strong></label>
+                                                                    <!-- <div class="preview"> -->
+                                                                        <!-- <img v-if="!newPoster" :src="gameEdit.posterUrl" alt="Posternya" height="100px" style="margin:10px"> -->
+                                                                        <img v-if="gameDetail.posterUrl" :src="gameDetail.posterUrl" class="img-thumbnail" alt="Posternya" width="100%" style="margin:10px">
+                                                                        <!-- <img v-else :src="posterUrl" alt="Posternya" height="100px" style="margin:10px"> -->
+                                                                    <!-- </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>

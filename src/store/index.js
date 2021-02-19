@@ -8,6 +8,7 @@ export default new Vuex.Store({
 	state: {
   		status: '',
   		token: localStorage.getItem('Authorization') || '',
+  		// tokenUser: localStorage.getItem('Authorization') || '',
   		admin : {},
   		user : {}
 	},
@@ -47,11 +48,10 @@ export default new Vuex.Store({
 			  axios.post('/admin/login', admin, auth) //shorthand
 	            .then(response => {
 					const token = response.data.data.accessToken
-	                axios.defaults.headers.common['Authorization'] = token
-	                localStorage.setItem('Authorization', token)
-	                // const logged = response.data.logged
-
 	                commit('auth_success', token)
+	                localStorage.setItem('Authorization', token)
+	                axios.defaults.headers.common['Authorization'] = token
+	                // const logged = response.data.logged
 	                resolve(response)
 	            })
 	            .catch(err => {
@@ -80,12 +80,12 @@ export default new Vuex.Store({
 			  }
 			  axios.post('/user/login', user, auth) //shorthand
 	            .then(response => {
-					const tokenUser = response.data.data.accessToken
-	                axios.defaults.headers.common['Authorization'] = tokenUser
-	                localStorage.setItem('Authorization', tokenUser)
+					const token = response.data.data.accessToken
+	                axios.defaults.headers.common['Authorization'] = token
+	                localStorage.setItem('Authorization', token)
 	                // const logged = response.data.logged
 
-	                commit('auth_success', tokenUser)
+	                commit('auth_success', token)
 	                resolve(response)
 	            })
 	            .catch(err => {

@@ -58,7 +58,10 @@ const routes = [
   {
     path: `/user/gameDetail/:gameId`,
     name: 'GameDetailUser',
-    components: {default:GameDetailUser, sidebar:SidebarUser}
+    components: {default:GameDetailUser, sidebar:SidebarUser},
+    meta: {
+      requiresAuthUser: true
+    }
   },
   {
     path: '/user',
@@ -71,12 +74,18 @@ const routes = [
   {
     path: '/user/transaction',
     name: 'TransactionUser',
-    components: {default:TransactionUser, sidebar:SidebarUser}
+    components: {default:TransactionUser, sidebar:SidebarUser},
+    meta: {
+      requiresAuthUser: true
+    }
   },
   {
     path: '/user/cart',
     name: 'Cart',
-    components: {default:Cart, sidebar:SidebarUser}
+    components: {default:Cart, sidebar:SidebarUser},
+    meta: {
+      requiresAuthUser: true
+    }
   },
 
 

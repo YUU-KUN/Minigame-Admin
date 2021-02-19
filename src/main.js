@@ -22,6 +22,11 @@ Vue.filter('formatDate', function(value) {
     return moment(String(value)).format('D MMM YYYY hh:mm')
   }
 })
+Vue.filter('reverse', function(value) {
+  // slice to make a copy of array, then reverse the copy
+  return value.slice().reverse();
+});
+
 
 Vue.use(VueCurrency, {
   name: 'rupiah',
@@ -36,9 +41,12 @@ Vue.use(VueCurrency, {
 Vue.config.productionTip = false
 
 const token = localStorage.getItem('Authorization')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+// if (token) {
+//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+//   console.log('tokennya: ' +token);
+// } else {
+//   console.log('Token Belum Masuk.');
+// }
 
 require('dotenv').config();
 

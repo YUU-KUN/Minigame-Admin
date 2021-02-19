@@ -24,6 +24,16 @@
                                                                     <input type="text" id="title" class="form-control" v-model="gameEdit.title"  >
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col">
+                                                                <div class="input-container" style="flex-grow: 1;  ">
+                                                                    <label for="genre"><strong>Genre</strong></label>
+                                                                    <input type="text" id="genre" class="form-control" v-model="gameEdit.genre">
+                                                                    <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
+                                                                        <option v-for="(genre, index) in gameEdit.genre[0]" :key="index">{{genre}}</option>
+                                                                    </select> -->
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -36,8 +46,8 @@
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="discount"><strong>Discount Price</strong></label>
-                                                                    <input type="number" id="discount" class="form-control" min="0">
+                                                                    <label for="discount"><strong>Discount (%)</strong></label>
+                                                                    <input type="number" id="discount" class="form-control" v-model="gameEdit.discount" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
@@ -48,7 +58,9 @@
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="duration"><strong>Rating</strong> (1-5)</label>
+                                                                    <label for="duration"><strong>Rating</strong> (1-5)
+                                                                        <span v-if="gameEdit.rating"><b-icon v-for="value in parseInt(gameEdit.rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                    </label>
                                                                     <input type="number" id="duration" class="form-control" v-model="gameEdit.rating"  min="0" max="5">
                                                                 </div>
                                                             </div>
@@ -68,13 +80,12 @@
                                                                     <input type="number" id="capasity" class="form-control" v-model="gameEdit.capacity"  min="1">
                                                                 </div>
                                                             </div>
+                                                            
+
                                                             <div class="col-6">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="genre"><strong>Genre</strong></label>
-                                                                    <input type="text" id="genre" class="form-control" v-model="gameEdit.genre">
-                                                                    <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
-                                                                        <option v-for="(genre, index) in gameEdit.genre[0]" :key="index">{{genre}}</option>
-                                                                    </select> -->
+                                                                    <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="gameEdit.url">{{gameEdit.url}}</span> <span v-else>yourURL</span></b> )</label>
+                                                                    <input type="text" id="url" class="form-control" v-model="gameEdit.url" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -188,22 +199,24 @@ export default {
         },
 
         editGame(){
+            console.log('clicked');
             const formData = new FormData()
             formData.append('title', this.gameEdit.title)
             formData.append('poster', this.gameEdit.poster)
             formData.append('image', this.gameEdit.image)
             formData.append('genre', this.gameEdit.genre)
             formData.append('price', this.gameEdit.price)
+            formData.append('discount', this.gameEdit.discount)
             formData.append('description', this.gameEdit.description)
             formData.append('difficulty', this.gameEdit.difficulty)
+            formData.append('rating', this.gameEdit.rating)
             formData.append('capacity', this.gameEdit.capacity)
             formData.append('duration', this.gameEdit.duration)
-            formData.append('url', this.gameEdit.title.replace(/\s/g, ''))
+            formData.append('url', this.gameEdit.url)
 
             let headers = {
                 "headers": {
                     'Content-Type': 'multipart/form-data',
-                    'Access-Control-Allow-Origin': '*'
                 },
             }
             this.axios.put('game/update/'+this.gameEdit.gameId, 
@@ -213,7 +226,7 @@ export default {
                 console.log('Berhasil Edit Data Game')
                 console.log(response)
                 }
-            ).catch((error) => console.log( error.response.request ))
+            ).catch((error) => console.log( error.response ))
         },
     },
     mounted() {

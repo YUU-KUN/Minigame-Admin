@@ -26,12 +26,11 @@
                                             <th>Status</th>
                                             <th>Payment</th>
                                             <th>Date</th>
-                                            <!-- <th>Kode Game</th> -->
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr v-for="(transaction, index) in userTransaction" :key="index">
+                                            <tr v-for="(transaction, index) in userTransaction.slice().reverse()" :key="index">
                                                 <td>{{index+1}}</td>
                                                 <td>
                                                   <span v-if="transaction.user">{{transaction.user}}</span>
@@ -62,12 +61,12 @@
                                                     </span>
                                                 </td>
                                                 <td>{{transaction.createdAt | formatDate}}</td>
-                                                <td>
+                                                <!-- <td>
                                                   <span v-if="transaction.status == 1" class="d-flex justify-content-center">
                                                     <a href="" data-fancybox :data-src="'#'+index"><span class="badge badge-primary">Lihat Kode Game</span></a>
                                                   </span>
                                                   <span class="d-flex justify-content-center" v-else><button class="btn btn-danger" @click="deleteUserTransaction(index)" title="Delete Transaction" ><b-icon icon="trash2-fill"></b-icon></button></span>
-                                                </td>
+                                                </td> -->
 
                                                 <div style="display: none;" :id="index" class="animated-modal">
                                                   <h2>Hello!</h2>

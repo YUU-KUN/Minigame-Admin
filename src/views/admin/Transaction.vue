@@ -34,9 +34,11 @@
                                             <td>{{index +1}}</td>
                                             <td><span v-if="transaction.user">{{transaction.user}}</span> <span v-else>User</span></td>
                                             <td>
-                                                <span v-for="(game, index) in transaction.items" :key="index">
-                                                {{game.cartGameData.title}}
-                                                </span>
+                                                <ul>
+                                                    <span v-for="(game, index) in transaction.items" :key="index">
+                                                        <li>{{game.cartGameData.title}}</li>
+                                                    </span>
+                                                </ul>
                                             </td>
                                             <td>{{transaction.total | rupiah}}</td>
                                             <td>
@@ -47,16 +49,25 @@
                                                 <span v-else>Transaksi Kadaluarsa</span>
                                             </td>
                                             <td>
-                                                <span v-if="transaction.buktiPembayaran">
+                                                <!-- <span v-if="transaction.buktiPembayaran">
                                                     <a :href="transaction.buktiPembayaran" target="_blank">Lihat Bukti Pembayaran</a>
                                                 </span>
-                                                <span v-else>Tidak Ada Bukti Pembayaran</span>
+                                                <span v-else>Tidak Ada Bukti Pembayaran</span> -->
+                                                <span class="d-flex justify-content-center" v-if="transaction.status ==  1 || transaction.status == 2 || transaction.status == 3">
+                                                    <a :href="transaction.buktiPembayaran" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
+                                                </span>
+                                                <span class="d-flex justify-content-center" v-else-if="transaction.status == 0">
+                                                    <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
+                                                </span>
+                                                <span v-else class="d-flex justify-content-center">
+                                                    -
+                                                </span>
                                             </td>
                                             
                                             <td>{{transaction.createdAt | formatDate}}</td>
                                             <td>
                                                 <span v-if="transaction.status != 2" class="d-flex justify-content-around ">
-                                                    <button class="btn btn-danger" tabindex="-1" data-fancybox :data-src="'#delete'+index"><b-icon icon="trash"></b-icon></button>
+                                                    <button class="btn btn-danger" tabindex="-1" data-fancybox :data-src="'#delete'+index"><b-icon icon="trash2-fill"></b-icon></button>
                                                 </span>
                                                 <span v-else class="d-flex justify-content-around ">
                                                     <span><button class="btn btn-success" @click="acceptTransaction(index)" title="Accept Transaction"><b-icon icon="check"></b-icon></button></span>

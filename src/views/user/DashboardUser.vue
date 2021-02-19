@@ -28,7 +28,7 @@
                       <div class="row">
                           <b-icon class="h4 mb-1" icon="cash" style="color: orange; margin: 0 5px"></b-icon>
                           <span v-if="!game.discount" ><h5><b>{{game.price | rupiah}}</b></h5></span>
-                          <span v-else style="text-decoration: line-through">{{game.price | rupiah}}&nbsp;	<span style="margin: 0 10px"><b><h5>{{game.price | rupiah}}&nbsp;	</h5></b></span> <span style="color:red"><h5>(Save 40%!)</h5></span></span>
+                          <span v-else><span style="text-decoration: line-through;">{{game.price | rupiah}}</span>&nbsp;	<span style="margin: 0 10px" ><b><h5>{{game.discountPrice | rupiah}}&nbsp;</h5></b><span style="color:red"><h5>(Save {{game.discount}}%!)</h5></span></span> </span>
                       </div>
                       <br>
                       <div class="row">
@@ -156,6 +156,11 @@ export default {
     }
   },
   methods: {
+    getCurrentUser() {
+      this.axios.get('user/profile').then(response => {
+        this.currentUser = response.data.data
+      })
+    },
     getWebGame() {
       this.axios.get('/game/web').then(response => {
         this.gameweb = response.data.data
@@ -172,7 +177,8 @@ export default {
     },
   },
   mounted() {
-    this.getWebGame()
+    this.getWebGame(),
+    this.getCurrentUser()
   }
 
 }

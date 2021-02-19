@@ -28,7 +28,9 @@ export default {
             let email = this.email 
             let password = this.password
             this.$store.dispatch('loginUser', { email, password })
-            .then(() => this.$router.push('/user'))
+            .then(() => 
+            setTimeout(this.$router.push('/user'), 3000)
+            )
             .catch(
                 err => {
                     let errorMessage = err.response.data.message;

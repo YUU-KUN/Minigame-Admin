@@ -42,9 +42,9 @@
                                         <tr v-for="(game, index) in gamelist" :key="index">
                                             <td>{{index+1}}</td>
                                             <td>{{game.title}}</td>
-                                            <td>{{game.price | rupiah}}</td>
+                                            <td>{{game.discountPrice | rupiah}}</td>
                                             <td v-if="game.rating">
-                                                {{rating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                                {{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span>
                                             </td>
                                             <td v-else>
                                                 -
@@ -131,7 +131,6 @@ export default {
             this.axios.get('game/list').then(response => {
                 this.gamelist = response.data.data
             })
-            this.rating = localStorage.getItem('rating')
         },
         viewGameDetail(index) {
             let detail = this.gamelist[index]
