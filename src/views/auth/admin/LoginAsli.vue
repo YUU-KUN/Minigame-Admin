@@ -30,9 +30,9 @@ export default {
             this.$store.dispatch('login', { email, password })
             // .then(() => this.$router.push('/'))
             .then(response => {
-                if (response.data.data.role == 'admin') {
-                    this.$router.push('/')   
-                } 
+                console.log(response);
+                console.log('Selamat Datang Admin');
+                this.$router.push('/')
             })
             .catch(
                 err => {
