@@ -29,7 +29,7 @@ export default {
             let password = this.password
             this.$store.dispatch('loginUser', { email, password })
             .then(() => 
-            setTimeout(this.$router.push('/user'), 3000)
+                setTimeout(this.$router.push('/user'), 3000)
             )
             .catch(
                 err => {

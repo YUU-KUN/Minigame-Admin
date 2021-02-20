@@ -51,7 +51,6 @@ export default new Vuex.Store({
 	                commit('auth_success', token)
 	                localStorage.setItem('Authorization', token)
 	                axios.defaults.headers.common['Authorization'] = token
-	                // const logged = response.data.logged
 	                resolve(response)
 	            })
 	            .catch(err => {
@@ -86,6 +85,7 @@ export default new Vuex.Store({
 	                // const logged = response.data.logged
 
 	                commit('auth_success', token)
+					setTimeout(resolve(response), 3000)
 	                resolve(response)
 	            })
 	            .catch(err => {

@@ -118,7 +118,7 @@
 
 
             <!-- ONLY FOR DEVELOPING -->
-              <div class="card bg-light">
+              <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>Current User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -137,7 +137,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -175,10 +175,15 @@ export default {
       })
       console.log('halo gan');
     },
+    setTimeout() {
+      setTimeout(this.getWebGame(), 2000)
+      setTimeout(this.getCurrentUser(), 2000)
+    }
   },
   mounted() {
-    this.getWebGame(),
-    this.getCurrentUser()
+    this.setTimeout()
+    // this.getWebGame(),
+    // this.getCurrentUser()
   }
 
 }
