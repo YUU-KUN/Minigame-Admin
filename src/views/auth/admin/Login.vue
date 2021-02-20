@@ -63,7 +63,9 @@ export default {
                 const titleSuccess = response.data.message
                 this.makeToast('success', titleSuccess, successMessage)
 
-                // this.$router.push('/')
+                setTimeout(() => {
+                    this.$router.push('/')
+                }, 2000);
             })
             .catch(err => {
                     const titleError = 'Terdapat Kesalahan'
