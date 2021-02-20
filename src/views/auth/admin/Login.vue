@@ -1,6 +1,5 @@
 <template>
-<!-- <div id="login-bg"> -->
-        <div class="row" id="ioginPanel">
+    <div class="row" id="ioginPanel">
         <div class="col-8"></div>
         <div class="col" style="background: white; right: 0; opacity: 0.85; height: 100%">
             <div class="row d-flex justify-content-center" style="padding: 0 10px; height: 100% ">
@@ -9,7 +8,7 @@
                         <h2 style="text-align:center;">
                             Hi there!
                             <br>
-                            Welcome to login page!
+                            Welcome to Admin Login Page!
                         </h2>
                     </div>
                     <br>
@@ -37,9 +36,6 @@
             </div>
         </div>
     </div>
-
-        
-<!-- </div> -->
 </template>
 
 <script>
@@ -48,7 +44,6 @@ export default {
         return {
             email: '',
             password: '',
-
         }
     },
     methods: {
@@ -56,7 +51,6 @@ export default {
             let email = this.email 
             let password = this.password
             this.$store.dispatch('login', { email, password })
-            // .then(() => this.$router.push('/'))
             .then(response => {
                 // Buat Toast
                 let successMessage = 'Selamat Datang Admin'
