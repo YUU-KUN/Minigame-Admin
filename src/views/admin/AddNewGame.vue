@@ -28,7 +28,14 @@
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
                                                                         <!-- <select name="" id="" v-model="genre"></select> -->
-                                                                        <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="index" track-by="index" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect>
+                                                                        <!-- <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect> -->
+                                                                        <!-- <select class="selectpicker form-control" id="genre" multiple data-live-search="true" v-model="genre" > -->
+                                                                        <select class="form-control" id="genre" v-model="genre" >
+                                                                            <option v-for="(genre, index) in gameGenres" :key="index" :value="genre">{{genre}}</option>
+                                                                          <!-- <option>Mustard</option>
+                                                                          <option>Ketchup</option>
+                                                                          <option>Relish</option> -->
+                                                                        </select>
                                                                         <!-- <pre class="language-json"><code>{{ genre  }}</code></pre> -->
                                                                     </div>
                                                                 </div>
@@ -168,13 +175,13 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Multiselect from 'vue-multiselect'
-Vue.component('multiselect', Multiselect)
+// import Vue from 'vue'
+// import Multiselect from 'vue-multiselect'
+// Vue.component('multiselect', Multiselect)
 export default {
-    components: {
-        Multiselect
-    },
+    // components: {
+    //     Multiselect
+    // },
     data(){
         return {
             title: '',
@@ -184,7 +191,7 @@ export default {
             description: '',
             poster: '',
             image: '',
-            genre: [],
+            genre: [{}],
             difficulty: '',
             capacity: '',
             rating: '',
@@ -194,11 +201,10 @@ export default {
 
             getGame: '',
 
-            value: [
+            gameGenres: [
                 'Adventure',
-                'Puzzle'
-                // { name: 'Adventure'},
-                // { name: 'Puzzle'},
+                'Action',
+                'Puzzle',
             ],
             
         }
@@ -224,6 +230,9 @@ export default {
         },
 
         addNewGame() {
+            if (this.discount == '') {
+                this.discount = 0
+            }
             const formData = new FormData()
             formData.append('title', this.title)
             formData.append('poster', this.poster)
@@ -262,6 +271,7 @@ export default {
         this.Games()
     }
 }
-</script>
 
-<style src="../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>
+// multiselect
+// $('select').selectpicker();
+</script>
