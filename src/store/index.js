@@ -54,7 +54,11 @@ export default new Vuex.Store({
 	                resolve(response)
 	            })
 	            .catch(err => {
-					console.log(err.response.data[0].message);
+					if (err.response.data[0]) {
+						console.log(err.response.data[0].message)
+					} else {
+						console.log(err.response)
+					}
 	                commit('auth_error')
 	                localStorage.removeItem('Authorization')
 	                reject(err)
@@ -89,7 +93,11 @@ export default new Vuex.Store({
 	                resolve(response)
 	            })
 	            .catch(err => {
-					console.log(err.response.data[0].message);
+					if (err.response.data[0]) {
+						console.log(err.response.data[0].message)
+					} else {
+						console.log(err.response)
+					}
 	                commit('auth_error')
 	                localStorage.removeItem('Authorization')
 	                reject(err)

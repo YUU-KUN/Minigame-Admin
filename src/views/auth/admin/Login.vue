@@ -16,8 +16,6 @@
                     <div class="form-group">
                         <label for="email" ><h4 ><b-icon icon="envelope-fill" style="margin-right: 10px"></b-icon>Email</h4></label>
                         <input type="email" class="form-control form-control-lg" id="email" aria-describedby="emailHelp" placeholder="youremail@dress.com" v-model="email">
-                        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small> -->
                     </div>
                     <p></p>
                     <div class="form-group">
@@ -60,20 +58,22 @@ export default {
             this.$store.dispatch('login', { email, password })
             // .then(() => this.$router.push('/'))
             .then(response => {
-                // let token = response.data.data.accessToken
-
                 // Buat Toast
                 let successMessage = 'Selamat Datang Admin'
                 const titleSuccess = response.data.message
                 this.makeToast('success', titleSuccess, successMessage)
 
-                this.$router.push('/')
+                // this.$router.push('/')
             })
             .catch(err => {
-                    let errorMessage = err.response;
-                    console.log(err.response);
                     const titleError = 'Terdapat Kesalahan'
-                    this.makeToast('danger', titleError, errorMessage)
+                    if (err.response.data[0]) {
+                        let errorMessage = err.response.data[0].message
+                        this.makeToast('danger', titleError, errorMessage)
+					} else {
+                        let errorMessage = err.response.data.message;
+                        this.makeToast('danger', titleError, errorMessage)
+                    }
                 }
             )
         },
