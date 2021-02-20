@@ -131,7 +131,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    components: {login: Login}
+    component: Login
   },
   {
     path: '/transactions',
