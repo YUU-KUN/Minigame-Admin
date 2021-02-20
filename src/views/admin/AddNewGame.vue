@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     
-                    <div class="card bg-light">
+                    <!-- <div class="card bg-light">
 			        	<div class="card-header">
 			        		<h3>Game Data</h3> 
 			        	</div>
@@ -158,7 +158,7 @@
 			        			</div>
 			        		</div>
 			        	</div>
-			        </div>
+			        </div> -->
 
                 </div> 
             </div>

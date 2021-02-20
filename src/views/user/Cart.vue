@@ -109,7 +109,7 @@
 			</div> -->
 
 			<!-- ONLY FOR DEVELOPING -->
-			<div class="card bg-light">
+			<!-- <div class="card bg-light">
 				<div class="card-header">
 					<h3>Cart ID</h3> 
 				</div>
@@ -146,7 +146,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- ONLY FOR DEVELOPING -->
 
 		</div>

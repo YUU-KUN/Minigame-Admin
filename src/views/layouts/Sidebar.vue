@@ -66,7 +66,7 @@ export default {
             })
         },
         logout() {
-            console.log('Logout Terpencet');
+            console.log('Logout Clicked');
             this.$store.dispatch('logout')
             .then(() => this.$router.push('/login'))
             .catch(err => console.log(err))

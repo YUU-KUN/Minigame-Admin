@@ -13,7 +13,7 @@
           <!-- </div> -->
         </div>
 
-        <a href="https://minigames.tranceformasiindonesia.com/theTempleOfRiddle" style="text-decoration: none">
+        <a :href="'https://minigames.tranceformasiindonesia.com/'+gameDetail.url" style="text-decoration: none">
           <button
             class="btn btn-success d-flex align-items-center justify-content-center"
             style="width: 100%; margin: 20px auto"
@@ -248,7 +248,7 @@
         </div> -->
 
         <!-- ONLY FOR DEVELOPING -->
-          <div class="card bg-light">
+          <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>Members</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -288,7 +288,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
 
         
               
