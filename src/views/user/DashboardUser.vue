@@ -32,7 +32,7 @@
                       </div>
                       <br>
                       <div class="row">
-                        <a :href="'minigames.tranceformasiindonesia.com/'+game.url" style="text-decoration: none">
+                        <a :href="'https://minigames.tranceformasiindonesia.com/'+game.url" target="_blank" style="text-decoration: none">
                           <button class="btn btn-warning d-flex align-items-center">
                             <b-icon icon="play-fill" font-scale="2" aria-hidden="true"></b-icon>
                             <b>Play Game</b>
@@ -118,7 +118,7 @@
 
 
             <!-- ONLY FOR DEVELOPING -->
-              <!-- <div class="card bg-light">
+              <div class="card bg-light">
                 <div class="card-header"> <h3>Current User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -137,7 +137,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
