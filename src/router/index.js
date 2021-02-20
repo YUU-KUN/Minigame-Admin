@@ -5,7 +5,8 @@ import Home from '../views/Home.vue'
 
 
 // auth admin
-import Login from '../views/auth/admin/Login'
+import Login from '../views/auth/admin/LoginAsli'
+import LoginTes from '../views/auth/admin/Login'
 import Register from '../views/auth/admin/Register'
 // auth user
 import LoginUser from '../views/auth/user/LoginUser'
@@ -132,6 +133,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/logintes',
+    name: 'LoginTes',
+    components: {login:LoginTes}
   },
   {
     path: '/transactions',
