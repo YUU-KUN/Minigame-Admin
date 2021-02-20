@@ -22,7 +22,7 @@
                         <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                             <div class="card-body" style="padding: 50px 0">
                                 <div class="col">
-                                    <img src="../../../public\assets\icons\Games.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
+                                    <img src="../../../public/assets/icons/Games.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
                                 </div>
                                 <br>
                                 <h3 class="card-text"><strong>{{totalGame.length}} Games</strong></h3>
@@ -41,7 +41,7 @@
                         <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                             <div class="card-body" style="padding: 50px 0">
                                 <div class="col">
-                                    <img src="../../../public\assets\icons\Codes.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
+                                    <img src="../../../public/assets/icons/Codes.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
                                 </div>
                                 <br>
                                 <h3 class="card-text"><strong>102 Codes</strong></h3>
@@ -55,7 +55,7 @@
                         <div class="card" style="width: 18rem; height: 200px; background-color: #111; border-color:#111; ">
                             <div class="card-body" style="padding: 50px 0">
                                 <div class="col">
-                                    <img src="../../../public\assets\icons\Transactions.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
+                                    <img src="../../../public/assets/icons/Transactions.svg" class="card-img-top" alt="..." style="margin:auto; width: 50px">
                                 </div>
                                 <br>
                                 <h3 class="card-text"><strong>{{totalTransaction.length}} Transactions</strong></h3>
