@@ -17,6 +17,7 @@ Vue.component('multiselect', Multiselect)
 Vue.use(VueAxios, axios); //HARUS VueAxios dulu, or enjoy your protocol ERROR
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+
 Vue.filter('formatDate', function(value) {
   if (value) {
     return moment(String(value)).format('D MMM YYYY hh:mm')

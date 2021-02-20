@@ -28,7 +28,7 @@
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
                                                                         <!-- <select name="" id="" v-model="genre"></select> -->
-                                                                        <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect>
+                                                                        <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="index" track-by="index" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect>
                                                                         <!-- <pre class="language-json"><code>{{ genre  }}</code></pre> -->
                                                                     </div>
                                                                 </div>
@@ -57,7 +57,7 @@
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="duration"><strong>Rating</strong> (1-5) 
-                                                                            <!-- ternyata pake parseInt() biar dia ngebaca integer -->
+                                                                            <!-- pake parseInt() biar dia ngebaca integer -->
                                                                             <span v-if="rating"><b-icon v-for="value in parseInt(rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
                                                                             <span v-else><b-icon icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span>
                                                                         </label>
@@ -195,8 +195,10 @@ export default {
             getGame: '',
 
             value: [
-                { name: 'Adventure'},
-                { name: 'Puzzle'},
+                'Adventure',
+                'Puzzle'
+                // { name: 'Adventure'},
+                // { name: 'Puzzle'},
             ],
             
         }
