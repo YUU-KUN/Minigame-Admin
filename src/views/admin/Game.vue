@@ -49,7 +49,10 @@
                                             <td v-else>
                                                 -
                                             </td>
-                                            <td>{{game.genre.join(', ')}}</td>
+                                            <td>
+                                                <span v-if="game.genre.length == 1">{{game.genre.join(', ').split(',').join(', ')}}</span> 
+                                                <span v-else>{{game.genre.join(', ')}}</span>
+                                            </td>
                                             <td >
                                                 <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
                                                 <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
@@ -98,7 +101,7 @@
                 </div>
               </div> -->
 
-              <!-- <div class="card bg-light">
+              <div class="card bg-light">
                 <div class="card-header"> <h3>List Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -107,7 +110,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>

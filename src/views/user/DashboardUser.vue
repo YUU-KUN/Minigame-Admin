@@ -15,7 +15,19 @@
                         <h1><b>{{game.title}}</b></h1>
                       </div>
                       <div class="row" >
-                        <span class="badge badge-pill badge-primary" v-for="(genre, index) in game.genre" :key="index" style="margin: 0 10px 0 0; font-size:16px">{{genre}}</span>
+                        <span v-if="game.genre.length > 1">
+                          <span class="badge badge-pill badge-primary" v-for="(genre, index) in game.genre" :key="index" style="margin: 0 10px 0 0; font-size:16px">
+                            {{genre}}
+                          </span>
+                        </span>
+                        <span v-else>
+                            <!-- {{game.genre.join(",").split(",")}} -->
+                          <span v-for="(gameSplit, index) in game.genre.join(',').split(',')" :key="index">
+                            <span class="badge badge-pill badge-primary" style="margin: 0 10px 0 0; font-size:16px">
+                              {{gameSplit}}
+                            </span>
+                          </span>
+                        </span>
                       </div>
                       <div class="row" v-if="game.rating" >
                           <li v-for="index in game.rating" :key="index" style="display:inline">

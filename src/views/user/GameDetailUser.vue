@@ -79,12 +79,25 @@
                                                             <strong>Categories</strong>
                                                           </h4>
                                                           <div class="col-12" style="padding: 0">
+                                                            <!-- {{detailGame.genre.length}}
                                                             <span
                                                               v-for="(category, index ) in detailGame.genre" :key="index"
                                                               class="badge badge-pill badge-primary"
                                                               style="margin: 0 10px 0 0; font-size: 16px"
                                                               >{{category}}</span
-                                                            >
+                                                            > -->
+                                                            <span v-if="detailGame.genre.length > 1">
+                                                              <span class="badge badge-pill badge-primary" v-for="(genre, index) in detailGame.genre" :key="index" style="margin: 0 10px 0 0; font-size:16px">
+                                                                {{genre}}
+                                                              </span>
+                                                            </span>
+                                                            <span v-else>
+                                                              <span v-for="(gameSplit, index) in detailGame.genre.join(',').split(',')" :key="index">
+                                                                <span class="badge badge-pill badge-primary" style="margin: 0 10px 0 0; font-size:16px">
+                                                                  {{gameSplit}}
+                                                                </span>
+                                                              </span>
+                                                            </span>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -257,8 +270,8 @@
                       </div>
                     </div>
                 </div>
-              </div>
-              <div class="card bg-light">
+              </div> -->
+              <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>GameID</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -267,7 +280,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="card bg-light">
                 <div class="card-header"> <h3>Detail Game</h3> </div>
@@ -279,7 +292,8 @@
                     </div>
                 </div>
               </div>
-        <div class="card bg-light">
+              
+        <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>All Users</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">

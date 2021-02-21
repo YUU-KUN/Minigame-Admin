@@ -27,16 +27,22 @@
                                                                 <div class="col-6">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                         <label for="genre"><strong>Genre</strong></label>
-                                                                        <!-- <select name="" id="" v-model="genre"></select> -->
-                                                                        <!-- <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="value" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect> -->
+                                                                        <multiselect v-model="genre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="gameGenres" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect>
+
+                                                                        <!-- BERHASIL -->
+                                                                        <!-- <select id="target" class="form-control selectpicker" required multiple v-model="genre">
+                                                                            <option v-for="(genre, index) in gameGenres" :key="index" :value="genre.name">{{genre.name}}</option>
+                                                                        </select> -->
+                                                                        
                                                                         <!-- <select class="selectpicker form-control" id="genre" multiple data-live-search="true" v-model="genre" > -->
-                                                                        <select class="form-control" id="genre" v-model="genre" >
+                                                                        <!-- <select class="form-control" id="genre" v-model="genre" >
                                                                             <option v-for="(genre, index) in gameGenres" :key="index" :value="genre">{{genre}}</option>
-                                                                          <!-- <option>Mustard</option>
-                                                                          <option>Ketchup</option>
-                                                                          <option>Relish</option> -->
-                                                                        </select>
-                                                                        <!-- <pre class="language-json"><code>{{ genre  }}</code></pre> -->
+                                                                        </select> -->
+                                                                        <!-- <pre class="language-json"><code>{{ genre }}</code></pre> -->
+                                                                        <!-- <pre class="language-json"><code>{{ genre }}</code></pre> -->
+                                                                        <!-- <pre class="language-json"><code v-for="(genre, index) in genre" :key="index">{{index}}</code></pre> -->
+                                                                        <!-- <pre class="language-json"><code>{{ Object.values(genre)}}</code></pre> -->
+                                                                        <!-- <pre class="language-json"><code>{{ genre[1]}} {{genre[0] }}</code></pre> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -174,6 +180,8 @@
 </div>
 </template>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
 // import Vue from 'vue'
 // import Multiselect from 'vue-multiselect'
@@ -184,6 +192,7 @@ export default {
     // },
     data(){
         return {
+            obj: '',
             title: '',
             price: '',
             duration: '',
@@ -191,7 +200,8 @@ export default {
             description: '',
             poster: '',
             image: '',
-            genre: [{}],
+            genre: [],
+            
             difficulty: '',
             capacity: '',
             rating: '',
@@ -202,10 +212,18 @@ export default {
             getGame: '',
 
             gameGenres: [
-                'Adventure',
-                'Action',
-                'Puzzle',
+                {name: 'Adventure'},
+                {name: 'Action'},
+                {name: 'Puzzle'},
+                // "Adventure",
+                // "Action",
+                // "Puzzle",
             ],
+            // gameGenres: {
+            //     name: 'Adventure',
+            //     name: 'Action',
+            //     name: 'Puzzle',
+            // }
             
         }
     },
@@ -233,11 +251,21 @@ export default {
             if (this.discount == '') {
                 this.discount = 0
             }
+
+            
+
+            // this.genre = Object.values(this.genre)
             const formData = new FormData()
             formData.append('title', this.title)
             formData.append('poster', this.poster)
             formData.append('image', this.image)
-            formData.append('genre', this.genre)
+            // var gen = "";
+            var i;
+            for (i = 0; i < this.genre.length; i++) {
+            //   gen += this.genre[i]
+              console.log(this.genre[i].name);
+                formData.append('genre', this.genre[i].name)
+            }
             formData.append('price', this.price)
             formData.append('discount', this.discount)
             formData.append('description', this.description)
@@ -250,10 +278,9 @@ export default {
             let headers = {
                 "headers": {
                     "Content-Type": "multipart/form-data",
+                    'Access-Control-Allow-Origin': '*'
                 },
-            }
-
-            console.log('ini form data: '+formData);    
+            }    
             this.axios.post('/game/create', formData, headers).then( response => {
                 console.log('imagenya: ' + formData)
                 console.log('response requestnya: ' + response.request)
@@ -269,9 +296,16 @@ export default {
     },
     mounted() {
         this.Games()
+        // multiselect
+        $('.selectpicker').selectpicker({
+            noneSelectedText: 'Pilih Genre'
+        });
+
+        this.obj = Object.assign({}, this.genre);
     }
 }
 
 // multiselect
 // $('select').selectpicker();
+
 </script>
