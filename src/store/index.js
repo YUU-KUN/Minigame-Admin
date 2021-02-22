@@ -65,50 +65,10 @@ export default new Vuex.Store({
 	            })
 	        })
 	    },
-
-		//User
-		loginUser({commit}, user){
-	        return new Promise((resolve, reject) => {
-	            commit('auth_request')
-              const config = {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              };
-			  const auth = {
-				auth: {
-					username: process.env.VUE_APP_BASIC_AUTH_USERNAME, 
-					password: process.env.VUE_APP_BASIC_AUTH_PASSWORD
-				}
-			  }
-			  axios.post('/user/login', user, auth) //shorthand
-	            .then(response => {
-					const token = response.data.data.accessToken
-	                axios.defaults.headers.common['Authorization'] = token
-	                localStorage.setItem('Authorization', token)
-	                // const logged = response.data.logged
-
-	                commit('auth_success', token)
-					setTimeout(resolve(response), 3000)
-	                resolve(response)
-	            })
-	            .catch(err => {
-					if (err.response.data[0]) {
-						console.log(err.response.data[0].message)
-					} else {
-						console.log(err.response)
-					}
-	                commit('auth_error')
-	                localStorage.removeItem('Authorization')
-	                reject(err)
-	            })
-	        })
-	    },
-
 	    register({commit}, user){
 	    	return new Promise((resolve, reject) => {
 	            commit('auth_request')
-	            axios({url: '/user/register', data: user, method: 'POST' })
+	            axios({url: '/admin/register', data: user, method: 'POST' })
 	            .then(response => {
 	                const token = response.data.token
 	                const logged = response.data.logged

@@ -9,7 +9,7 @@ import VueCurrency from 'vue-currency-filter'
 import moment from 'moment'
 import Multiselect from 'vue-multiselect'
 
-import 'bootstrap-vue/dist/bootstrap-vue.css' //import bootstrap-vue doang, gak perlu bootstrap biasa,or have fun with that 'beautiful' layout
+import 'bootstrap-vue/dist/bootstrap-vue.css' //import bootstrap-vue doang, gak perlu bootstrap biasa, or have fun with that 'beautiful' layout
 
 // Vue.use(Multiselect)
 Vue.component('multiselect', Multiselect)
@@ -23,10 +23,6 @@ Vue.filter('formatDate', function(value) {
     return moment(String(value)).format('D MMM YYYY hh:mm')
   }
 })
-Vue.filter('reverse', function(value) {
-  // slice to make a copy of array, then reverse the copy
-  return value.slice().reverse();
-});
 
 
 Vue.use(VueCurrency, {

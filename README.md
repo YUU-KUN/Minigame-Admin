@@ -1,4 +1,4 @@
-# minigame-like-sidigs
+# minigame-admin
 
 ## Project setup
 ```
