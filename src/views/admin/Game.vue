@@ -42,7 +42,10 @@
                                         <tr v-for="(game, index) in gamelist" :key="index">
                                             <td>{{index+1}}</td>
                                             <td>{{game.title}}</td>
-                                            <td>{{game.discountPrice | rupiah}}</td>
+                                            <td>
+                                                <span v-if="game.discountPrice > 0">{{game.discountPrice | rupiah}}</span>
+                                                <span v-else>{{game.price | rupiah}}</span>
+                                            </td>
                                             <td v-if="game.rating">
                                                 {{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span>
                                             </td>
@@ -101,7 +104,7 @@
                 </div>
               </div> -->
 
-              <div class="card bg-light">
+              <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>List Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -110,7 +113,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <!-- ONLY FOR DEVELOPING -->
 
         </div>

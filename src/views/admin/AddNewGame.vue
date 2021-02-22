@@ -39,7 +39,6 @@
                                                                             <option v-for="(genre, index) in gameGenres" :key="index" :value="genre">{{genre}}</option>
                                                                         </select> -->
                                                                         <!-- <pre class="language-json"><code>{{ genre }}</code></pre> -->
-                                                                        <!-- <pre class="language-json"><code>{{ genre }}</code></pre> -->
                                                                         <!-- <pre class="language-json"><code v-for="(genre, index) in genre" :key="index">{{index}}</code></pre> -->
                                                                         <!-- <pre class="language-json"><code>{{ Object.values(genre)}}</code></pre> -->
                                                                         <!-- <pre class="language-json"><code>{{ genre[1]}} {{genre[0] }}</code></pre> -->
@@ -201,6 +200,7 @@ export default {
             poster: '',
             image: '',
             genre: [],
+            // genre: ['Adventure', 'Action', 'Puzzle'],
             
             difficulty: '',
             capacity: '',
@@ -252,20 +252,20 @@ export default {
                 this.discount = 0
             }
 
-            
-
             // this.genre = Object.values(this.genre)
+            console.log(this.genre);
             const formData = new FormData()
             formData.append('title', this.title)
             formData.append('poster', this.poster)
             formData.append('image', this.image)
             // var gen = "";
-            var i;
+            // var i;
             for (i = 0; i < this.genre.length; i++) {
-            //   gen += this.genre[i]
-              console.log(this.genre[i].name);
+                //   gen += this.genre[i]
+                console.log(this.genre[i].name);
                 formData.append('genre', this.genre[i].name)
             }
+            // formData.append('genre', this.genre)
             formData.append('price', this.price)
             formData.append('discount', this.discount)
             formData.append('description', this.description)

@@ -282,7 +282,7 @@
                 </div>
               </div> -->
 
-              <div class="card bg-light">
+              <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>Detail Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -291,7 +291,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               
         <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>All Users</h3> </div>
