@@ -2,7 +2,7 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #111;">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <span>Halo, {{whoami.name}}</span>
+        <span>Halo, Admin</span>
     </a>
 
     <!-- Divider -->
@@ -55,16 +55,9 @@
 <script>
 export default {
     data() {
-        return {
-            whoami: '',
-        }
+        return {}
     },
     methods: {
-        whoAmI() {
-            this.axios.get('admin/profile').then(response => {
-                this.whoami = response.data.data
-            })
-        },
         logout() {
             console.log('Logout Clicked');
             this.$store.dispatch('logout')
@@ -73,7 +66,6 @@ export default {
         }
     },
     mounted() {
-        this.whoAmI()
     }
 
 }

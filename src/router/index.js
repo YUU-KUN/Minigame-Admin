@@ -20,6 +20,7 @@ import EditGame from '../views/GameEdit'
 import Code from '../views/Code'
 import Transaction from '../views/Transaction'
 import CobaUploadImage from '../views/cobaUploadImage'
+import CobaInput from '../views/CobaInputImage'
 
 Vue.use(VueRouter)
 
@@ -35,7 +36,7 @@ const routes = [
     }
   },
   {
-    path: '/editGame/:gameEdit',
+    path: '/editGame/:gameId',
     name: 'EditGame',
     components: {default:EditGame, sidebar: Sidebar},
     meta: {
@@ -51,7 +52,7 @@ const routes = [
     }
   },
   {
-    path: '/gameDetail/:gameDetail',
+    path: '/gameDetail/:gameId',
     name: 'GameDetail',
     components: {default:GameDetail, sidebar:Sidebar},
     meta: {
@@ -112,6 +113,11 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/upload',
+    name: 'UploadImage',
+    component: CobaInput
   },
   {
     path: '/about',

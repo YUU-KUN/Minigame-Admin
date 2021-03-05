@@ -45,12 +45,13 @@ export default new Vuex.Store({
 					password: process.env.VUE_APP_BASIC_AUTH_PASSWORD
 				}
 			  }
-			  axios.post('/admin/login', admin, auth) //shorthand
+			  axios.post('admin/login', admin, auth) //shorthand
 	            .then(response => {
 					const token = response.data.data.accessToken
+					console.log(token);
 	                commit('auth_success', token)
 	                localStorage.setItem('Authorization', token)
-	                axios.defaults.headers.common['Authorization'] = token
+	                axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
 	                resolve(response)
 	            })
 	            .catch(err => {
@@ -70,7 +71,7 @@ export default new Vuex.Store({
 	            commit('auth_request')
 	            axios({url: '/admin/register', data: user, method: 'POST' })
 	            .then(response => {
-	                const token = response.data.token
+	                const token = response.data.accessToken
 	                const logged = response.data.logged
 	                localStorage.setItem('Authorization', token)
 	                // Add the following line:

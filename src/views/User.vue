@@ -20,21 +20,25 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
+                                            <th>Profile Image</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Username</th>
                                             <th>Verified</th>
-                                            <th>Joined</th>
+                                            <th>Joined At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                             <tr v-for="(user, index) in users" :key="index">
                                                 <td>{{index+1}}</td>
+                                                <td><img :src="user.userImage" height="100px" alt=""></td>
+                                                <td>{{user.name}}</td>
                                                 <td>{{user.email}}</td>
                                                 <td>{{user.username}}</td>
-                                                <td>{{user.isVerified}}</td>
-                                                <td>{{user.createdAt | formatDate}}</td>
-                                                <td class="d-flex justify-content-center">
+                                                <td>{{user.verified.toString().toUpperCase()}}</td>
+                                                <td>{{user.verifiedAt | formatDate}}</td>
+                                                <td style="">
                                                     <button class="btn btn-danger" data-fancybox :data-src="'#'+index"><b-icon icon="trash2-fill" title="Delete User"></b-icon></button>
                                                 </td>
 
@@ -56,7 +60,7 @@
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
-              <!-- <div class="card bg-light">
+              <div class="card bg-light">
                 <div class="card-header"> <h3>List User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -65,7 +69,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
 
@@ -102,7 +106,7 @@ export default {
     },
     methods: {
         getUser() {
-            this.axios.get('/user/list').then(response => {
+            this.axios.get('user/list-admin').then(response => {
                 this.users = response.data.data
             })
         },

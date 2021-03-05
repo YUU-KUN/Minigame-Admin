@@ -19,15 +19,17 @@
                                                         <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                             <div class="col">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="title"><strong>Game</strong></label>
-                                                                    <input type="text" id="title" class="form-control" v-model="gameDetail.title"   disabled>
+                                                                    <label for="title"><strong>Title</strong></label>
+                                                                    <input type="text" id="title" class="form-control" v-model="gameDetail.gameTitle"   disabled>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="genre"><strong>Genre</strong></label>
-                                                                    <input type="text" id="genre" class="form-control" v-model="gameDetail.genre" disabled>
+                                                                    <input type="text" id="genre" class="form-control" v-model="gameGenre" disabled>
+                                                                    <!-- <span v-if="game.gameGenre.length == 1">{{game.gameGenre.join(', ').split(',').join(', ')}}</span> 
+                                                <span v-else>{{game.gameGenre.join(', ')}}</span> -->
                                                                     <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
                                                                         <option v-for="(genre, index) in gameDetail.genre[0]" :key="index">{{genre}}</option>
                                                                     </select> -->
@@ -40,27 +42,27 @@
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="price"><strong>Normal Price</strong></label>
-                                                                    <input type="number" id="price" class="form-control" v-model="gameDetail.price"  min="0" disabled>
+                                                                    <input type="number" id="price" class="form-control" v-model="gameDetail.gamePrice"  min="0" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="discount"><strong>Discount (%)</strong></label>
-                                                                    <input type="number" id="discount" class="form-control" v-model="gameDetail.discount" min="0" disabled>
+                                                                    <input type="number" id="discount" class="form-control" v-model="gameDetail.gameDiscount" min="0" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="duration"><strong>Duration</strong> (Minutes)</label>
-                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.duration"  min="1" disabled>
+                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.gameDuration"  min="1" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="duration"><strong>Rating</strong> (1-5)
-                                                                        <span v-if="gameDetail.rating"><b-icon v-for="value in parseInt(gameDetail.rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
+                                                                        <span v-if="gameDetail.gameRating"><b-icon v-for="value in parseInt(gameDetail.gameRating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
                                                                     </label>
-                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.rating"  min="0" max="5" disabled>
+                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.gameRating"  min="0" max="5" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -70,21 +72,21 @@
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="difficulty"><strong>Difficulty</strong></label>
-                                                                    <input type="number" id="difficulty" class="form-control" v-model="gameDetail.difficulty"  min="1" disabled>
+                                                                    <input type="number" id="difficulty" class="form-control" v-model="gameDetail.gameDifficulty"  min="1" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="capasity"><strong>Capacity</strong></label>
-                                                                    <input type="number" id="capasity" class="form-control" v-model="gameDetail.capacity"  min="1" disabled>
+                                                                    <input type="number" id="capasity" class="form-control" v-model="gameDetail.gameCapacity"  min="1" disabled>
                                                                 </div>
                                                             </div>
                                                             
 
                                                             <div class="col-6">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="gameDetail.url">{{gameDetail.url}}</span> <span v-else>yourURL</span></b> )</label>
-                                                                    <input type="text" id="url" class="form-control" v-model="gameDetail.url" disabled>
+                                                                    <label for="url"><strong>URL</strong> (tranceformasiindonesia.com/<b><span v-if="gameDetail.gameUrl">{{gameDetail.gameUrl}}</span> <span v-else>yourURL</span></b> )</label>
+                                                                    <input type="text" id="url" class="form-control" v-model="gameDetail.gameUrl" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -94,7 +96,7 @@
                                                             <div class="col">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="description"><strong>Description</strong></label>
-                                                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameDetail.description" disabled></textarea>
+                                                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" v-model="gameDetail.gameDescription" disabled></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -130,7 +132,7 @@
                                                                 <div class="input-container" style="flex-grow: 1;">
                                                                     <label for="cover"><strong>Cover</strong></label>
                                                                     <!-- <div class="preview"> -->
-                                                                        <img v-if="gameDetail.imageUrl" :src="gameDetail.imageUrl" class="img-thumbnail" alt="Covernya" width="100%" style="margin:10px">
+                                                                        <img v-if="gameDetail.gameImage" :src="gameDetail.gameImage" class="img-thumbnail" alt="Covernya" width="100%" style="margin:10px">
                                                                         <!-- <img v-else :src="gameEdit.imageUrl" alt="Covernya" height="100px" style="margin:10px"> -->
                                                                     <!-- </div> -->
                                                                 </div>
@@ -140,7 +142,7 @@
                                                                     <label for="poster"><strong>Poster</strong></label>
                                                                     <!-- <div class="preview"> -->
                                                                         <!-- <img v-if="!newPoster" :src="gameEdit.posterUrl" alt="Posternya" height="100px" style="margin:10px"> -->
-                                                                        <img v-if="gameDetail.posterUrl" :src="gameDetail.posterUrl" class="img-thumbnail" alt="Posternya" width="100%" style="margin:10px">
+                                                                        <img v-if="gameDetail.posterImage" :src="gameDetail.posterImage" class="img-thumbnail" alt="Posternya" width="100%" style="margin:10px">
                                                                         <!-- <img v-else :src="posterUrl" alt="Posternya" height="100px" style="margin:10px"> -->
                                                                     <!-- </div> -->
                                                                 </div>
@@ -160,7 +162,7 @@
 
 
             <!-- ONLY FOR DEVELOPING -->
-            <!-- <div class="card bg-light">
+            <div class="card bg-light">
                 <div class="card-header"> <h3>Detail Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -169,7 +171,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -179,13 +181,24 @@
 
 <script>
 export default {
-    data(){
+    data() {
         return {
-            gameDetail: ''
+            gameId: this.$route.params.gameId,
+            gameDetail: '',
+            gameGenre: '',
+        }
+    },
+    methods: {
+        getDetailGame() {
+            this.axios.get('game/detail/'+this.gameId).then(response => {
+                this.gameDetail = response.data.data
+                this.gameGenre = this.gameDetail.gameGenre.join(', ')
+            })
         }
     },
     mounted() {
-        this.gameDetail = this.$route.params.gameDetail
+        this.getDetailGame() 
+        // this.gameDetail = this.$route.params.gameDetail
     }
 }
 </script>

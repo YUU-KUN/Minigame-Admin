@@ -21,6 +21,7 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>User</th>
+                                            <th>Members</th>
                                             <th>Item</th>
                                             <th>Total</th>
                                             <th>Status</th>
@@ -32,20 +33,35 @@
                                     <tbody>
                                         <tr v-for="(transaction, index) in transactions" :key="index">
                                             <td>{{index +1}}</td>
-                                            <td><span v-if="transaction.user">{{transaction.user}}</span> <span v-else>User</span></td>
+                                            <td>
+                                                <!-- <span v-if="transaction.userData"> -->
+                                                    <span>{{transaction.userData.name}}</span>
+                                                    <!-- <span v-for="(transaction, index) in transaction.userData" :key="index">{{transaction.name}}</span> -->
+                                                <!-- </span>  -->
+                                                <!-- <span v-else>-</span> -->
+                                            </td>
+                                            <td>
+                                                <span v-for="(transactionItems, index) in transaction.transactionItems" :key="index">
+                                                    <span v-for="(member, index) in transactionItems.members" :key="index">
+                                                        <ul>
+                                                            <li>{{member.name}}</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <ul>
-                                                    <span v-for="(game, index) in transaction.items" :key="index">
-                                                        <li>{{game.cartGameData.title}}</li>
+                                                    <span v-for="(game, index) in transaction.transactionItems" :key="index">
+                                                        <li>{{game.gameData.gameTitle}}</li>
                                                     </span>
                                                 </ul>
                                             </td>
-                                            <td>{{transaction.total | rupiah}}</td>
+                                            <td>{{transaction.transactionTotal | rupiah}}</td>
                                             <td>
-                                                <span v-if="transaction.status == 0">Menunggu Bukti Pembayaran</span>
-                                                <span v-else-if="transaction.status == 1">Transaksi Terkonfirmasi</span>
-                                                <span v-else-if="transaction.status == 2">Menunggu Konfirmasi Admin</span>
-                                                <span v-else-if="transaction.status == 3">Transaksi Ditolak</span>
+                                                <span v-if="transaction.transactionStatus == 0">Menunggu Bukti Pembayaran</span>
+                                                <span v-else-if="transaction.transactionStatus == 1">Transaksi Terkonfirmasi</span>
+                                                <span v-else-if="transaction.transactionStatus == 2">Menunggu Konfirmasi Admin</span>
+                                                <span v-else-if="transaction.transactionStatus == 3">Transaksi Ditolak</span>
                                                 <span v-else>Transaksi Kadaluarsa</span>
                                             </td>
                                             <td>
@@ -53,10 +69,10 @@
                                                     <a :href="transaction.buktiPembayaran" target="_blank">Lihat Bukti Pembayaran</a>
                                                 </span>
                                                 <span v-else>Tidak Ada Bukti Pembayaran</span> -->
-                                                <span class="d-flex justify-content-center" v-if="transaction.status ==  1 || transaction.status == 2 || transaction.status == 3">
-                                                    <a :href="transaction.buktiPembayaran" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
+                                                <span class="d-flex justify-content-center" v-if="transaction.transactionStatus ==  1 || transaction.transactionStatus == 2 || transaction.transactionStatus == 3">
+                                                    <a :href="transaction.transactionImage" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
                                                 </span>
-                                                <span class="d-flex justify-content-center" v-else-if="transaction.status == 0">
+                                                <span class="d-flex justify-content-center" v-else-if="transaction.transactionStatus == 0">
                                                     <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
                                                 </span>
                                                 <span v-else class="d-flex justify-content-center">
@@ -66,13 +82,13 @@
                                             
                                             <td>{{transaction.createdAt | formatDate}}</td>
                                             <td>
-                                                <span v-if="transaction.status != 2" class="d-flex justify-content-around ">
+                                                <span v-if="transaction.transactionStatus != 2" class="d-flex justify-content-around ">
                                                     <button class="btn btn-danger" tabindex="-1" data-fancybox :data-src="'#delete'+index"><b-icon icon="trash2-fill"></b-icon></button>
                                                 </span>
                                                 <span v-else class="d-flex justify-content-around ">
-                                                    <span><button class="btn btn-success" @click="acceptTransaction(index)" title="Accept Transaction"><b-icon icon="check"></b-icon></button></span>
-                                                    <button class="btn btn-primary" data-fancybox :data-src="'#reject'+index" title="Reject Transaction"><b-icon icon="x"></b-icon></button>
-                                                    <button class="btn btn-danger" data-fancybox :data-src="'#delete'+index" title="Delete Transaction"><b-icon icon="trash2-fill"></b-icon></button>
+                                                    <span><button class="btn btn-success" @click="acceptTransaction(index)" title="Accept Transaction" style="margin: 0 5px"><b-icon icon="check"></b-icon></button></span>
+                                                    <button class="btn btn-warning" data-fancybox :data-src="'#reject'+index" title="Reject Transaction" style="margin: 0 5px"><b-icon icon="x"></b-icon></button>
+                                                    <button class="btn btn-danger" data-fancybox :data-src="'#delete'+index" title="Delete Transaction" style="margin: 0 5px"><b-icon icon="trash2-fill"></b-icon></button>
                                                 </span>
                                             </td>
 
@@ -88,14 +104,14 @@
                                             
                                             <!-- Reject Transaction -->
                                             <div style="display:none" :id="'reject'+index" >
-                                                <h2>Watch Out!</h2>
+                                                <h2>Are you sure?</h2>
                                                 <p>Why do you wanna <b>reject</b> <span v-if="transaction.user"><b>{{transaction.user}}</b>'s</span> <span v-else>this</span> transaction?</p>
                                                 <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                 <input type="text" v-model="rejectReason" class="form-control">
                                                 </div>
                                                 <div class=" d-flex justify-content-center">
                                                 <button type="button" data-fancybox-close @click="checkTransactionId(index)" class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                <button type="button" @click="rejectTransaction(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                <button type="button" @click="rejectTransaction(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">REJECT!</button>
                                                 </div>
                                             </div>
                                             
@@ -109,7 +125,7 @@
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
-              <!-- <div class="card bg-dark">
+              <div class="card bg-dark">
                 <div class="card-header"> <h3>List Transaksi User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -118,7 +134,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -138,24 +154,24 @@ export default {
     },
     methods: {
         acceptTransaction(index) {
-            this.axios.put('transaction/accept/'+this.transactions[index].transaksiId).then(response => {
+            this.axios.put('transaction/accept/'+this.transactions[index].transactionId).then(response => {
                 this.getUserTransaction()
                 console.log(response);
                 console.log('Transaction Accepted');
             })
         },
         rejectTransaction(index) {
-            this.axios.put('transaction/reject/'+this.transactions[index].transaksiId, {reason: this.rejectReason}).then(response => {
+            this.axios.put('transaction/reject/'+this.transactions[index].transactionId, {reason: this.rejectReason}).then(response => {
                 this.getUserTransaction()
                 console.log(response);
                 console.log('Transaction Rejected');
             })
         },
         checkTransactionId(index){
-            console.log(this.transactions[index].transaksiId);
+            console.log(this.transactions[index].transactionId);
         },
         removeTransaction(index) {
-            let transactionId = this.transactions[index].transaksiId
+            let transactionId = this.transactions[index].transactionId
             console.log(transactionId);
             this.axios.delete('transaction/delete/'+transactionId).then(response => {
                 console.log('Berhasil menghapus transaksi');
@@ -168,12 +184,12 @@ export default {
             console.log(this.info)
         },
         getUserTransaction(){
-            let headers = {
-                "headers": {
-                    "content-type": "application/json",
-                },
-            }
-            this.axios.get('/transaction/list', headers).then(response => {
+            // let headers = {
+            //     "headers": {
+            //         "content-type": "application/json",
+            //     },
+            // }
+            this.axios.get('/transaction/list/admin').then(response => {
                 this.transactions = response.data.data
             })
         }

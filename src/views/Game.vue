@@ -35,28 +35,36 @@
                                             <!-- <th>Duration</th> -->
                                             <!-- <th>Level</th> -->
                                             <th>Genre</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(game, index) in gamelist" :key="index">
                                             <td>{{index+1}}</td>
-                                            <td>{{game.title}}</td>
+                                            <td>{{game.gameTitle}}</td>
                                             <td>
-                                                <span v-if="game.discountPrice > 0">{{game.discountPrice | rupiah}}</span>
-                                                <span v-else>{{game.price | rupiah}}</span>
+                                                <span v-if="game.gamePriceAfterDiscount > 0">{{game.gamePriceAfterDiscount | rupiah}}</span>
+                                                <span v-else>{{game.gamePrice | rupiah}}</span>
                                             </td>
-                                            <td v-if="game.rating">
-                                                {{game.rating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                            <td v-if="game.gameRating">
+                                                {{game.gameRating}} <span style="font-size:17px;color:orange;">&starf;</span>
                                             </td>
                                             <td v-else>
                                                 -
                                             </td>
                                             <td>
-                                                <span v-if="game.genre.length == 1">{{game.genre.join(', ').split(',').join(', ')}}</span> 
-                                                <span v-else>{{game.genre.join(', ')}}</span>
+                                                <span v-if="game.gameGenre.length == 1">{{game.gameGenre.join(', ').split(',').join(', ')}}</span> 
+                                                <span v-else>{{game.gameGenre.join(', ')}}</span>
+                                                <!-- <span>{{game.gameGenre.join(', ')}}</span> -->
                                             </td>
-                                            <td >
+                                            <td>
+                                                <span v-if="game.gameReady">Active</span>
+                                                <span v-else>Disabled</span>
+                                            </td>
+                                            <td>
+                                                <button v-if="!game.gameReady" class="btn btn-outline-success" @click="activate(index)" style="margin: 0 5px">Activate</button>
+                                                <button v-else class="btn btn-danger" data-fancybox :data-src="'#disableGame'+index" style="margin: 0 5px">Disable</button>
                                                 <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
                                                 <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
                                                 <button class="btn btn-danger" data-fancybox :data-src="'#'+index" style="margin: 0 5px">Delete</button>
@@ -65,10 +73,20 @@
                                             <!-- Delete Confirmation -->
                                             <div style="display:none" :id="index" class="animated-modal">
                                                 <h2>Watch Out!</h2>
-                                                <p>Are you sure wanna delete <b>{{game.title}}</b>?</p>
+                                                <p>Are you sure wanna delete <b>{{game.gameTitle}}</b>?</p>
                                                 <div class=" d-flex justify-content-center">
                                                 <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                <button type="button" @click="removeGame(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
+                                                <button type="button" @click="removeGame(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Delete!</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Disable Game Confirmation -->
+                                            <div style="display:none" :id="'disableGame'+index" class="animated-modal">
+                                                <h2>Watch Out!</h2>
+                                                <p>Are you sure wanna Disable <b>{{game.gameTitle}}</b>?</p>
+                                                <div class=" d-flex justify-content-center">
+                                                <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                <button type="button" @click="disable(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Disable!</button>
                                                 </div>
                                             </div>
 
@@ -104,7 +122,7 @@
                 </div>
               </div> -->
 
-              <!-- <div class="card bg-light">
+              <div class="card bg-light">
                 <div class="card-header"> <h3>List Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -113,7 +131,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -134,8 +152,10 @@ export default {
     },
     methods: {
         getGames() {
-            this.axios.get('game/list').then(response => {
+            this.axios.get('https://minigame-infiniteroom.herokuapp.com/api/game/list').then(response => {
                 this.gamelist = response.data.data
+            }).catch(error => {
+                console.log(error.response);
             })
         },
         viewGameDetail(index) {
@@ -157,6 +177,21 @@ export default {
             this.$router.push({name: 'EditGame', params: {gameEdit:edit, gameId:id}}) //bisa juga kayak gini
         },
 
+        activate(index) {
+            const gameId = this.gamelist[index].gameId
+            this.axios.put('game/activate/'+gameId).then(response => {
+                console.log(response.data.message)
+                this.getGames()
+            })
+        },
+        disable(index) {
+            const gameId = this.gamelist[index].gameId
+            this.axios.put('game/disable/'+gameId).then(response => {
+                console.log(response.data.message);
+                this.getGames()
+            })
+        },
+
         // ASLI
         // editGame(index) {
         //     let edit = this.gamelist[index]
@@ -164,8 +199,11 @@ export default {
         //     this.$router.push({name:'EditGame', params:{gameId:id, gameEdit: edit}})
         // },
         removeGame(index) {
-            let GameID = this.gamelist[index].gameId
-            this.axios.delete('game/delete/'+GameID).then(this.getGames())
+            const gameId = this.gamelist[index].gameId
+            this.axios.delete('game/delete/'+gameId).then(response => {
+                console.log(response.data.message)
+                this.gamelist.splice(index, 1)
+            })
             this.removed = true
             this.info = 'Berhasil Hapus Game'
             console.log(this.info)

@@ -37,17 +37,20 @@ Vue.use(VueCurrency, {
 })
 Vue.config.productionTip = false
 
-const token = localStorage.getItem('Authorization')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-  axios.defaults.headers.common['Authorization'] = token
-  axios.defaults.headers.common['x-access-token'] = token
-} 
-
 require('dotenv').config();
-
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
+
+const token = localStorage.getItem('Authorization')
+if (token) {
+  console.log('Token Exist');
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer '+ token
+  axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+  // axios.defaults.headers.common['x-access-token'] = token
+} else {
+  console.log('Token Not Found');
+}
+
 
 new Vue({
   router,

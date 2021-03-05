@@ -22,7 +22,7 @@
                                             <th>No.</th>
                                             <th>User</th>
                                             <th>Game</th>
-                                            <th>Playing Date</th>
+                                            <th>Playing Schedule</th>
                                             <th>Code</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -31,16 +31,17 @@
                                     <tbody>
                                         <tr v-for="(user, index) in userlist" :key="index">
                                             <td>{{index+1}}</td>
-                                            <td>{{user.userDetail.name}}</td>
-                                            <td>{{user.gameDetail.title}}</td>
-                                            <td>{{user.playingDate | formatDate}}</td>
-                                            <td>{{user.code}}</td>
+                                            <td>{{user.userData.name}}</td>
+                                            <td>{{user.gameData.gameTitle}}</td>
+                                            <td>{{user.playingSchedule | formatDate}}</td>
+                                            <td>{{user.uniqueCode}}</td>
                                             <td>
-                                                <div v-if="user.expired">Expired</div>
+                                                <div v-if="user.isExpired">Expired</div>
                                                 <div v-else>Available</div>
                                             </td>
-                                            <td class="d-flex justify-content-center">
-                                                <button class="btn btn-danger" data-fancybox :data-src="'#'+index" @click="tesIndex(index)">Generate</button>
+                                            <td>
+                                                <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+index" @click="tesIndex(index)">Generate</button>
+                                                <!-- <button class="btn btn-danger" style="margin: 0 5px" data-fancybox :data-src="'#deleteCodeList'+index" >Delete</button> -->
                                                 <div style="display: none;" :id="index">
                                                     <h2>Generate New Code</h2>
                                                     <p>Please select the date to play!</p>
@@ -63,21 +64,22 @@
                                                                                     <div class="input-container" style="flex-grow: 1;  ">
                                                                                         <label for="time"><strong>Time</strong></label>
                                                                                         <select name="time" v-model="time" id="time" class="form-control">
-                                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index" selected>{{time}}</option>
+                                                                                            <option value="" selected>Choose new play tIme!</option>
+                                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index">{{time}}</option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 <div class="form-group" >
-                                                                                    <div class="col">
+                                                                                    <!-- <div class="col"> -->
                                                                                         <div class="input-container" style="flex-grow: 1;">
-                                                                                            <button @click="generate(index)" data-fancybox-close class="btn btn-warning d-flex align-items-center justify-content-center" style="width:100%">
-                                                                                                <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon>
+                                                                                            <button @click="generate(index)" data-fancybox-close class="btn btn-success d-flex align-items-center justify-content-center" style="width:100%">
+                                                                                                <!-- <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon> -->
                                                                                                 <b>Generate</b>
                                                                                             </button>
                                                                                         </div>
-                                                                                    </div>
+                                                                                    <!-- </div> -->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -87,6 +89,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <!-- Delete Confirmation -->
+                                                <!-- <div style="display:none" :id="'deleteCodeList'+index" class="animated-modal">
+                                                    <h2>Watch Out!</h2>
+                                                    <p>Are you sure wanna delete?</p>
+                                                    <div class=" d-flex justify-content-center">
+                                                    <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                                    <button type="button" @click="removeCodeList(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Delete!</button>
+                                                    </div>
+                                                </div> -->
+
                                             </td>
                                         </tr>
                                     </tbody>
@@ -109,7 +122,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
 
             <div class="card bg-light">
                 <div class="card-header"> <h3>Data User</h3> </div>
@@ -120,7 +133,7 @@
                       </div>
                     </div>
                 </div>
-              </div> -->
+              </div>
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -154,27 +167,30 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            let userGameId = this.userlist[index].userGameId
+            let codeId = this.userlist[index].codeId
             // console.log(userGameId);
-            this.axios.put('generate/code/'+userGameId, {
-                date: this.date,
+            this.axios.put('code/generate/'+codeId, {
+                playDate: this.date,
                 time: this.time
             }, headers).then(response => {
-                this.newCode = response.data.data.code
+                this.newCode = response.data.data.uniqueCode
                 console.log(this.newCode)
                 this.getUserCode()
             })
             this.generated = true
-            this.info = 'Berhasil generate Kode. Kode '+ this.userlist[index].userDetail.name+ ' adalah ' 
+            this.info = 'Berhasil generate Kode. Kode '+ this.userlist[index].userData.name+ ' adalah ' 
             console.log('Success Generate')
         },
         getUserCode() {
-            this.axios.get('game/usergame').then(response => {
-                this.userlist = response.data.data
-                this.allCode = response.data.data[1].code
+            this.axios.get('code/list').then(response => {
+                this.userlist = response.data.data.reverse()
+                // this.allCode = response.data.data[0].uniqueCode
 
             })
         },
+        // removeCodeList(index) {
+        //     this.axios.get
+        // },
         tesIndex(index) {
             console.log(index);
         }

@@ -35,9 +35,6 @@
                 </form>
             </div>
         </div>
-
-        <!-- <b-button @click="$bvToast.show('my-toast')">Show toast</b-button> -->
-
     <b-toast id="my-toast" :variant="toastVariant" solid>
       <template #toast-title>
         <div class="d-flex flex-grow-1 align-items-baseline">
@@ -75,12 +72,8 @@ export default {
                 this.toastVariant = 'success'
                 this.toastMessage = 'Selamat Datang Admin'
                 this.toastTitle = response.data.message
-                // this.makeToast('success', this.toastTitle, toastMessage)
                 this.$bvToast.show('my-toast')
-
-                setTimeout(() => {
-                    this.$router.push('/')
-                }, 2000);
+                this.$router.push('/')
             })
             .catch(err => {
                     this.$bvToast.show('my-toast')
@@ -88,30 +81,20 @@ export default {
                     this.toastTitle = 'Terdapat Kesalahan'
                     if (err.response.data[0]) {
                         this.toastMessage = err.response.data[0].message
-                        // this.makeToast('danger', this.toastTitle, toastMessage)
 				    } else {
                         this.toastMessage = err.response.data.message;
-                        // this.makeToast('danger', this.toastTitle, toastMessage)
                     }
                 }
             )
         },
-        makeToast(variant = 'default', title, message) {
-            this.$bvToast.toast(message, { //body
-                title: title, //atas
-                variant: variant,
-                solid: true
-            })
-        },
-        
     },
     computed: {
-        time: function(){
+        time(){
             return this.date.format('s');
         }
     },
 
-    mounted: function(){
+    mounted(){
   	var timer = setInterval(() => {
         this.date = moment(this.date.add(1, 'seconds'));
         if(this.date.diff(moment(0)) === 100){
@@ -134,6 +117,7 @@ export default {
             height: 100%;
             background-image: url('../../../public/admin/img/bg-login.jpg');
             background-repeat: no-repeat;
+            background-size: cover;
         }
 
         #ioginPanel {
