@@ -174,22 +174,6 @@
 			        		</div>
 			        	</div>
 			        </div> -->
-                    <pre>
-                        title {{title}}
-                        price {{price}}
-                        duration {{duration}}
-                        discount {{discount}}
-                        description {{description}}
-                        poster {{poster}}
-                        image {{readImage}}
-                        imageUrl {{imageUrl}}
-                        difficulty {{difficulty}}
-                        genre {{genre}}
-                        capacity {{capacity}}
-                        rating {{rating}}
-                        url {{url}}
-                    </pre>
-
                 </div> 
             </div>
         </div>
@@ -284,6 +268,11 @@ export default {
         addNewGame() {
             if (this.discount == '' || this.discount < 0) {
                 this.discount = 0
+            } else if (this.discount > 100) {
+                this.discount = 100
+            } 
+            if (this.rating == '' || this.rating < 0) {
+                this.rating = 5
             }
 
             for (let i = 0; i < this.genre.length; i++) {

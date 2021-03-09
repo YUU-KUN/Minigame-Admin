@@ -72,5 +72,13 @@ export default {
 </script>
 
 <style>
-
+.nav-item a.router-link-exact-active::before{
+  position: absolute;
+  content: "";
+  left: 5px;
+  width: 5px;
+  height: 23px;
+  background: #5f6be3;
+  border-radius: 25px;
+}
 </style>

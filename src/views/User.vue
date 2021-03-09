@@ -60,7 +60,7 @@
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
-              <div class="card bg-light">
+              <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>List User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -69,7 +69,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <!-- ONLY FOR DEVELOPING -->
 
 
@@ -120,7 +120,11 @@ export default {
                     "content-type": "application/json",
                 },
             }
-            this.axios.delete(`/user/${id}`, headers).then(this.getUser())
+            this.axios.delete(`/user/delete/${id}`, headers).then(response => {
+                this.users.slice(0, 1)
+                console.log(response)
+                this.getUser()
+            })
             this.$bvToast.show('my-toast')
             this.info = true
             console.log('Berhasil hapus User '+username)

@@ -1,7 +1,7 @@
 <template>
     <div class="row" id="ioginPanel">
         <div class="col-8"></div>
-        <div class="col" style="background: white; right: 0; opacity: 0.85; height: 100%">
+        <div class="col" style="background: white; right: 0; height: 100%">
             <div class="row d-flex justify-content-center" style="padding: 0 10px; height: 100% ">
                 <form @submit.prevent="login">
                     <div class="row d-flex justify-content-center">
@@ -19,7 +19,9 @@
                     <p></p>
                     <div class="form-group">
                         <label for="password"> <h4><b-icon icon="shield-lock-fill" style="margin-right: 10px"></b-icon>Password</h4></label>
-                        <input type="text" class="form-control form-control-lg" id="password" placeholder="Password" v-model="password">
+                        <!-- <input type="text" class="form-control form-control-lg" id="password" placeholder="Password" v-model="password"> -->
+                        <input :type="passwordFieldType" class="form-control form-control-lg" id="password" placeholder="Password" v-model="password">
+                        <span @click="showPassword()" class="field-icon"><b-icon :icon="icon"></b-icon></span>
                     </div>
                     <div class="form-group form-check" >
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -28,9 +30,12 @@
                             <label class="form-check-label"><a href="">Forgot You Password?</a></label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="width:100%; margin:10px auto">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="width:100%; margin:10px auto">
+                        <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                        <span v-else>Sign In</span>
+                    </button>
                     <div class="row d-flex justify-content-center" style="text-align:center;">
-                        <span>Doesn't have account? <a href="">Sign up</a></span>
+                        <span>Don't have an account? <a href=""><b>Sign up now!</b></a></span>
                     </div>
                 </form>
             </div>
@@ -58,16 +63,24 @@ export default {
             date: moment(0),
             toastTitle: '',
             toastMessage: '',
-            toastVariant: ''
+            toastVariant: '',
+
+            // show password
+            passwordFieldType: 'password',
+            icon: 'eye',
+
+            loading: false
         }
     },
     methods: {
         login() {
+            this.loading = true
             this.date = moment(0)
             let email = this.email 
             let password = this.password
             this.$store.dispatch('login', { email, password })
             .then(response => {
+                this.loading = false
                 // Buat Toastnya
                 this.toastVariant = 'success'
                 this.toastMessage = 'Selamat Datang Admin'
@@ -75,7 +88,8 @@ export default {
                 this.$bvToast.show('my-toast')
                 this.$router.push('/')
             })
-            .catch(err => {
+            .catch(err => {     
+                this.loading = false
                     this.$bvToast.show('my-toast')
                     this.toastVariant = 'danger'
                     this.toastTitle = 'Terdapat Kesalahan'
@@ -87,6 +101,10 @@ export default {
                 }
             )
         },
+        showPassword() {
+                this.icon = this.icon === 'eye' ? 'eye-slash' : 'eye'
+                this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+        }
     },
     computed: {
         time(){
@@ -107,35 +125,40 @@ export default {
 </script>
 
 <style>
-        html {
-            height: 100%;
-            width: 100%;
-        }
-
-        body {
-            width: 100%;
-            height: 100%;
-            background-image: url('../../../public/admin/img/bg-login.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        #ioginPanel {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        form {
-            width: 100%;
-            margin: auto 15px
-        }
-
-        .form-group {
-            margin: 20px auto
-        }
-        
-        a {
-            text-decoration: none;
-        }
+    html {
+        height: 100%;
+        width: 100%;
+    }
+    body {
+        width: 100%;
+        height: 100%;
+        background-image: url('../../../public/admin/img/bg-login.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    #ioginPanel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    form {
+        width: 100%;
+        margin: auto 15px
+    }
+    .form-group {
+        margin: 20px auto
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    /* show / hide password */
+    .field-icon {
+        float: right; 
+        margin-left: -25px; 
+        margin-right: 25px; 
+        margin-top: -35px; 
+        position: relative; 
+        z-index: 2;
+    }
 </style>

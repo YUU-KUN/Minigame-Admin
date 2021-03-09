@@ -104,7 +104,6 @@ export default {
         getTotalCodes() {
             this.axios.get('code/list').then(response => {
                 this.totalCode = response.data.data
-                console.log(this.totalCode);
             }).catch(error => {
                 console.log(error.response);
             })

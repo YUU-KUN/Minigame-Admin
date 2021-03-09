@@ -125,7 +125,7 @@
             </div>
 
             <!-- ONLY FOR DEVELOPING -->
-              <div class="card bg-dark">
+              <!-- <div class="card bg-dark">
                 <div class="card-header"> <h3>List Transaksi User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -134,7 +134,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -174,7 +174,9 @@ export default {
             let transactionId = this.transactions[index].transactionId
             console.log(transactionId);
             this.axios.delete('transaction/delete/'+transactionId).then(response => {
+                console.log(response)
                 console.log('Berhasil menghapus transaksi');
+                this.transactions.slice(0, 1)
                 this.getUserTransaction()
             }).catch(err => {
                 console.log(err.response);
