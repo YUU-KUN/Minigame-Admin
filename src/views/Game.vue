@@ -63,7 +63,7 @@
                                                 <span v-else>Disabled</span>
                                             </td>
                                             <td>
-                                                <button v-if="!game.gameReady" class="btn btn-outline-success" @click="activate(index)" style="margin: 0 5px">Activate</button>
+                                                <button v-if="!game.gameReady" class="btn btn-outline-success" @click="activate(index)" style="margin: 0 5px">Enable</button>
                                                 <button v-else class="btn btn-danger" data-fancybox :data-src="'#disableGame'+index" style="margin: 0 5px">Disable</button>
                                                 <button class="btn btn-success" @click="viewGameDetail(index)" style="margin: 0 5px">View</button>
                                                 <button class="btn btn-primary" @click="editGame(index)" style="margin: 0 5px">Edit</button>
@@ -147,7 +147,7 @@ export default {
             gamelist: '',
             gameDetail: '',
             gameEdit: '',
-            info: ''
+            info: '',
         }
     },
     methods: {
@@ -182,6 +182,8 @@ export default {
             this.axios.put('game/activate/'+gameId).then(response => {
                 console.log(response.data.message)
                 this.getGames()
+            }).catch(error => {
+                console.log(error.response)
             })
         },
         disable(index) {
@@ -189,6 +191,8 @@ export default {
             this.axios.put('game/disable/'+gameId).then(response => {
                 console.log(response.data.message);
                 this.getGames()
+            }).catch(error => {
+                console.log(error.response);
             })
         },
 

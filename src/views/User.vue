@@ -124,6 +124,8 @@ export default {
                 this.users.slice(0, 1)
                 console.log(response)
                 this.getUser()
+            }).catch(error => {
+                console.log(error)
             })
             this.$bvToast.show('my-toast')
             this.info = true

@@ -158,6 +158,8 @@ export default {
                 this.getUserTransaction()
                 console.log(response);
                 console.log('Transaction Accepted');
+            }).catch(error => {
+                console.log(error.response);
             })
         },
         rejectTransaction(index) {
@@ -165,6 +167,8 @@ export default {
                 this.getUserTransaction()
                 console.log(response);
                 console.log('Transaction Rejected');
+            }).catch(error => {
+                console.log(error.response);
             })
         },
         checkTransactionId(index){

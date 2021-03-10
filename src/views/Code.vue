@@ -40,7 +40,9 @@
                                                 <div v-else>Available</div>
                                             </td>
                                             <td>
-                                                <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+index" @click="tesIndex(index)">Generate</button>
+                                                <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+index">
+                                                    Generate
+                                                </button>
                                                 <!-- <button class="btn btn-danger" style="margin: 0 5px" data-fancybox :data-src="'#deleteCodeList'+index" >Delete</button> -->
                                                 <div style="display: none;" :id="index">
                                                     <h2>Generate New Code</h2>
@@ -72,14 +74,11 @@
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 <div class="form-group" >
-                                                                                    <!-- <div class="col"> -->
-                                                                                        <div class="input-container" style="flex-grow: 1;">
-                                                                                            <button @click="generate(index)" data-fancybox-close class="btn btn-success d-flex align-items-center justify-content-center" style="width:100%">
-                                                                                                <!-- <b-icon icon="cart-plus-fill" font-scale="1.4" aria-hidden="true"></b-icon> -->
-                                                                                                <b>Generate</b>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    <!-- </div> -->
+                                                                                    <div class="input-container" style="flex-grow: 1;">
+                                                                                        <button @click="generate(index)" data-fancybox-close class="btn btn-success d-flex align-items-center justify-content-center" style="width:100%">
+                                                                                            <b>Generate</b>
+                                                                                        </button>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -124,7 +123,7 @@
                 </div>
               </div> -->
 
-            <div class="card bg-light">
+            <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>Data User</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -133,7 +132,7 @@
                       </div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <!-- ONLY FOR DEVELOPING -->
 
         </div>
@@ -168,7 +167,6 @@ export default {
                 },
             }
             let codeId = this.userlist[index].codeId
-            // console.log(userGameId);
             this.axios.put('code/generate/'+codeId, {
                 playDate: this.date,
                 time: this.time
@@ -176,6 +174,8 @@ export default {
                 this.newCode = response.data.data.uniqueCode
                 console.log(this.newCode)
                 this.getUserCode()
+            }).catch(error => {
+                console.log(error.response)
             })
             this.generated = true
             this.info = 'Berhasil generate Kode. Kode '+ this.userlist[index].userData.name+ ' adalah ' 
@@ -184,16 +184,8 @@ export default {
         getUserCode() {
             this.axios.get('code/list').then(response => {
                 this.userlist = response.data.data.reverse()
-                // this.allCode = response.data.data[0].uniqueCode
-
             })
         },
-        // removeCodeList(index) {
-        //     this.axios.get
-        // },
-        tesIndex(index) {
-            console.log(index);
-        }
     },
     mounted() {
         this.getUserCode()

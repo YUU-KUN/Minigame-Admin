@@ -29,17 +29,7 @@
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="genre"><strong>Genre</strong></label>
                                                                     <input type="text" id="genre" class="form-control" v-model="editGenre" disabled>
-                                                                    <!-- <select id="genre" class="form-control selectpicker" required multiple v-model="genre">
-                                                                        <option v-for="(genre, index) in genre" :key="index" :value="genre">{{genre}}</option>
-                                                                    </select> -->
-                                                                    <!-- <select id="genre" class="form-control selectpicker" required multiple v-model="genre">
-                                                                        <option v-for="(genre, index) in gameDetail.genre" :key="index" value="">{{genre}}</option>
-                                                                    </select> -->
                                                                     <!-- <multiselect v-model="gameDetail.gameGenre" tag-placeholder="Add this as new genre" placeholder="Search or add a genre" label="name" track-by="name" :options="gameGenres" :multiple="true" :taggable="true" openDirection="bottom" :max="3" @tag="addGenre"></multiselect> -->
-                                                                    <!-- <pre>{{gameDetail.genre}}</pre> -->
-                                                                    <!-- <select name="genre" id="genre" v-model="genre"  class="form-control">
-                                                                        <option v-for="(genre, index) in gameDetail.genre[0]" :key="index">{{genre}}</option>
-                                                                    </select> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -79,7 +69,10 @@
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="difficulty"><strong>Difficulty</strong></label>
-                                                                    <input type="number" id="difficulty" class="form-control" v-model="gameDetail.gameDifficulty"  min="1">
+                                                                    <!-- <input type="number" id="difficulty" class="form-control" v-model="gameDetail.gameDifficulty"  min="1"> -->
+                                                                    <select id="difficulty" class="form-control"  v-model="gameDetail.gameDifficulty" min="1">
+                                                                        <option v-for="(diff, index) in difficulties" :key="index" :value="diff[index+1]" selected>{{diff}}</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3">
@@ -134,7 +127,10 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
                                                             <div class="col-md">
-                                                                <button class="btn btn-primary" type="submit">Update!</button>
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>                        
+                                                                    <span v-else>Update!</span>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -202,18 +198,25 @@ export default {
                 // "Action",
                 // "Puzzle",
             ],
+
+            difficulties: [
+                'Eazy',
+                'Normal',
+                'Hard',
+                'Very Hard',
+            ],
             gameDetail: '',
             gameEdit: '',
             posterUrl: '',
             imageUrl: '',
 
             editGenre: '',
+            loading: false
         }
     },
     methods: {
         getGame() {
             this.axios.get('game/detail/'+this.gameId).then(response => { 
-            // this.axios.get('game/detail/'+this.$route.params.gameId).then(response => { 
                 this.gameDetail = response.data.data
                 this.editGenre = this.gameDetail.gameGenre.join(', ')
             })
@@ -238,30 +241,10 @@ export default {
         },
 
         editGame(){
+            this.loading = true
             if (this.gameDetail.gameDiscount < 0 || !this.gameDetail.gameDiscount) {
                 this.gameDetail.gameDiscount = 0
             }
-            // this.gameEdit.poster = this.gameEdit.posterUrl
-            // this.gameEdit.image = this.gameEdit.posterUrl
-
-            // const formData = new FormData()
-            // formData.append('title', this.gameEdit.title)
-            // if (this.gameEdit.image) {
-            //     formData.append('image', this.gameEdit.image)
-            // }
-            // if (this.gameEdit.poster) {
-            //     formData.append('poster', this.gameEdit.poster)
-            // }
-            // formData.append('genre', this.gameEdit.genre)
-            // formData.append('price', this.gameEdit.price)
-            // formData.append('discount', this.gameEdit.discount)
-            // formData.append('description', this.gameEdit.description)
-            // formData.append('difficulty', this.gameEdit.difficulty)
-            // formData.append('rating', this.gameEdit.rating)
-            // formData.append('capacity', this.gameEdit.capacity)
-            // formData.append('duration', this.gameEdit.duration)
-            // formData.append('url', this.gameEdit.url)
-
             let headers = {
                 "headers": {
                     'Content-Type': 'multipart/form-data',
@@ -288,11 +271,14 @@ export default {
             this.axios.put('game/update/'+this.gameId, 
             addGameData
             ).then( response => {
+                this.loading = false
                 this.$router.push('/games'), 
                 console.log('Berhasil Edit Data Game')
                 console.log(response)
-                }
-            ).catch((error) => console.log( error.response ))
+            }).catch((error) => {
+                this.loading = false
+                console.log( error.response )
+            })
         },
         addGenre() {
             console.log('Add Genre');
@@ -301,6 +287,12 @@ export default {
     mounted() {
         // this.gameEdit = this.$route.params.gameEdit 
         this.getGame()
+
+        for (let i = 0; i < gameDetail.gameGenre.length; i++) {
+            const element = array[i];
+            this.gameDetail.gameGenre
+            
+        }
 
         // multiselect
         $('.selectpicker').selectpicker({

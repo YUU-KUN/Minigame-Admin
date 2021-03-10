@@ -20,7 +20,7 @@ Vue.use(BootstrapVueIcons)
 
 Vue.filter('formatDate', function(value) {
   if (value) {
-    return moment(String(value)).locale('id').format('D MMM YYYY hh:mm a')
+    return moment(String(value)).locale('id').format('D MMM YYYY HH:mm')
   }
 })
 
@@ -46,7 +46,6 @@ if (token) {
   console.log('Token Exist');
   Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer '+ token
   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
-  // axios.defaults.headers.common['x-access-token'] = token
 } else {
   console.log('Token Not Found');
 }

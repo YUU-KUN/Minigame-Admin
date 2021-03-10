@@ -8,7 +8,6 @@ export default new Vuex.Store({
 	state: {
   		status: '',
   		token: localStorage.getItem('Authorization') || '',
-  		// tokenUser: localStorage.getItem('Authorization') || '',
   		admin : {},
   		user : {}
 	},
