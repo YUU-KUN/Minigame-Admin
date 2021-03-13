@@ -148,17 +148,6 @@
 
             <!-- ONLY FOR DEVELOPING -->
             <!-- <div class="card bg-light">
-                <div class="card-header"> <h3>Game ID</h3> </div>
-                  <div class="card-inner">
-                    <div class="card bg-dark">
-                      <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{gameEdit.gameId}}</pre>
-                      </div>
-                    </div>
-                </div>
-              </div> -->
-
-            <!-- <div class="card bg-light">
                 <div class="card-header"> <h3>Detail Game</h3> </div>
                   <div class="card-inner">
                     <div class="card bg-dark">
@@ -206,7 +195,6 @@ export default {
                 'Very Hard',
             ],
             gameDetail: '',
-            gameEdit: '',
             posterUrl: '',
             imageUrl: '',
 
@@ -285,14 +273,12 @@ export default {
         }
     },
     mounted() {
-        // this.gameEdit = this.$route.params.gameEdit 
         this.getGame()
 
-        for (let i = 0; i < gameDetail.gameGenre.length; i++) {
-            const element = array[i];
-            this.gameDetail.gameGenre
-            
-        }
+        // for (let i = 0; i < gameDetail.gameGenre.length; i++) {
+        //     const element = array[i];
+        //     this.gameDetail.gameGenre
+        // }
 
         // multiselect
         $('.selectpicker').selectpicker({
