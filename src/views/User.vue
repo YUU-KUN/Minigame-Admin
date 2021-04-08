@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -52,7 +52,45 @@
                                                 </div>
                                             </tr>
                                     </tbody>
-                                </table>
+                                </table> -->
+                                
+                                <b-table
+                                  id="my-table"
+                                  class="table table-bordered"
+                                  :items="users"
+                                  :fields="fields"
+                                  :per-page="perPage"
+                                  :current-page="currentPage"
+                                  small
+                                >
+                                    
+                                    <template v-slot:cell(no)="nais">
+                                        <span>{{nais.index+1}}</span>
+                                    </template>
+                                    <template v-slot:cell(name)="data">
+                                      <img :src="data.item.userImage" height="40px" alt="">
+                                      {{data.item.name}} 
+                                    </template>
+                                    <template v-slot:cell(joined_at)="gan">
+                                        {{gan.item.verifiedAt | formatDate}}
+                                    </template>
+                                    <template v-slot:cell(verified)="gan">
+                                        <span v-if="gan.item.verified"><b-badge variant="success">Verified</b-badge></span>
+                                        <span v-else><b-badge variant="warning">Unverified</b-badge></span>
+                                    </template>
+                                    <template v-slot:cell(action)="nais">
+                                        <button class="btn btn-danger" data-fancybox :data-src="'#'+nais.index"><b-icon icon="trash2-fill" title="Delete User"></b-icon></button>
+                                    </template>
+                                </b-table>
+                                <br>
+                                <b-pagination
+                                  v-model="currentPage"
+                                  :total-rows="rows"
+                                  :per-page="perPage"
+                                  aria-controls="my-table"
+                                  align="center"
+                                ></b-pagination>
+
                             </div>
                         </div>
                     </div>
@@ -71,11 +109,6 @@
                 </div>
               </div> -->
               <!-- ONLY FOR DEVELOPING -->
-
-
-                
-
-            
 
             <!-- <div class="card shadow mb-4">
                 <div class="card" style="width: 18rem;">
@@ -99,9 +132,13 @@ import 'bootstrap-vue'
 export default {
     data() {
         return {
-            users: '',
+            users: [],
             removed: false,
             info: false,
+            fields: ['no', 'name', 'email', 'username', 'verified', 'joined_at', 'action'],
+            perPage: 10,
+            currentPage: 1,
+
         }
     },
     methods: {
@@ -135,6 +172,12 @@ export default {
     },
     mounted() {
         this.getUser()
+    },
+
+    computed: {
+      rows() {
+        return this.users.length
+      }
     }
 }
 </script>

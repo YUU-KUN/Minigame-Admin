@@ -30,6 +30,13 @@
     </li>
 
     <li class="nav-item">
+        <router-link to="/leaderboard" class="nav-link">
+            <i class="fas fa-fw fa-school"></i>
+            <span>Leaderboard</span>
+        </router-link>
+    </li>
+
+    <li class="nav-item">
         <router-link to="/codes" class="nav-link">
             <i class="fas fa-fw fa-school"></i>
             <span>Code</span>

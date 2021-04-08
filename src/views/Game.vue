@@ -25,15 +25,13 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>Game</th>
                                             <th>Price</th>
                                             <th>Rating</th>
-                                            <!-- <th>Duration</th> -->
-                                            <!-- <th>Level</th> -->
                                             <th>Genre</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -56,7 +54,6 @@
                                             <td>
                                                 <span v-if="game.gameGenre.length == 1">{{game.gameGenre.join(', ').split(',').join(', ')}}</span> 
                                                 <span v-else>{{game.gameGenre.join(', ')}}</span>
-                                                <!-- <span>{{game.gameGenre.join(', ')}}</span> -->
                                             </td>
                                             <td>
                                                 <span v-if="game.gameReady">Active</span>
@@ -70,7 +67,6 @@
                                                 <button class="btn btn-danger" data-fancybox :data-src="'#'+index" style="margin: 0 5px">Delete</button>
                                             </td>
 
-                                            <!-- Delete Confirmation -->
                                             <div style="display:none" :id="index" class="animated-modal">
                                                 <h2>Watch Out!</h2>
                                                 <p>Are you sure wanna delete <b>{{game.gameTitle}}</b>?</p>
@@ -80,7 +76,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Disable Game Confirmation -->
                                             <div style="display:none" :id="'disableGame'+index" class="animated-modal">
                                                 <h2>Watch Out!</h2>
                                                 <p>Are you sure wanna Disable <b>{{game.gameTitle}}</b>?</p>
@@ -92,7 +87,74 @@
 
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> -->
+
+                                <b-table
+                                  id="my-table"
+                                  class="table table-bordered"
+                                  :items="gamelist"
+                                  :per-page="perPage"
+                                  :current-page="currentPage"
+                                  :fields="fields"
+                                >
+                                    
+                                    <template v-slot:cell(no)="data">
+                                        <span>{{data.index+1}}</span>
+                                    </template>
+                                    <template v-slot:cell(title)="data">
+                                        {{data.item.gameTitle }}
+                                    </template>
+                                    <template v-slot:cell(price)="data">
+                                        {{data.item.gamePrice | rupiah }}
+                                    </template>
+                                    <template v-slot:cell(rating)="data">
+                                        {{data.item.gameRating}} <span style="font-size:17px;color:orange;">&starf;</span>
+                                    </template>
+                                    <template v-slot:cell(genre)="data">
+                                        <span v-if="data.item.gameGenre.length == 1">{{data.item.gameGenre.join(', ').split(',').join(', ')}}</span> 
+                                        <span v-else>{{data.item.gameGenre.join(', ')}}</span>
+                                    </template>
+                                    <template v-slot:cell(status)="data">
+                                        <span v-if="data.item.gameReady"><b-badge variant="success">Active</b-badge></span>
+                                        <span v-else><b-badge variant="warning">Disabled</b-badge></span>
+                                    </template>
+                                    <template v-slot:cell(action)="data">
+                                        <button v-if="!data.item.gameReady" class="btn btn-outline-success" @click="activate(data.index)" style="margin: 0 5px">Enable</button>
+                                        <button v-else class="btn btn-danger" data-fancybox :data-src="'#disableGame'+data.index" style="margin: 0 5px">Disable</button>
+                                        <button class="btn btn-success" @click="viewGameDetail(data.index)" style="margin: 0 5px">View</button>
+                                        <button class="btn btn-primary" @click="editGame(data.index)" style="margin: 0 5px">Edit</button>
+                                        <button class="btn btn-danger" data-fancybox :data-src="'#'+data.index" style="margin: 0 5px">Delete</button>
+
+                                        <!-- Delete Confirmation -->
+                                        <div style="display:none" :id="data.index" class="animated-modal">
+                                            <h2>Watch Out!</h2>
+                                            <p>Are you sure wanna delete <b>{{data.item.gameTitle}}</b>?</p>
+                                            <div class=" d-flex justify-content-center">
+                                            <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                            <button type="button" @click="removeGame(data.index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Delete!</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Disable Game Confirmation -->
+                                        <div style="display:none" :id="'disableGame'+data.index" class="animated-modal">
+                                            <h2>Watch Out!</h2>
+                                            <p>Are you sure wanna Disable <b>{{data.item.gameTitle}}</b>?</p>
+                                            <div class=" d-flex justify-content-center">
+                                            <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                            <button type="button" @click="disable(data.index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Disable!</button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </b-table>
+                                <br>
+                                <b-pagination
+                                  v-model="currentPage"
+                                  :total-rows="rows"
+                                  :per-page="perPage"
+                                  aria-controls="my-table"
+                                  align="center"
+                                ></b-pagination>
+
                             </div>
                         </div>
                     </div>
@@ -144,10 +206,13 @@ export default {
     data() {
         return {
             removed: false,
-            gamelist: '',
+            gamelist: [],
             gameDetail: '',
             gameEdit: '',
             info: '',
+            perPage: 10,
+            currentPage: 1,
+            fields: ['no', 'title', 'price', 'rating', 'genre', 'status', 'action'],
         }
     },
     methods: {
@@ -215,6 +280,11 @@ export default {
     },
     mounted() {
         this.getGames()
+    },
+    computed:{
+        rows() {
+            return this.gamelist.length
+        }
     }
 }
 </script>

@@ -8,7 +8,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import VueCurrency from 'vue-currency-filter'
 import moment from 'moment'
 import Multiselect from 'vue-multiselect'
-
+import numeral from 'numeral'
 import 'bootstrap-vue/dist/bootstrap-vue.css' //import bootstrap-vue doang, gak perlu bootstrap biasa, or have fun with that 'beautiful' layout
 
 // Vue.use(Multiselect)
@@ -23,6 +23,10 @@ Vue.filter('formatDate', function(value) {
     return moment(String(value)).locale('id').format('D MMM YYYY HH:mm')
   }
 })
+
+Vue.filter("formatNumber", function (value) {
+  return numeral(value).format("0,0"); // displaying other groupings/separators is possible, look at the docs
+});
 
 
 Vue.use(VueCurrency, {

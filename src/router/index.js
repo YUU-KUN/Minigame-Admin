@@ -10,7 +10,6 @@ import Register from '../views/auth/Register'
 // layout
 import Sidebar from '../views/layouts/Sidebar'
 
-// admin
 import Dashboard from '../views/Dashboard'
 import User from '../views/User'
 import Game from '../views/Game'
@@ -21,6 +20,7 @@ import Code from '../views/Code'
 import Transaction from '../views/Transaction'
 import CobaUploadImage from '../views/cobaUploadImage'
 import CobaInput from '../views/CobaInputImage'
+import Leaderboard from '../views/Leaderboard'
 
 Vue.use(VueRouter)
 
@@ -31,6 +31,14 @@ const routes = [
     path: '/tes',
     name: 'CobaUploadImage',
     components: {default:CobaUploadImage, sidebar: Sidebar},
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/leaderboard',
+    name: 'Leaderboard',
+    components: {default:Leaderboard, sidebar: Sidebar},
     meta: {
       requiresAuth: true
     }

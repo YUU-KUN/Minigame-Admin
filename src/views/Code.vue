@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -43,7 +43,6 @@
                                                 <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+index">
                                                     Generate
                                                 </button>
-                                                <!-- <button class="btn btn-danger" style="margin: 0 5px" data-fancybox :data-src="'#deleteCodeList'+index" >Delete</button> -->
                                                 <div style="display: none;" :id="index">
                                                     <h2>Generate New Code</h2>
                                                     <p>Please select the date to play!</p>
@@ -88,21 +87,97 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- Delete Confirmation -->
-                                                <!-- <div style="display:none" :id="'deleteCodeList'+index" class="animated-modal">
-                                                    <h2>Watch Out!</h2>
-                                                    <p>Are you sure wanna delete?</p>
-                                                    <div class=" d-flex justify-content-center">
-                                                    <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                    <button type="button" @click="removeCodeList(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">Delete!</button>
-                                                    </div>
-                                                </div> -->
-
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> -->
+
+                                <b-table
+                                  id="my-table"
+                                  class="table table-bordered"
+                                  :items="userlist"
+                                  :per-page="perPage"
+                                  :current-page="currentPage"
+                                  :fields="fields"
+                                >
+
+                                    <template v-slot:cell(no)="data">
+                                        <span>{{data.index+1}}</span>
+                                    </template>
+                                    <template v-slot:cell(user)="data">
+                                        {{data.item.userData.name }}
+                                    </template>
+                                    <template v-slot:cell(game)="data">
+                                        {{data.item.gameData.gameTitle }}
+                                    </template>
+                                    <template v-slot:cell(playing_schedule)="data">
+                                        {{data.item.playingSchedule | formatDate}}
+                                    </template>
+                                    <template v-slot:cell(code)="data">
+                                        {{data.item.uniqueCode}}
+                                    </template>
+                                    <template v-slot:cell(status)="data">
+                                        <span v-if="data.item.isExpired"><b-badge variant="warning">Expired</b-badge></span>
+                                        <span v-else><b-badge variant="success">Available</b-badge></span>
+                                    </template>
+                                    <template v-slot:cell(action)="data">
+                                        <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+data.index">
+                                            Generate
+                                        </button>
+                                        <div style="display: none;" :id="data.index">
+                                            <h2>Generate New Code</h2>
+                                            <p>Please select the date to play!</p>
+                                            <div class="form">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="col">
+                                                                        <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                            <div class="input-container" style="flex-grow: 1;  ">
+                                                                                <label for="date"><strong>Date</strong></label>
+                                                                                <input type="date" id="date" class="form-control" v-model="date">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                                                                            <div class="input-container" style="flex-grow: 1;  ">
+                                                                                <label for="time"><strong>Time</strong></label>
+                                                                                <select name="time" v-model="time" id="time" class="form-control">
+                                                                                    <option value="" selected>Choose new play tIme!</option>
+                                                                                    <option :value="index+1" v-for="(time, index) in chooseTime" :key="index">{{time}}</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group" >
+                                                                            <div class="input-container" style="flex-grow: 1;">
+                                                                                <button @click="generate(data.index)" data-fancybox-close class="btn btn-success d-flex align-items-center justify-content-center" style="width:100%">
+                                                                                    <b>Generate</b>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </b-table>
+                                <br>
+                                <b-pagination
+                                  v-model="currentPage"
+                                  :total-rows="rows"
+                                  :per-page="perPage"
+                                  aria-controls="my-table"
+                                  align="center"
+                                ></b-pagination>
                             </div>
                         </div>
                     </div>
@@ -144,7 +219,7 @@
 export default {
     data() {
         return {
-            userlist: '',
+            userlist: [],
             generated: false,
             date: '',
             time: '',
@@ -156,6 +231,9 @@ export default {
             ],
             allCode: '',
             newCode: '',
+            perPage: 10,
+            currentPage: 1,
+            fields: ['no', 'user', 'game', 'playing_schedule', 'code', 'status', 'action']
         }
     },
     methods: {
@@ -190,6 +268,11 @@ export default {
     mounted() {
         this.getUserCode()
     },
+    computed: {
+        rows() {
+            return this.userlist.length
+        }
+    }
 }
 </script>
 
