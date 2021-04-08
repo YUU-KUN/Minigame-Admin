@@ -12,7 +12,7 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-if="loadingTotalUser" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
                                     <span v-else><strong>{{totalUser.length}} User<span v-if="totalUser.length > 1">s</span></strong></span>
                                 </h3>
                             </div>
@@ -29,7 +29,7 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-if="loadingTotalGame" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
                                     <span v-else><strong>{{totalGame.length}} Game<span v-if="totalGame.length > 1">s</span></strong></span>
                                 </h3>
                             </div>
@@ -51,7 +51,7 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-if="loadingTotalCode" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
                                     <span v-else><strong>{{totalCode.length}} Code<span v-if="totalCode.length > 1">s</span></strong></span>
                                 </h3>
                             </div>
@@ -68,7 +68,7 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-if="loadingTotalTransaction" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
                                     <span v-else><strong>{{totalTransaction.length}} Transaction<span v-if="totalTransaction.length > 1">s</span></strong></span>
                                 </h3>
                             </div>
@@ -90,47 +90,50 @@ export default {
             totalTransaction: '',
             totalCode: '',
 
-            loading: false
+            loadingTotalUser: false,
+            loadingTotalGame: false,
+            loadingTotalCode: false,
+            loadingTotalTransaction: false
         }
     },
     methods: {
         getTotalUsers() {
-            this.loading =  true
+            this.loadingTotalUser =  true
             this.axios.get('user/list-admin').then(response => {
-                this.loading = false
                 this.totalUser = response.data.data
+                this.loadingTotalUser = false
             }).catch(error => {
-                this.loading = false
+                this.loadingTotalUser = false
                 console.log(error.response);
             })
         },
         getTotalGames() {
-            this.loading = true
+            this.loadingTotalGame = true
             this.axios.get('game/list').then(response => {
-                this.loading = false
                 this.totalGame = response.data.data
+                this.loadingTotalGame = false
             }).catch(error => {
-                this.loading = false
+                this.loadingTotalGame = false
                 console.log(error.response);
             })
         },
         getTotalTransactions() {
-            this.loading = true
+            this.loadingTotalTransaction = true
             this.axios.get('transaction/list/admin').then(response => {
-                this.loading = false
                 this.totalTransaction = response.data.data
+                this.loadingTotalTransaction = false
             }).catch(error => {
-                this.loading = false
+                this.loadingTotalTransaction = false
                 console.log(error.response);
             })
         },
         getTotalCodes() {
-            this.loading = true
+            this.loadingTotalCode = true
             this.axios.get('code/list').then(response => {
-                this.loading = false
                 this.totalCode = response.data.data
+                this.loadingTotalCode = false
             }).catch(error => {
-                this.loading = false
+                this.loadingTotalCode = false
                 console.log(error.response);
             })
         }

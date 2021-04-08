@@ -61,15 +61,20 @@
                                   :fields="fields"
                                   :per-page="perPage"
                                   :current-page="currentPage"
-                                  small
                                 >
                                     
                                     <template v-slot:cell(no)="nais">
                                         <span>{{nais.index+1}}</span>
                                     </template>
                                     <template v-slot:cell(name)="data">
-                                      <img :src="data.item.userImage" height="40px" alt="">
-                                      {{data.item.name}} 
+                                        <div class="row">
+                                            <div class="col-4" style="text-align:center">
+                                                <img :src="data.item.userImage" height="50px" alt="Profile Picture">
+                                            </div>
+                                            <div class="col">
+                                                {{data.item.name}} 
+                                            </div>
+                                        </div>
                                     </template>
                                     <template v-slot:cell(joined_at)="gan">
                                         {{gan.item.verifiedAt | formatDate}}
