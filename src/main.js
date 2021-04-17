@@ -52,6 +52,7 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
 } else {
   console.log('Token Not Found');
+  store.dispatch('logout')
 }
 
 
