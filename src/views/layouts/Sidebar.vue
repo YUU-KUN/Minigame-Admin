@@ -56,20 +56,61 @@
             <span>Logout</span>
         </div>
     </li>
+
+    <li class="nav-item"  style="bottom:0; position:absolute">
+        <div class="nav-link" data-fancybox data-src="#option" style="cursor: pointer">
+            <i class="fas fa-fw fa-school"></i>
+            <span>Option</span>
+        </div>
+    </li>
+
+    <!-- Option Fancybox -->
+    <div style="display:none" id="option">
+        <div class="form">
+            <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
+                <div class="input-container" style="flex-grow: 1;  ">
+                    <label for="bg_login"><strong>Change Login Background</strong></label>
+                    <input type="file" id="bg_login" accept="image/*" ref="bg_login" class="form-control" @change="onLoginChange">
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" @click="updateLoginBg" style="width:100%" type="button">Simpan</button>
+            </div>
+        </div>
+    </div>
 </ul>
 </template>
 
 <script>
 export default {
     data() {
-        return {}
+        return {
+            login_bg: "",
+        }
     },
     methods: {
         logout() {
-            console.log('Logout Clicked');
             this.$store.dispatch('logout')
             .then(() => this.$router.push('/login'))
             .catch(err => console.log(err))
+        },
+        onLoginChange() {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+              this.login_bg = e.target.result
+            }
+            const bg_login = this.$refs.bg_login.files[0]
+            reader.readAsDataURL(bg_login)
+        },
+        updateLoginBg() {
+            const data = {
+                image: this.login_bg
+            }
+            this.axios.put('endpoint', data).then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log(error)
+            })
         }
     },
     mounted() {
