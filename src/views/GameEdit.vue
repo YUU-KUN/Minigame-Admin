@@ -56,11 +56,10 @@
                                                             </div>
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
-                                                                    <label for="duration"><strong>Rating</strong> (1-5)
-                                                                        <span v-if="gameDetail.gameRating"><b-icon v-for="value in parseInt(gameDetail.gameRating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
-                                                                    </label>
-                                                                    <input type="number" id="duration" class="form-control" v-model="gameDetail.gameRating"  min="0" max="5">
+                                                                    <label for="duration"><strong>Rating</strong></label>
+                                                                    <!-- <input type="number" id="duration" class="form-control" v-model="gameDetail.gameRating"  min="0" max="5"> -->
                                                                 </div>
+                                                                <b-form-rating id="rating-inline" class="form-control" inline variant="warning" :value="gameDetail.gameRating" v-model="gameDetail.gameRating"></b-form-rating>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -69,7 +68,6 @@
                                                             <div class="col-3">
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="difficulty"><strong>Difficulty</strong></label>
-                                                                    <!-- <input type="number" id="difficulty" class="form-control" v-model="gameDetail.gameDifficulty"  min="1"> -->
                                                                     <select id="difficulty" class="form-control"  v-model="gameDetail.gameDifficulty" min="1">
                                                                         <option v-for="(diff, index) in difficulties" :key="index" :value="diff[index+1]" selected>{{diff}}</option>
                                                                     </select>
