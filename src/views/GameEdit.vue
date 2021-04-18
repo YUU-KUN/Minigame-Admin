@@ -69,7 +69,11 @@
                                                                 <div class="input-container" style="flex-grow: 1;  ">
                                                                     <label for="difficulty"><strong>Difficulty</strong></label>
                                                                     <select id="difficulty" class="form-control"  v-model="gameDetail.gameDifficulty" min="1">
-                                                                        <option v-for="(diff, index) in difficulties" :key="index" :value="diff[index+1]" selected>{{diff}}</option>
+                                                                        <option value="1" selected>Easy</option>
+                                                                        <option value="2" >Normal</option>
+                                                                        <option value="3" >Hard</option>
+                                                                        <option value="4" >Very Hard</option>
+                                                                        <!-- <option v-for="(diff, index) in difficulties" :key="index" :value="diff[index+1]" selected>{{diff}}</option> -->
                                                                     </select>
                                                                 </div>
                                                             </div>
