@@ -43,6 +43,7 @@
                                                                         <!-- <pre class="language-json"><code>{{ Object.values(genre)}}</code></pre> -->
                                                                         <!-- <pre class="language-json"><code>{{ genre[1]}} {{genre[0] }}</code></pre> -->
                                                                     </div>
+                                                                    <!-- <pre>{{genre}}</pre> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -68,13 +69,9 @@
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <div class="input-container" style="flex-grow: 1;  ">
-                                                                        <label for="duration"><strong>Rating</strong> (1-5) 
-                                                                            <!-- pake parseInt() biar dia ngebaca integer -->
-                                                                            <span v-if="rating"><b-icon v-for="value in parseInt(rating)" :key="value" icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span> 
-                                                                            <span v-else><b-icon icon="star-fill" class="h7" style="color: orange" aria-hidden="true"></b-icon></span>
-                                                                        </label>
-                                                                        <input type="number" id="duration" class="form-control" v-model="rating" min="1" max="5" >
+                                                                        <label for="duration"><strong>Rating</strong></label> 
                                                                     </div>
+                                                                    <b-form-rating id="rating-inline" class="form-control" inline variant="warning" :value="rating" v-model="rating"></b-form-rating>
                                                                 </div>
                                                             </div>
                                                         </div>
