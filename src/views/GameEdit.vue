@@ -190,12 +190,12 @@ export default {
                 // "Puzzle",
             ],
 
-            difficulties: [
-                'Eazy',
-                'Normal',
-                'Hard',
-                'Very Hard',
-            ],
+            // difficulties: [
+            //     'Eazy',
+            //     'Normal',
+            //     'Hard',
+            //     'Very Hard',
+            // ],
             gameDetail: '',
             posterUrl: '',
             imageUrl: '',
