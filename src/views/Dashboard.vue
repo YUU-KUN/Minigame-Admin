@@ -12,8 +12,8 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loadingTotalUser" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
-                                    <span v-else><strong>{{totalUser.length}} User<span v-if="totalUser.length > 1">s</span></strong></span>
+                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-else><strong>{{userCount}} User<span v-if="userCount > 1">s</span></strong></span>
                                 </h3>
                             </div>
                         </div>
@@ -29,8 +29,8 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loadingTotalGame" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
-                                    <span v-else><strong>{{totalGame.length}} Game<span v-if="totalGame.length > 1">s</span></strong></span>
+                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-else><strong>{{gameCount}} Game<span v-if="gameCount > 1">s</span></strong></span>
                                 </h3>
                             </div>
                         </div>
@@ -51,8 +51,8 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loadingTotalCode" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
-                                    <span v-else><strong>{{totalCode.length}} Code<span v-if="totalCode.length > 1">s</span></strong></span>
+                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-else><strong>{{codeCount}} Code<span v-if="codeCount > 1">s</span></strong></span>
                                 </h3>
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                                 </div>
                                 <br>
                                 <h3 class="card-text">
-                                    <span v-if="loadingTotalTransaction" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
-                                    <span v-else><strong>{{totalTransaction.length}} Transaction<span v-if="totalTransaction.length > 1">s</span></strong></span>
+                                    <span v-if="loading" class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span>
+                                    <span v-else><strong>{{transactionCount}} Transaction<span v-if="transactionCount > 1">s</span></strong></span>
                                 </h3>
                             </div>
                         </div>
@@ -85,64 +85,31 @@
 export default {
     data() {
         return {
-            totalUser: '',
-            totalGame: '',
-            totalTransaction: '',
-            totalCode: '',
+            userCount: '',
+            gameCount: '',
+            transactionCount: '',
+            codeCount: '',
 
-            loadingTotalUser: false,
-            loadingTotalGame: false,
-            loadingTotalCode: false,
-            loadingTotalTransaction: false
+            loading: false,
         }
     },
     methods: {
-        getTotalUsers() {
-            this.loadingTotalUser =  true
-            this.axios.get('user/list-admin').then(response => {
-                this.totalUser = response.data.data
-                this.loadingTotalUser = false
+        getDashboard() {
+            this.loading = true
+            this.axios.get('dashboard/admin').then(response => {
+                this.userCount = response.data.data.userCount
+                this.gameCount = response.data.data.gameCount
+                this.transactionCount = response.data.data.transactionCount
+                this.codeCount = response.data.data.codeCount
+                this.loading = false
             }).catch(error => {
-                this.loadingTotalUser = false
-                console.log(error.response);
+                this.loading = false
+                console.log(error);
             })
         },
-        getTotalGames() {
-            this.loadingTotalGame = true
-            this.axios.get('game/list').then(response => {
-                this.totalGame = response.data.data
-                this.loadingTotalGame = false
-            }).catch(error => {
-                this.loadingTotalGame = false
-                console.log(error.response);
-            })
-        },
-        getTotalTransactions() {
-            this.loadingTotalTransaction = true
-            this.axios.get('transaction/list/admin').then(response => {
-                this.totalTransaction = response.data.data
-                this.loadingTotalTransaction = false
-            }).catch(error => {
-                this.loadingTotalTransaction = false
-                console.log(error.response);
-            })
-        },
-        getTotalCodes() {
-            this.loadingTotalCode = true
-            this.axios.get('code/list').then(response => {
-                this.totalCode = response.data.data
-                this.loadingTotalCode = false
-            }).catch(error => {
-                this.loadingTotalCode = false
-                console.log(error.response);
-            })
-        }
     },
     mounted() {
-        this.getTotalUsers()
-        this.getTotalGames()
-        this.getTotalTransactions()
-        this.getTotalCodes()
+        this.getDashboard()
     }
 }
 </script>
