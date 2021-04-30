@@ -157,7 +157,7 @@
                                             <a :href="data.item.transactionImage" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
                                         </span>
                                         <span class="d-flex justify-content-center" v-else-if="data.item.transactionStatus == 0">
-                                            <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
+                                            <a href="" data-fancybox :data-src="'#bukti'+data.index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
                                         </span>
                                         <span v-else class="d-flex justify-content-center">
                                             -
