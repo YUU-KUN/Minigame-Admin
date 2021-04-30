@@ -111,13 +111,14 @@
                                         {{data.item.gameData.gameTitle }}
                                     </template>
                                     <template v-slot:cell(playing_schedule)="data">
-                                        {{data.item.playingSchedule | formatDate}}
+                                        <!-- {{data.item.playingSchedule | formatDate}} -->
+                                        {{playingSchedule(data.item.playingSchedule)}}
                                     </template>
                                     <template v-slot:cell(code)="data">
                                         {{data.item.uniqueCode}}
                                     </template>
                                     <template v-slot:cell(status)="data">
-                                        <span v-if="data.item.isExpired"><b-badge variant="warning">Expired</b-badge></span>
+                                        <span v-if="data.item.isExpired && data.item.isPlayed"><b-badge variant="warning">Expired</b-badge></span>
                                         <span v-else><b-badge variant="success">Available</b-badge></span>
                                     </template>
                                     <template v-slot:cell(action)="data">
@@ -179,6 +180,7 @@
                                   align="center"
                                 ></b-pagination>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -264,6 +266,12 @@ export default {
                 this.userlist = response.data.data.reverse()
             })
         },
+        playingSchedule(time) {
+            var date = new Date(time);
+            // const playingSchedule = date.toLocaleDateString('id-ID')
+            const playingSchedule = date.toDateString()
+            return playingSchedule
+        }
     },
     mounted() {
         this.getUserCode()
