@@ -180,7 +180,6 @@
                                   align="center"
                                 ></b-pagination>
                             </div>
-                            <pre>{{userlist}}</pre>
                         </div>
                     </div>
                 </div>
