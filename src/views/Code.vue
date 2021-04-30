@@ -118,7 +118,7 @@
                                         {{data.item.uniqueCode}}
                                     </template>
                                     <template v-slot:cell(status)="data">
-                                        <span v-if="data.item.isExpired && data.item.isPlayed"><b-badge variant="warning">Expired</b-badge></span>
+                                        <span v-if="data.item.isPlayed"><b-badge variant="warning">Expired</b-badge></span>
                                         <span v-else><b-badge variant="success">Available</b-badge></span>
                                     </template>
                                     <template v-slot:cell(action)="data">
@@ -180,7 +180,7 @@
                                   align="center"
                                 ></b-pagination>
                             </div>
-
+                            <pre>{{userlist}}</pre>
                         </div>
                     </div>
                 </div>
