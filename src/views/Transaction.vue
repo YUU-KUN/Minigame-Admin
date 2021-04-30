@@ -16,100 +16,6 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>User</th>
-                                            <th>Members</th>
-                                            <th>Item</th>
-                                            <th>Total</th>
-                                            <th>Status</th>
-                                            <th>Payment</th>
-                                            <th>Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(transaction, index) in transactions" :key="index">
-                                            <td>{{index +1}}</td>
-                                            <td>
-                                                    <span>{{transaction.userData.name}}</span>
-                                            </td>
-                                            <td>
-                                                <span v-for="(transactionItems, index) in transaction.transactionItems" :key="index">
-                                                    <span v-for="(member, index) in transactionItems.members" :key="index">
-                                                        <ul>
-                                                            <li>{{member.name}}</li>
-                                                        </ul>
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <ul>
-                                                    <span v-for="(game, index) in transaction.transactionItems" :key="index">
-                                                        <li>{{game.gameData.gameTitle}}</li>
-                                                    </span>
-                                                </ul>
-                                            </td>
-                                            <td>{{transaction.transactionTotal | rupiah}}</td>
-                                            <td>
-                                                <span v-if="transaction.transactionStatus == 0">Menunggu Bukti Pembayaran</span>
-                                                <span v-else-if="transaction.transactionStatus == 1">Transaksi Terkonfirmasi</span>
-                                                <span v-else-if="transaction.transactionStatus == 2">Menunggu Konfirmasi Admin</span>
-                                                <span v-else-if="transaction.transactionStatus == 3">Transaksi Ditolak</span>
-                                                <span v-else>Transaksi Kadaluarsa</span>
-                                            </td>
-                                            <td>
-                                                <span class="d-flex justify-content-center" v-if="transaction.transactionStatus ==  1 || transaction.transactionStatus == 2 || transaction.transactionStatus == 3">
-                                                    <a :href="transaction.transactionImage" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
-                                                </span>
-                                                <span class="d-flex justify-content-center" v-else-if="transaction.transactionStatus == 0">
-                                                    <a href="" data-fancybox :data-src="'#bukti'+index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
-                                                </span>
-                                                <span v-else class="d-flex justify-content-center">
-                                                    -
-                                                </span>
-                                            </td>
-                                            
-                                            <td>{{transaction.createdAt | formatDate}}</td>
-                                            <td>
-                                                <span v-if="transaction.transactionStatus != 2" class="d-flex justify-content-around ">
-                                                    <button class="btn btn-danger" tabindex="-1" data-fancybox :data-src="'#delete'+index"><b-icon icon="trash2-fill"></b-icon></button>
-                                                </span>
-                                                <span v-else class="d-flex justify-content-around ">
-                                                    <span><button class="btn btn-success" @click="acceptTransaction(index)" title="Accept Transaction" style="margin: 0 5px"><b-icon icon="check"></b-icon></button></span>
-                                                    <button class="btn btn-warning" data-fancybox :data-src="'#reject'+index" title="Reject Transaction" style="margin: 0 5px"><b-icon icon="x"></b-icon></button>
-                                                    <button class="btn btn-danger" data-fancybox :data-src="'#delete'+index" title="Delete Transaction" style="margin: 0 5px"><b-icon icon="trash2-fill"></b-icon></button>
-                                                </span>
-                                            </td>
-
-                                            <div style="display:none" :id="'delete'+index" >
-                                                <h2>Watch Out!</h2>
-                                                <p>Are you sure wanna delete <span v-if="transaction.user"><b>{{transaction.user}}</b>'s</span> <span v-else>this</span> transaction?</p>
-                                                <div class=" d-flex justify-content-center">
-                                                <button type="button" data-fancybox-close @click="checkTransactionId(index)" class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                <button type="button" @click="removeTransaction(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">YASHH!</button>
-                                                </div>
-                                            </div>
-                                            
-                                            <div style="display:none" :id="'reject'+index" >
-                                                <h2>Are you sure?</h2>
-                                                <p>Why do you wanna <b>reject</b> <span v-if="transaction.user"><b>{{transaction.user}}</b>'s</span> <span v-else>this</span> transaction?</p>
-                                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                <input type="text" v-model="rejectReason" class="form-control">
-                                                </div>
-                                                <div class=" d-flex justify-content-center">
-                                                <button type="button" data-fancybox-close @click="checkTransactionId(index)" class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
-                                                <button type="button" @click="rejectTransaction(index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">REJECT!</button>
-                                                </div>
-                                            </div>
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table> -->
-
-
                                 <b-table
                                   id="my-table"
                                   class="table table-bordered"
@@ -117,9 +23,7 @@
                                   :per-page="perPage"
                                   :current-page="currentPage"
                                   :fields="fields"
-                                  
                                 >
-                                    
                                     <template v-slot:cell(no)="data">
                                         <span>{{data.index+1}}</span>
                                     </template>
@@ -157,7 +61,10 @@
                                             <a :href="data.item.transactionImage" target="_blank"><span class="badge badge-success">Lihat Bukti Pembayaran</span></a>
                                         </span>
                                         <span class="d-flex justify-content-center" v-else-if="data.item.transactionStatus == 0">
-                                            <a href="" data-fancybox :data-src="'#bukti'+data.index"><span class="badge badge-warning">Upload Bukti Pembayaran</span></a>
+                                            <!-- <a href="" data-fancybox :data-src="'#bukti'+data.index">
+                                                <span class="badge badge-warning">Upload Bukti Pembayaran</span>
+                                            </a> -->
+                                            <span class="badge badge-warning">Menunggu Bukti Pembayaran</span>
                                         </span>
                                         <span v-else class="d-flex justify-content-center">
                                             -
