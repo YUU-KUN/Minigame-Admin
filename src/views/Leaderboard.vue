@@ -33,12 +33,15 @@
                   id="selectDate"
                   v-model="sort"
                 >
-                <!-- <option value="" disabled selected></option> -->
                   <option
                     :value="sort"
                     v-for="(sort, index) in sortlist"
                     :key="index"
-                    >{{ sort.toUpperCase() }}</option
+                    >
+                    {{ sort.toUpperCase() }}
+                    <!-- <span v-if="sort == 'score'">TIME REMAINING</span>
+                    <span v-else>{{ sort.toUpperCase() }}</span> -->
+                    </option
                   >
                 </select>
               </div>
@@ -46,42 +49,6 @@
             <div class="row">
               <div class="col-md-12 mt-3">
                 <div class="table-responsive">
-                  <!-- <table
-                    class="table table-bordered"
-                    id="dataTable"
-                    width="100%"
-                    cellspacing="0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>No.</th>
-                        <th>Team Name</th>
-                        <th>Leader Name</th>
-                        <th>Game Data</th>
-                        <th>Score</th>
-                        <th>Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(leaderboard, index) in leaderboard"
-                        :key="index"
-                      >
-                        <td>{{ index + 1 }}</td>
-                        <td>
-                          <span v-if="leaderboard.teamName">
-                            <span>{{ leaderboard.teamName }}</span>
-                          </span>
-                          <span v-else>-</span>
-                        </td>
-                        <td>{{ leaderboard.leaderName }}</td>
-                        <td>{{ leaderboard.gameData.gameTitle }}</td>
-                        <td>{{ leaderboard.score | formatNumber}}</td>
-                        <td>{{ leaderboard.createdAt | formatDate }}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
-
                   <b-table
                       id="my-table"
                       class="table table-bordered"
@@ -89,21 +56,19 @@
                       :per-page="perPage"
                       :current-page="currentPage"
                       :fields="fields"
-                      
                     >
-                        
-                        <template v-slot:cell(no)="data">
-                            <span>{{data.index+1}}</span>
-                        </template>
-                        <template v-slot:cell(gameData)="data">
-                            {{data.item.gameData.gameTitle }}
-                        </template>
-                        <template v-slot:cell(score)="data">
-                            {{data.item.score | formatNumber }}
-                        </template>
-                        <template v-slot:cell(date)="data">
-                            {{data.item.createdAt | formatDate}}
-                        </template>
+                      <template v-slot:cell(no)="data">
+                          <span>{{data.index+1}}</span>
+                      </template>
+                      <template v-slot:cell(gameData)="data">
+                          {{data.item.gameData.gameTitle }}
+                      </template>
+                      <template v-slot:cell(score)="data">
+                          {{data.item.score | formatNumber}}
+                      </template>
+                      <template v-slot:cell(date)="data">
+                          {{data.item.createdAt | formatDate}}
+                      </template>
                     </b-table>
                     <br>
                     <b-pagination
@@ -131,30 +96,9 @@
                     </div>
                 </div>
               </div> -->
-
-        <!-- <div class="card bg-light">
-                <div class="card-header"> <h3>Game ID & Sort By</h3> </div>
-                  <div class="card-inner">
-                    <div class="card bg-dark">
-                      <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{gameId}} SORTED BY {{sort}}</pre>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              <div class="card bg-light">
-                <div class="card-header"> <h3>Leaderboard</h3> </div>
-                  <div class="card-inner">
-                    <div class="card bg-dark">
-                      <div class="card-inner bg-dark">
-                        <pre class="text-warning">{{getLeaderboard}}</pre>
-                      </div>
-                    </div>
-                </div>
-              </div> -->
-              <span style="display: none">{{getLeaderboard}}</span>
-        <!-- {{ leaderboard }} -->
         <!-- ONLY FOR DEVELOPING -->
+
+        <span style="display: none">{{getLeaderboard}}</span>
       </div>
     </div>
   </div>
@@ -175,28 +119,12 @@ export default {
       currentPage: 1
     };
   },
-  methods: {
-    getGames() {
-      this.axios.get("game/list").then((response) => {
-        this.games = response.data.data;
-        this.sort = this.sortlist[0]
-        this.gameId = this.games[0].gameId
-        // localStorage.setItem("gameId", this.games[1].gameId);
-        // localStorage.setItem("sort", this.sortlist[0]);
-      });
-    },
-  },
   created() {
-    this.getGames()
+    this.sort = this.sortlist[0]
   },
   computed: {
     getLeaderboard() {
       this.loading = true
-
-      if (!this.gameId && !this.sort) {
-        this.gameId = localStorage.getItem("gameId");
-        this.sort = localStorage.getItem("sort");
-      }
       this.axios
         .get(`gameplay/leaderboard/list/sort/${this.sort}`)
         .then((response) => {
@@ -209,7 +137,7 @@ export default {
           }
         }).catch(error => {
           this.loading = false
-          console.log(error);
+          console.log(error.response);
         }) 
     },
     rows() {
