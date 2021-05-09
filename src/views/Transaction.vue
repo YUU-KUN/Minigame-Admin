@@ -101,7 +101,7 @@
                                             <input type="text" v-model="rejectReason" class="form-control">
                                             </div>
                                             <div class=" d-flex justify-content-center">
-                                            <button type="button" data-fancybox-close @click="checkTransactionId(data.index)" class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
+                                            <button type="button" data-fancybox-close class="btn btn-outline-secondary col-5" style="margin: 0 5px">Cancel</button>
                                             <button type="button" @click="rejectTransaction(data.index)" data-fancybox-close class="btn btn-danger col-5 " style="margin: 0 5px">REJECT!</button>
                                             </div>
                                         </div>
@@ -172,9 +172,6 @@ export default {
                 console.log(error.response);
             })
         },
-        checkTransactionId(index){
-            console.log(this.transactions[index].transactionId);
-        },
         removeTransaction(index) {
             let transactionId = this.transactions[index].transactionId
             console.log(transactionId);
@@ -191,11 +188,6 @@ export default {
             console.log(this.info)
         },
         getUserTransaction(){
-            // let headers = {
-            //     "headers": {
-            //         "content-type": "application/json",
-            //     },
-            // }
             this.axios.get('/transaction/list/admin').then(response => {
                 this.transactions = response.data.data
             })
