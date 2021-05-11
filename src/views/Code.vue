@@ -161,7 +161,7 @@ export default {
             newCode: '',
             perPage: 10,
             currentPage: 1,
-            fields: ['no', 'user', 'game', 'playing_schedule', 'code', 'status', 'action']
+            fields: ['no', 'user', 'game', 'playing_schedule', 'code', 'status']
         }
     },
     methods: {
