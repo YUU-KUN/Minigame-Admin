@@ -16,82 +16,6 @@
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <div class="table-responsive">
-                                <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>User</th>
-                                            <th>Game</th>
-                                            <th>Playing Schedule</th>
-                                            <th>Code</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(user, index) in userlist" :key="index">
-                                            <td>{{index+1}}</td>
-                                            <td>{{user.userData.name}}</td>
-                                            <td>{{user.gameData.gameTitle}}</td>
-                                            <td>{{user.playingSchedule | formatDate}}</td>
-                                            <td>{{user.uniqueCode}}</td>
-                                            <td>
-                                                <div v-if="user.isExpired">Expired</div>
-                                                <div v-else>Available</div>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+index">
-                                                    Generate
-                                                </button>
-                                                <div style="display: none;" :id="index">
-                                                    <h2>Generate New Code</h2>
-                                                    <p>Please select the date to play!</p>
-                                                    <div class="form">
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-body">
-                                                                            <div class="col">
-                                                                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                                        <label for="date"><strong>Date</strong></label>
-                                                                                        <input type="date" id="date" class="form-control" v-model="date">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="form-group" style="display: flex; align-items: flex-end; justify-content: space-between;">
-                                                                                    <div class="input-container" style="flex-grow: 1;  ">
-                                                                                        <label for="time"><strong>Time</strong></label>
-                                                                                        <select name="time" v-model="time" id="time" class="form-control">
-                                                                                            <option value="" selected>Choose new play tIme!</option>
-                                                                                            <option :value="index+1" v-for="(time, index) in chooseTime" :key="index">{{time}}</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-12">
-                                                                                <div class="form-group" >
-                                                                                    <div class="input-container" style="flex-grow: 1;">
-                                                                                        <button @click="generate(index)" data-fancybox-close class="btn btn-success d-flex align-items-center justify-content-center" style="width:100%">
-                                                                                            <b>Generate</b>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table> -->
-
                                 <b-table
                                   id="my-table"
                                   class="table table-bordered"
@@ -121,7 +45,7 @@
                                         <span v-if="data.item.isPlayed"><b-badge variant="warning">Expired</b-badge></span>
                                         <span v-else><b-badge variant="success">Available</b-badge></span>
                                     </template>
-                                    <template v-slot:cell(action)="data">
+                                    <!-- <template v-slot:cell(action)="data">
                                         <button class="btn btn-success" style="margin: 0 5px" data-fancybox :data-src="'#'+data.index">
                                             Generate
                                         </button>
@@ -169,7 +93,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </template>
+                                    </template> -->
                                 </b-table>
                                 <br>
                                 <b-pagination
